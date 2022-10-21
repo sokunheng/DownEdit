@@ -82,12 +82,13 @@ while True:
                                 # Check if output exists in folder. If exists then skip else process
                                 if os.path.exists(output) == True:
                                     console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
+                                    # function skip
+                                    clip_list.remove(file)
                                 else:
                                     process(video_folder + "/" + file, output)
-                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} have been created.')
-                                #console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} have been created.')
+                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} has been created.')
                             console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Processed {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos successfully.')
-                            time.sleep(7)
+                            time.sleep(8)
                         else:
                             console.log("[red][Folder][/red] No such directory")
                             time.sleep(3)
