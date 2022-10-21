@@ -1,5 +1,6 @@
 # download all tiktok video from user
 # edit video from entire directory using moviepy
+# Created by HengSok
 
 import time, os, inquirer
 from pystyle import *
@@ -35,8 +36,6 @@ while True:
                 #Edit Video Function
                 def process(input, output):
 
-                    # Number of files found
-                    console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
                     #print(path_name_list)
                     clip = VideoFileClip(input)
                     #audio = AudioFileClip(input)
@@ -66,19 +65,29 @@ while True:
 
                         # check if the folder exists or not
                         if os.path.exists(video_folder):
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Start processing the video.')
+                            
                             # Get input files
                             file_list = os.listdir(video_folder)
                             clip_list = get_clip_list(file_list)
 
+                            # Number of files found
+                            console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
+                            # Process status
+                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Start processing the video.')
+
                             # Process files
                             for file in clip_list:
+
                                 output = video_folder + "/" + file[:-4] + "_edited.mp4"
-                                process(video_folder + "/" + file, output)
-                                clip_list.remove(file)
-                                console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} have been created.')
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}All videos processed successfully.')
-                            time.sleep(5)
+                                # Check if output exists in folder. If exists then skip else process
+                                if os.path.exists(output) == True:
+                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
+                                else:
+                                    process(video_folder + "/" + file, output)
+                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} have been created.')
+                                #console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} have been created.')
+                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Processed {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos successfully.')
+                            time.sleep(7)
                         else:
                             console.log("[red][Folder][/red] No such directory")
                             time.sleep(3)
@@ -111,5 +120,5 @@ while True:
                 df = input("Test: ")
                 #downloadIG()
     except:
-        console.log("[red][Error][/red] Script Interupted!")
+        console.log("[red][Error][/red] Program Interupted!")
         time.sleep(2)
