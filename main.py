@@ -47,13 +47,13 @@ while True:
                 if __name__ == "__main__":
                     os.system('cls')
                     banner = f"""{Fore.MAGENTA}
-            ███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
-            ██╔════╝██╔══██╗██║╚══██╔══╝  ██║░░░██║██║██╔══██╗██╔════╝██╔══██╗
-            █████╗░░██║░░██║██║░░░██║░░░  ╚██╗░██╔╝██║██║░░██║█████╗░░██║░░██║
-            ██╔══╝░░██║░░██║██║░░░██║░░░  ░╚████╔╝░██║██║░░██║██╔══╝░░██║░░██║
-            ███████╗██████╔╝██║░░░██║░░░  ░░╚██╔╝░░██║██████╔╝███████╗╚█████╔╝
-            ╚══════╝╚═════╝░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝╚═════╝░╚══════╝░╚════╝░
-                                Created by HengSok{Fore.YELLOW}
+        ███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
+        ██╔════╝██╔══██╗██║╚══██╔══╝  ██║░░░██║██║██╔══██╗██╔════╝██╔══██╗
+        █████╗░░██║░░██║██║░░░██║░░░  ╚██╗░██╔╝██║██║░░██║█████╗░░██║░░██║
+        ██╔══╝░░██║░░██║██║░░░██║░░░  ░╚████╔╝░██║██║░░██║██╔══╝░░██║░░██║
+        ███████╗██████╔╝██║░░░██║░░░  ░░╚██╔╝░░██║██████╔╝███████╗╚█████╔╝
+        ╚══════╝╚═════╝░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝╚═════╝░╚══════╝░╚════╝░
+                            Created by HengSok{Fore.YELLOW}
                     """
                     print(Center.XCenter(banner))
 
@@ -73,7 +73,7 @@ while True:
                             # Number of files found
                             console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
                             # Process status
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Start processing the video.')
+                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTYELLOW_EX}Start processing the video.')
 
                             # Process files
                             for file in clip_list:
@@ -87,8 +87,9 @@ while True:
                                 else:
                                     process(video_folder + "/" + file, output)
                                     console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} has been created.')
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}Processed {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos successfully.')
-                            time.sleep(8)
+                            console.log(f'[cyan][File][/cyan] Processed {Fore.LIGHTGREEN_EX}{len(clip_list)}{Fore.WHITE} videos successfully.')
+                            time.sleep(1)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
                         else:
                             console.log("[red][Folder][/red] No such directory")
                             time.sleep(3)
@@ -99,16 +100,18 @@ while True:
         if __name__ == "__main__":
             os.system("cls" if os.name == "nt" else "clear"); os.system("title MMO by @HengSok" if os.name == "nt" else "")
             txt = f"""{Fore.MAGENTA}
-        ███╗░░░███╗███╗░░░███╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░██╗░░░░░
-        ████╗░████║████╗░████║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗██║░░░░░
-        ██╔████╔██║██╔████╔██║██║░░██║█████╗░░░██║░░░██║░░██║██║░░██║██║░░░░░
-        ██║╚██╔╝██║██║╚██╔╝██║██║░░██║╚════╝░░░██║░░░██║░░██║██║░░██║██║░░░░░
-        ██║░╚═╝░██║██║░╚═╝░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝╚█████╔╝███████╗
-        ╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░░╚════╝░╚══════╝
-                                Created by HengSok
+    ███╗░░░███╗███╗░░░███╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░██╗░░░░░
+    ████╗░████║████╗░████║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗██║░░░░░
+    ██╔████╔██║██╔████╔██║██║░░██║█████╗░░░██║░░░██║░░██║██║░░██║██║░░░░░
+    ██║╚██╔╝██║██║╚██╔╝██║██║░░██║╚════╝░░░██║░░░██║░░██║██║░░██║██║░░░░░
+    ██║░╚═╝░██║██║░╚═╝░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝╚█████╔╝███████╗
+    ╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░░╚════╝░╚══════╝
+                            Created by HengSok
                   """
             
             print(Center.XCenter(txt))
+            print(f'{Fore.GREEN}')
+            print(Box.DoubleCube("Use arrow key to select the options"))
             questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Tiktok Video', ' Download IG Video'],),]   
             answers = inquirer.prompt(questions)
 
