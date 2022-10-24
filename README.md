@@ -45,4 +45,4 @@ Please ⭐️ this repository if this project helped you!
 
 ## 📝 License
 
-Copyright © 2019 [SokunHeng](https://github.com/SokunHeng).<br />
+Copyright © 2022 [SokunHeng](https://github.com/SokunHeng).<br />
