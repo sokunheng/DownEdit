@@ -62,10 +62,21 @@ while True:
                         print(f'{Fore.GREEN}')
                         print(Box.DoubleCube(r"Example: C:\Users\Name\Desktop\Folder\Video"))
                         video_folder = input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
+                        counter = 0
 
                         # check if the folder exists or not
                         if os.path.exists(video_folder):
-                            
+
+                            # make a new folder with counter += 1 everytime it runs.
+                            while True:
+                                counter += 1
+                                dir = "Video{}".format(counter)
+                                if os.path.isdir(dir):
+                                    pass
+                                else:
+                                    os.makedirs(dir)
+                                    break
+
                             # Get input files
                             file_list = os.listdir(video_folder)
                             clip_list = get_clip_list(file_list)
@@ -78,7 +89,8 @@ while True:
                             # Process files
                             for file in clip_list:
 
-                                output = video_folder + "/" + file[:-4] + "_edited.mp4"
+                                output = dir + "/" + file[:-4] + "_edited.mp4"
+                                
                                 # Check if output exists in folder. If exists then skip else process
                                 if os.path.exists(output) == True:
                                     console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
@@ -97,6 +109,12 @@ while True:
                         console.log("[red][Error][/red] Please Choose the Folder")
                         time.sleep(3)
 
+        
+        # Download Video From Tiktok
+        class downTik:
+            print("test")
+
+
         if __name__ == "__main__":
             os.system("cls" if os.name == "nt" else "clear"); os.system("title MMO by @HengSok" if os.name == "nt" else "")
             txt = f"""{Fore.MAGENTA}
@@ -112,17 +130,15 @@ while True:
             print(Center.XCenter(txt))
             print(f'{Fore.GREEN}')
             print(Box.DoubleCube("Use arrow key to select the options"))
-            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Tiktok Video', ' Download IG Video'],),]   
+            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Tiktok Video', ' Download Douyin Video'],),]   
             answers = inquirer.prompt(questions)
 
             if answers['list'] == ' Edit Video':
                 editVideo()
             elif answers['list'] == ' Download Tiktok Video':
-                dsf = input("Test: ")
-                #downloadTiktok()
+                downTik()
             elif answers['list'] =='Download IG Video':
-                df = input("Test: ")
-                #downloadIG()
+                pass
     except:
         console.log("[red][Error][/red] Program Interupted!")
         time.sleep(2)
