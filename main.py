@@ -84,21 +84,23 @@ while True:
                             # Number of files found
                             console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
                             # Process status
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTYELLOW_EX}Start processing the video.')
+                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTYELLOW_EX}Start processing the video...')
 
-                            # Process files
-                            for file in clip_list:
+                            # status or waiting
+                            with console.status('[cyan] Processing the video...', spinner='aesthetic') as status:
 
-                                output = dir + "/" + file[:-4] + "_edited.mp4"
-                                
-                                # Check if output exists in folder. If exists then skip else process
-                                if os.path.exists(output) == True:
-                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
-                                    # function skip
-                                    clip_list.remove(file)
-                                else:
-                                    process(video_folder + "/" + file, output)
-                                    console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} has been created.')
+                                # Process files
+                                for file in clip_list:
+                                    output = dir + "/" + file[:-4] + "_edited.mp4"
+
+                                    # Check if output exists in folder. If exists then skip else process
+                                    if os.path.exists(output) == True:
+                                        console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
+                                        # function skip
+                                        clip_list.remove(file)
+                                    else:
+                                        process(video_folder + "/" + file, output)
+                                        console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} has been created.')
                             console.log(f'[cyan][File][/cyan] Processed {Fore.LIGHTGREEN_EX}{len(clip_list)}{Fore.WHITE} videos successfully.')
                             time.sleep(1)
                             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
@@ -136,7 +138,9 @@ while True:
             if answers['list'] == ' Edit Video':
                 editVideo()
             elif answers['list'] == ' Download Tiktok Video':
-                downTik()
+                dsf = input("Test: ")
+                #downTik()
+                
             elif answers['list'] =='Download IG Video':
                 pass
     except:
