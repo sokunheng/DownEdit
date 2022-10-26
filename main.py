@@ -62,20 +62,9 @@ while True:
                         print(f'{Fore.GREEN}')
                         print(Box.DoubleCube(r"Example: C:\Users\Name\Desktop\Folder\Video"))
                         video_folder = input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
-                        counter = 0
 
                         # check if the folder exists or not
                         if os.path.exists(video_folder):
-
-                            # make a new folder with counter += 1 everytime it runs.
-                            while True:
-                                counter += 1
-                                dir = "Video{}".format(counter)
-                                if os.path.isdir(dir):
-                                    pass
-                                else:
-                                    os.makedirs(dir)
-                                    break
 
                             # Get input files
                             file_list = os.listdir(video_folder)
@@ -85,9 +74,23 @@ while True:
                             console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
                             # Process status
                             console.log(f'[cyan][File][/cyan] {Fore.LIGHTYELLOW_EX}Start processing the video...')
+                            counter = 0
 
                             # status or waiting
                             with console.status('[cyan] Processing the video...', spinner='aesthetic') as status:
+                                
+                                if not clip_list:
+                                    pass
+                                else:
+                                    # make a new folder with counter += 1 everytime it runs.
+                                    while True:
+                                        counter += 1
+                                        dir = "Video{}".format(counter)
+                                        if os.path.isdir(dir):
+                                            pass
+                                        else:
+                                            os.makedirs(dir)
+                                            break
 
                                 # Process files
                                 for file in clip_list:
