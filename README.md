@@ -15,9 +15,9 @@
 ```html
 C:\Users\Name\Desktop\Folder\Video
 ```
-- `Download all videos`
+- `Download douyin videos` - Download from video from user by input user link. Example:
 ```html
-video link
+https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
 ```
 
 ## 🔎 Requirements
