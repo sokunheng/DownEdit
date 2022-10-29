@@ -28,6 +28,11 @@ Click <u>install.bat<u> for automatic python libraries installation
 ```html
  install.bat
 ```
+Run the script
+```ht
+ main.py
+```
+
 You can also download the application and install on your Window. <br/>
 => [Download](https://github.com/SokunHeng/DownEdit/releases/tag/exe)
 
