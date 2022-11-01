@@ -3,7 +3,7 @@
 # edit video from entire directory using moviepy
 # Created by HengSok
 
-import requests,json,os,time,re,sys
+import requests,json,os,time,re
 import inquirer
 from pystyle import *
 from moviepy.editor import * 
@@ -73,13 +73,14 @@ while True:
                             clip_list = get_clip_list(file_list)
 
                             # Number of files found
-                            console.log(f"[cyan][File][/cyan] {Fore.WHITE}Found {Fore.GREEN}{len(clip_list)}{Fore.WHITE} videos")
+                            console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
                             # Process status
-                            console.log(f'[cyan][File][/cyan] {Fore.LIGHTYELLOW_EX}Start processing the video...')
+                            console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]')
                             counter = 0
 
                             # status or waiting
-                            with console.status('[cyan] Processing the video...', spinner='aesthetic') as status:
+                        
+                            with console.status('[cyan] Processing the video...') as status:
                                 
                                 if not clip_list:
                                     pass
@@ -100,13 +101,13 @@ while True:
 
                                     # Check if output exists in folder. If exists then skip else process
                                     if os.path.exists(output) == True:
-                                        console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} already exist, skip...')
+                                        console.log(f'[cyan][File][/cyan] [green]{file}[/green] already exist, skip...')
                                         # function skip
                                         clip_list.remove(file)
                                     else:
                                         process(video_folder + "/" + file, output)
-                                        console.log(f'[cyan][File][/cyan] {Fore.LIGHTGREEN_EX}{file}{Fore.WHITE} has been created.')
-                            console.log(f'[cyan][File][/cyan] Processed {Fore.LIGHTGREEN_EX}{len(clip_list)}{Fore.WHITE} videos successfully.')
+                                        console.log(f'[cyan][File][/cyan] [green]{file}[/green] has been created.')
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
                             time.sleep(1)
                             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
                         else:
@@ -236,7 +237,7 @@ while True:
                         result = []
                         while result == []:
                             index += 1
-                            console.log(f"[cyan][Status][/cyan] {Fore.WHITE}Attempt {Fore.GREEN}{index} {Fore.WHITE}in progress\r".format(index))
+                            console.log(f"[cyan][Status][/cyan] Attempt [green]{index}[/green] in progress\r".format(index))
                             time.sleep(0.3)
                             response = requests.get(
                                 url = api_post_url, headers = self.headers)
@@ -319,7 +320,7 @@ while True:
                         # Filter illegal characters in video copy and author names
                         print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Wait for the replacement of illegal characters in the copy!")
                         author_list = self.replaceT(author_list)
-                        console.log(f"[cyan][Status][/cyan] :receipt: {Fore.WHITE}Waiting to replace the author's illegal characters...\r \n")
+                        console.log(f"[cyan][Status][/cyan] :receipt: Waiting to replace the author's illegal characters...\r \n")
                         nickname = self.replaceT(nickname)
                         self.videos_download(author_list, video_list, uri_list, aweme_id, nickname, max_cursor)
                         return self,author_list,video_list,uri_list,aweme_id,nickname,max_cursor
@@ -367,7 +368,7 @@ while True:
                             if len(author_list[i]) > 182:
                                 print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}", "The file name is too long to be intercepted")
                                 author_list[i] = author_list[i][0:180]
-                                console.log(f"[cyan][Status][/cyan] {Fore.WHITE}", f"After interception name：{Fore.GREEN}{0}，{Fore.WHITE}Length：{Fore.GREEN}{1}".format(author_list[i], len(author_list[i])))
+                                console.log(f"[cyan][Status][/cyan] ", f"After interception name：[green]{0}[/green]，Length：[green]{1}[/green]".format(author_list[i], len(author_list[i])))
 
                             # Check if the video has been downloaded
                             try:
@@ -401,7 +402,7 @@ while True:
                                         # Check whether the response is successful
                                         if video.status_code == 200:                        
                                             print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Video] {Fore.WHITE}" + creat_time + " " + author_list[i])
-                                            console.log(f"[green][Status][/green] {Fore.WHITE}File size: " + "{size:.2f} MB".format(size = content_size / chunk_size /1024))    # 开始下载，显示下载文件大小
+                                            console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = content_size / chunk_size /1024))    # 开始下载，显示下载文件大小
 
                                             if self.mode == 'post':
                                                 v_url = nickname[i] + '\\' + creat_time + re.sub(
@@ -442,13 +443,13 @@ while True:
 
                     os.system('cls')
                     txt = f"""{Fore.MAGENTA}
-        ██████╗░░█████╗░██╗░░░██╗██╗░░░██╗██╗███╗░░██╗░░░░░░██████╗░░█████╗░░██╗░░░░░░░██╗███╗░░██╗██╗░░░░░░█████╗░░█████╗░██████╗░
-        ██╔══██╗██╔══██╗██║░░░██║╚██╗░██╔╝██║████╗░██║░░░░░░██╔══██╗██╔══██╗░██║░░██╗░░██║████╗░██║██║░░░░░██╔══██╗██╔══██╗██╔══██╗
-        ██║░░██║██║░░██║██║░░░██║░╚████╔╝░██║██╔██╗██║█████╗██║░░██║██║░░██║░╚██╗████╗██╔╝██╔██╗██║██║░░░░░██║░░██║███████║██║░░██║
-        ██║░░██║██║░░██║██║░░░██║░░╚██╔╝░░██║██║╚████║╚════╝██║░░██║██║░░██║░░████╔═████║░██║╚████║██║░░░░░██║░░██║██╔══██║██║░░██║
-        ██████╔╝╚█████╔╝╚██████╔╝░░░██║░░░██║██║░╚███║░░░░░░██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║███████╗╚█████╔╝██║░░██║██████╔╝
-        ╚═════╝░░╚════╝░░╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░░░░░░╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝╚══════╝░╚════╝░╚═╝░░╚═╝╚═════╝░
-                                                Created by HengSok - DouyinDownload V1.2.5{Fore.GREEN}
+        ██████╗░░█████╗░██╗░░░██╗██╗░░░██╗██╗███╗░░██╗░░░░░░██████╗░██╗░░░░░
+        ██╔══██╗██╔══██╗██║░░░██║╚██╗░██╔╝██║████╗░██║░░░░░░██╔══██╗██║░░░░░
+        ██║░░██║██║░░██║██║░░░██║░╚████╔╝░██║██╔██╗██║█████╗██║░░██║██║░░░░░
+        ██║░░██║██║░░██║██║░░░██║░░╚██╔╝░░██║██║╚████║╚════╝██║░░██║██║░░░░░
+        ██████╔╝╚█████╔╝╚██████╔╝░░░██║░░░██║██║░╚███║░░░░░░██████╔╝███████╗
+        ╚═════╝░░╚════╝░░╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░░░░░░╚═════╝░╚══════╝
+                    Created by HengSok - DouyinDownload V1.2.5{Fore.GREEN}
                             """
                     print(Center.XCenter(txt))
                     # draw layout
@@ -471,28 +472,26 @@ while True:
         if __name__ == "__main__":
             os.system("cls" if os.name == "nt" else "clear"); os.system("title MMO by @HengSok" if os.name == "nt" else "")
             txt = f"""{Fore.MAGENTA}
-    ███╗░░░███╗███╗░░░███╗░█████╗░░░░░░░████████╗░█████╗░░█████╗░██╗░░░░░
-    ████╗░████║████╗░████║██╔══██╗░░░░░░╚══██╔══╝██╔══██╗██╔══██╗██║░░░░░
-    ██╔████╔██║██╔████╔██║██║░░██║█████╗░░░██║░░░██║░░██║██║░░██║██║░░░░░
-    ██║╚██╔╝██║██║╚██╔╝██║██║░░██║╚════╝░░░██║░░░██║░░██║██║░░██║██║░░░░░
-    ██║░╚═╝░██║██║░╚═╝░██║╚█████╔╝░░░░░░░░░██║░░░╚█████╔╝╚█████╔╝███████╗
-    ╚═╝░░░░░╚═╝╚═╝░░░░░╚═╝░╚════╝░░░░░░░░░░╚═╝░░░░╚════╝░░╚════╝░╚══════╝
-                            Created by HengSok
+    ██████╗░░█████╗░░██╗░░░░░░░██╗███╗░░██╗░░░░░░███████╗██████╗░██╗████████╗
+    ██╔══██╗██╔══██╗░██║░░██╗░░██║████╗░██║░░░░░░██╔════╝██╔══██╗██║╚══██╔══╝
+    ██║░░██║██║░░██║░╚██╗████╗██╔╝██╔██╗██║█████╗█████╗░░██║░░██║██║░░░██║░░░
+    ██║░░██║██║░░██║░░████╔═████║░██║╚████║╚════╝██╔══╝░░██║░░██║██║░░░██║░░░
+    ██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║░░░░░░███████╗██████╔╝██║░░░██║░░░
+    ╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝░░░░░░╚══════╝╚═════╝░╚═╝░░░╚═╝░░░
+                           Created by HengSok - v0.1
                   """
             
             print(Center.XCenter(txt))
             print(f'{Fore.GREEN}')
             print(Box.DoubleCube("Use arrow key to select the options"))
-            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Tiktok Video', ' Download Douyin Video'],),]   
+            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Douyin Video'],),]   
             answers = inquirer.prompt(questions)
 
             if answers['list'] == ' Edit Video':
                 editVideo()
             elif answers['list'] == ' Download Douyin Video':
                 downDouyin()
-                
-            elif answers['list'] =='Download IG Video':
-                pass
+
     except:
         console.log("[red][Error][/red] Program Interupted!")
         time.sleep(2)
