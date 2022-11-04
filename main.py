@@ -4,16 +4,18 @@
 # Created by HengSok
 
 import requests,json,os,time,re
+from tqdm.auto import tqdm
 import inquirer
 from pystyle import *
 from moviepy.editor import * 
+import colorama
 from colorama import *
 from rich.traceback import install
 from rich.console import Console
 
 install()
 console = Console()
-init()
+#colorama.init(autoreset=True)
 
 while True:
     try:
@@ -155,7 +157,7 @@ while True:
                         else:
                             time.sleep(1)
                         
-                    # 匹配粘贴的url地址
+                    # Match pasted url
                     def Find(self, string):
                         # findall() Find a string that matches a regular expression
                         url = re.findall(
@@ -335,7 +337,7 @@ while True:
 
                     # video download
                     def videos_download(self, author_list, video_list, uri_list, aweme_id, nickname, max_cursor):
-                        # 生成1080p分辨率的视频链接
+                        # Generate video links in 1080p resolution
                         new_video_list = [];uri_url = 'https://aweme.snssdk.com/aweme/v1/play/?video_id=%s&radio=1080p&line=0'
                         # Create and check if the download directory exists
                         try:
@@ -373,7 +375,7 @@ while True:
                             # Check if the video has been downloaded
                             try:
                                 if creat_time + author_list[i] + '.mp4' in v_info:
-                                    console.log(f"[red][File][/red] {Fore.GREEN}", author_list[i], f'{Fore.WHITE}[File already exists, skipping...]') # 开始下载，显示下载文件大小
+                                    console.log(f"[red][File][/red] {Fore.GREEN}", author_list[i], f'{Fore.WHITE}[File already exists, skipping...]') 
                                     print('\r')
                                     continue
                             except:
@@ -464,9 +466,95 @@ while True:
                     mode = 'post'
                     TK.setting(user,music,count,dir,mode)
                     time.sleep(1.5) 
-                    console.log(f"[cyan][Status][/cyan] {Fore.WHITE}Successfully downloaded all{Fore.WHITE} videos :white_check_mark:")
+                    console.log(f"[cyan][Status][/cyan] {Fore.WHITE}Successfully downloaded all{Fore.WHITE} videos ✓")
                     time.sleep(1)                   
                     print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+        
+
+        class dwonTiktok:
+
+            #init Function
+            def __init__(self):
+
+                # Download All Video From Tiktok User Function
+                def downloadAllVidsFromUser():
+
+                    url = "https://tiktok-video-no-watermark2.p.rapidapi.com/user/posts"
+
+                    querystring = {"unique_id":"", "count":"35","cursor":"0"}
+                    querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
+
+                    headers = {
+                        "X-RapidAPI-Key": "473e4ea488mshb270611342960f0p1c3632jsn90da643acd52",
+                        "X-RapidAPI-Host": "tiktok-video-no-watermark2.p.rapidapi.com"
+                    }
+
+                    request_data = requests.request("GET", url, headers=headers, params=querystring).json()
+                    username = request_data["data"]["videos"][0]['author']["unique_id"]
+
+                    if not os.path.exists(f"./tiktok/{username}"):
+                        os.makedirs(f"./tiktok/{username}")
+
+                    videos = request_data["data"]["videos"]
+
+                    print(f"""\n{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.RED}@{username} {Fore.YELLOW}Have Published {Fore.BLUE}{len(videos)} {Fore.YELLOW}Videos. Downloading them...""")
+                    console.log("[cyan][Status][/cyan] Already Downloaded Videos Will Be Skipped.\n")
+
+
+                    count = 0
+                    for video in videos:
+                        
+                        count += 1
+                        download_url = video["play"]
+                        uri = video["video_id"]
+                        title = video['title']
+                        limit = str(f'{title:80.80}')
+                        print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[Title] {Fore.GREEN}{limit}\r""")
+                        # download start time                           
+                        start = time.time()
+                        # data size of each download                                        
+                        chunk_size = 1024
+
+                        if not os.path.exists(f"./tiktok/{username}/{uri}.mp4"):
+
+                            video_bytes = requests.get(download_url, stream=True)
+                            total_length = int(video_bytes.headers.get("Content-Length"))
+                            console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = total_length / chunk_size /1024)) 
+                            with open(f'./tiktok/{username}/{uri}.mp4', 'wb') as out_file:
+                                out_file.write(video_bytes.content)
+                                end = time.time() 
+
+                                print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Timelapse:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{uri}.mp4{Fore.YELLOW} Downloaded\n""")
+                            
+                        else:
+                            print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{uri}.mp4{Fore.WHITE} already exists! Skipping...\n")
+                            time.sleep(0.7) 
+                            continue
+                    time.sleep(1) 
+                    console.log(f"[cyan][Status][/cyan] Successfully downloaded [green]{count}[/green] videos ✓")
+                    
+
+                if __name__ == "__main__":
+
+                    if not os.path.exists("./tiktok"):
+                        os.makedirs("./tiktok")
+                    os.system('cls')
+                    banner = f"""{Fore.MAGENTA} 
+                ████████╗██╗██╗░░██╗████████╗░█████╗░██╗░░██╗░░░░░░██████╗░██╗░░░░░
+                ╚══██╔══╝██║██║░██╔╝╚══██╔══╝██╔══██╗██║░██╔╝░░░░░░██╔══██╗██║░░░░░
+                ░░░██║░░░██║█████═╝░░░░██║░░░██║░░██║█████═╝░█████╗██║░░██║██║░░░░░
+                ░░░██║░░░██║██╔═██╗░░░░██║░░░██║░░██║██╔═██╗░╚════╝██║░░██║██║░░░░░
+                ░░░██║░░░██║██║░╚██╗░░░██║░░░╚█████╔╝██║░╚██╗░░░░░░██████╔╝███████╗
+                ░░░╚═╝░░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝░░░░░░╚═════╝░╚══════╝
+                                        Created by HengSok
+                                """
+                    print(Center.XCenter(banner))
+                    print(f'{Fore.GREEN}')
+                    print(Box.DoubleCube(r"Example: @tiktok"))
+                    downloadAllVidsFromUser()
+                    time.sleep(1)                   
+                    print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
 
 
         if __name__ == "__main__":
@@ -484,13 +572,15 @@ while True:
             print(Center.XCenter(txt))
             print(f'{Fore.GREEN}')
             print(Box.DoubleCube("Use arrow key to select the options"))
-            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Douyin Video'],),]   
+            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Douyin Video', ' Download Tiktok Video'],),]   
             answers = inquirer.prompt(questions)
 
             if answers['list'] == ' Edit Video':
                 editVideo()
             elif answers['list'] == ' Download Douyin Video':
                 downDouyin()
+            elif answers['list'] == ' Download Tiktok Video':
+                dwonTiktok()
 
     except:
         console.log("[red][Error][/red] Program Interupted!")
