@@ -19,7 +19,10 @@ C:\Users\Name\Desktop\Folder\Video
 ```html
 https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
 ```
-
+- `Download tiktok videos` - Download all video from user by input username with @. Example:
+```html
+@tiktok
+```
 ## 🔎 Requirements
 - Python 3 or better
 
