@@ -45,8 +45,8 @@ You can also download the application and install on your Window. <br/>
 
 ## API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
-- [TiktokAPI1](https://github.com/Johnserf-Seed/TikTokDownload)
-- [TiktokAPI2](https://github.com/Johnserf-Seed/TikTokDownload)
+- [TiktokAPI1](https://github.com/yi005/Tiktok-Video-No-Watermark)
+- [TiktokAPI2](https://rapidapi.com/yi005/api/tiktok-video-no-watermark2/)
 ## Author
 
 👤 **Sokun Heng**
