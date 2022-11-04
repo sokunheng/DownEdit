@@ -44,8 +44,8 @@ You can also download the application and install on your Window. <br/>
 - [Inquirer](https://pypi.org/project/inquirer/)
 - [Colorama](https://github.com/tartley/colorama)
 - [Rich](https://github.com/Textualize/rich)
-- [Requests](https://github.com/Zulko/moviepy)
-- [Pystyle](https://github.com/Zulko/moviepy)
+- [Requests](https://requests.readthedocs.io/en/latest/)
+- [Pystyle](https://github.com/billythegoat356/pystyle)
  
 ## 📡 API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
