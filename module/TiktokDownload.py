@@ -26,13 +26,26 @@ while True:
         url = "https://www.tikwm.com/api/user/posts"
         print(Box.DoubleCube(r"""Api: https://www.tikwm.com
 Example: @tiktok"""))
-        querystring = {"unique_id":"", "count":"35","cursor":"0"}
-        querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
+        
+        KeyError = False
+		while not KeyError:
+			try:
+				url = "https://www.tikwm.com/api/user/posts"
 
-        headers = {
-            "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36",
-        }
-        request_data = requests.request("GET", url, headers=headers, params=querystring).json()
+				querystring = {"unique_id":"", "count":"35","cursor":"0"}
+				querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
+
+				s = requests.Session()
+				gen = s.headers['User-Agent']
+
+				header = {
+					"user-agent": gen
+				}
+
+				request_data = requests.request("GET", url, headers=header, params=querystring).json()
+				break         
+			except:
+				pass
         username = request_data["data"]["videos"][0]['author']["unique_id"]
 
         if not os.path.exists(f"./tiktok/{username}"):
