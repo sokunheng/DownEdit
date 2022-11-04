@@ -543,7 +543,7 @@ while True:
                     ]
                     api_key = random.choice(key)
 
-                    querystring = {"unique_id":"", "count":"3","cursor":"0"}
+                    querystring = {"unique_id":"", "count":"35","cursor":"0"}
                     querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
                     headers = {
