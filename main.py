@@ -4,7 +4,8 @@
 # Created by HengSok
 
 import requests,json,os,time,re
-from tqdm.auto import tqdm
+import random 
+from random import choice
 import inquirer
 from pystyle import *
 from moviepy.editor import * 
@@ -476,16 +477,77 @@ while True:
             #init Function
             def __init__(self):
 
-                # Download All Video From Tiktok User Function
-                def downloadAllVidsFromUser():
-
-                    url = "https://tiktok-video-no-watermark2.p.rapidapi.com/user/posts"
-
+                def api1():
+                    url = "https://www.tikwm.com/api/user/posts"
+                    print(Box.DoubleCube(f"""Api: https://www.tikwm.com \nExample: @tiktok"""))
                     querystring = {"unique_id":"", "count":"35","cursor":"0"}
                     querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
                     headers = {
-                        "X-RapidAPI-Key": "473e4ea488mshb270611342960f0p1c3632jsn90da643acd52",
+                        "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36",
+                    }
+                    request_data = requests.request("GET", url, headers=headers, params=querystring).json()
+                    username = request_data["data"]["videos"][0]['author']["unique_id"]
+
+                    if not os.path.exists(f"./tiktok/{username}"):
+                        os.makedirs(f"./tiktok/{username}")
+
+                    videos = request_data["data"]["videos"]
+
+                    print(f"""\n{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.RED}@{username} {Fore.YELLOW}Have Published {Fore.BLUE}{len(videos)} {Fore.YELLOW}Videos. Downloading them...""")
+                    console.log("[cyan][Status][/cyan] Already Downloaded Videos Will Be Skipped.\n")
+
+
+                    count = 0
+                    for video in videos:
+                        
+                        count += 1
+                        download_url = video["play"]
+                        uri = video["video_id"]
+                        title = video['title']
+                        limit = str(f'{title:80.80}')
+                        print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[Title] {Fore.GREEN}{limit}\r""")
+                        # download start time                           
+                        start = time.time()
+                        # data size of each download                                        
+                        chunk_size = 1024
+
+                        if not os.path.exists(f"./tiktok/{username}/{uri}.mp4"):
+
+                            video_bytes = requests.get(download_url, stream=True)
+                            total_length = int(video_bytes.headers.get("Content-Length"))
+                            console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = total_length / chunk_size /1024)) 
+                            with open(f'./tiktok/{username}/{uri}.mp4', 'wb') as out_file:
+                                out_file.write(video_bytes.content)
+                                end = time.time() 
+
+                                print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Timelapse:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{uri}.mp4{Fore.YELLOW} Downloaded\n""")
+                            
+                        else:
+                            print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{uri}.mp4{Fore.WHITE} already exists! Skipping...\n")
+                            time.sleep(0.7) 
+                            continue
+                    time.sleep(1) 
+                    console.log(f"[cyan][Status][/cyan] Successfully downloaded [green]{count}[/green] videos ✓")
+
+                # Download All Video From Tiktok User Function
+                def api2():
+
+                    url = "https://tiktok-video-no-watermark2.p.rapidapi.com/user/posts"
+                    print(Box.DoubleCube(f"""Api: https://tiktok-video-no-watermark2.p.rapidapi.com/ \nExample: @tiktok"""))
+
+                    key = [
+                        "cbb685f815msh9bb9a7c12e7952fp1c55ddjsn1313cb0b6392",
+                        "bc72be337fmshb7473c97adae84ep1ed443jsna2e9de2f00f5",
+                    ]
+                    api_key = random.choice(key)
+
+                    querystring = {"unique_id":"", "count":"3","cursor":"0"}
+                    querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
+
+                    headers = {
+                        "X-RapidAPI-Key": api_key,
                         "X-RapidAPI-Host": "tiktok-video-no-watermark2.p.rapidapi.com"
                     }
 
@@ -551,13 +613,14 @@ while True:
                                 """
                     print(Center.XCenter(banner))
                     print(f'{Fore.GREEN}')
-                    print(Box.DoubleCube(r"Example: @tiktok"))
-                    downloadAllVidsFromUser()
+                    fns = [api1, api2]
+                    choice(fns)()
                     time.sleep(1)                   
                     print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
 
 
         if __name__ == "__main__":
+            
             os.system("cls" if os.name == "nt" else "clear"); os.system("title MMO by @HengSok" if os.name == "nt" else "")
             txt = f"""{Fore.MAGENTA}
     ██████╗░░█████╗░░██╗░░░░░░░██╗███╗░░██╗░░░░░░███████╗██████╗░██╗████████╗
