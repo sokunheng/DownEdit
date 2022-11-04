@@ -41,7 +41,12 @@ You can also download the application and install on your Window. <br/>
 
 ## 🔨 Module
 - [Moviepy](https://github.com/Zulko/moviepy)
+
+
+## API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
+- [TiktokAPI1](https://github.com/Johnserf-Seed/TikTokDownload)
+- [TiktokAPI2](https://github.com/Johnserf-Seed/TikTokDownload)
 ## Author
 
 👤 **Sokun Heng**
