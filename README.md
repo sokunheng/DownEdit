@@ -41,9 +41,13 @@ You can also download the application and install on your Window. <br/>
 
 ## 🔨 Module
 - [Moviepy](https://github.com/Zulko/moviepy)
-
-
-## API
+- [Inquirer](https://pypi.org/project/inquirer/)
+- [Colorama](https://github.com/tartley/colorama)
+- [Rich](https://github.com/Textualize/rich)
+- [Requests](https://github.com/Zulko/moviepy)
+- [Pystyle](https://github.com/Zulko/moviepy)
+ 
+## 📡 API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
 - [TiktokAPI1](https://github.com/yi005/Tiktok-Video-No-Watermark)
 - [TiktokAPI2](https://rapidapi.com/yi005/api/tiktok-video-no-watermark2/)
