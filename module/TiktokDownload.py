@@ -26,7 +26,7 @@ while True:
         url = "https://www.tikwm.com/api/user/posts"
         print(Box.DoubleCube(r"""Api: https://www.tikwm.com
 Example: @tiktok"""))
-        querystring = {"unique_id":"", "count":"3","cursor":"0"}
+        querystring = {"unique_id":"", "count":"35","cursor":"0"}
         querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
         headers = {
@@ -90,7 +90,7 @@ Example: @tiktok"""))
         ]
         api_key = random.choice(key)
 
-        querystring = {"unique_id":"", "count":"3","cursor":"0"}
+        querystring = {"unique_id":"", "count":"35","cursor":"0"}
         querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
         headers = {
