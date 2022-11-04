@@ -480,13 +480,27 @@ while True:
                 def api1():
                     url = "https://www.tikwm.com/api/user/posts"
                     print(Box.DoubleCube(f"""Api: https://www.tikwm.com \nExample: @tiktok"""))
-                    querystring = {"unique_id":"", "count":"35","cursor":"0"}
-                    querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
-                    headers = {
-                        "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36",
-                    }
-                    request_data = requests.request("GET", url, headers=headers, params=querystring).json()
+                    KeyError = False
+                    while not KeyError:
+                        try:
+                            url = "https://www.tikwm.com/api/user/posts"
+
+                            querystring = {"unique_id":"", "count":"35","cursor":"0"}
+                            querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
+
+                            s = requests.Session()
+                            gen = s.headers['User-Agent']
+
+                            header = {
+                                "user-agent": gen
+                            }
+
+                            request_data = requests.request("GET", url, headers=header, params=querystring).json()
+                            break         
+                        except:
+                            pass
+
                     username = request_data["data"]["videos"][0]['author']["unique_id"]
 
                     if not os.path.exists(f"./tiktok/{username}"):
@@ -543,7 +557,7 @@ while True:
                     ]
                     api_key = random.choice(key)
 
-                    querystring = {"unique_id":"", "count":"35","cursor":"0"}
+                    querystring = {"unique_id":"", "count":"3","cursor":"0"}
                     querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
                     headers = {
