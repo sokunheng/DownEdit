@@ -3,6 +3,8 @@
 
 <p>An program that allows you to download all video users from any social media website such as Tiktok, Douyin, and others. After you've downloaded the video, you may also edit video by flipping it from left to right or right to left throughout the entire directory with just a single click (bulk edit). More features are on the way; stay tuned.!<p>
 
+## <a href="https://www.buymeacoffee.com/iamnamheng" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
 ## ✨ Preview
 ![Screenshot (68)](https://user-images.githubusercontent.com/44894784/197470005-340d47f6-8f86-4dea-bdca-08f5d5f8e252.png)
 
