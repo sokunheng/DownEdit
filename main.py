@@ -495,7 +495,7 @@ while True:
                             gen = s.headers['User-Agent']
 
                             header = {
-                                "user-agent": gen
+                                "User-Agent": gen
                             }
 
                             request_data = requests.request("GET", url, headers=header, params=querystring).json()
