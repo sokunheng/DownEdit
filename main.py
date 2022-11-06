@@ -50,6 +50,8 @@ while True:
                 
                 #Main 
                 if __name__ == "__main__":
+                    if not os.path.exists("./edited"):
+                        os.makedirs("./edited")
                     os.system('cls')
                     banner = f"""{Fore.MAGENTA}
         ███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
@@ -91,7 +93,7 @@ while True:
                                     # make a new folder with counter += 1 everytime it runs.
                                     while True:
                                         counter += 1
-                                        dir = "Video{}".format(counter)
+                                        dir = "./edited/Video{}".format(counter)
                                         if os.path.isdir(dir):
                                             pass
                                         else:
