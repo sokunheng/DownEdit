@@ -26,7 +26,7 @@ https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUata
 @tiktok
 ```
 ## 🔎 Requirements
-- Python 3 or better
+- Python 3.6 or better
 
 ## ⚙ Installation 
 Click <u>install.bat<u> for automatic python libraries installation
