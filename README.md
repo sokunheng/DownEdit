@@ -39,7 +39,7 @@ Run the script
 ```
 
 You can also download the application and install on your Window. <br/>
-=> [Download](https://github.com/SokunHeng/DownEdit/releases/tag/exe)
+=> [Download](https://github.com/SokunHeng/DownEdit/releases)
 
 ## 🔨 Module
 - [Moviepy](https://github.com/Zulko/moviepy)
