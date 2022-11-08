@@ -1,4 +1,6 @@
-
+# download all kuaishou video from user
+# date 09/11/2022
+# Created by HengSok
 
 import requests
 import json
