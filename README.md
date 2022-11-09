@@ -15,28 +15,51 @@
 - `Download all videos` from a user (no watermark) such as Tiktok, Kuaishou and Douyin. Will be updated more in the future!
 
 ## 🚀 Usage
-- **`Edit Video`** - Simply copy and paste (right click) whatever directory location you would like to process. Example:
+- **`Edit Video`** - Simply copy and paste (right click) whatever directory location you would like to process.
+
+<details>
+<summary>Tutorial</summary>
+
 ```html
 C:\Users\Name\Desktop\Folder\Video
 ```
+
 ![Edit_Video_AdobeExpress](https://user-images.githubusercontent.com/44894784/200826802-58b223ea-dd01-4f3a-b896-d87228cddd4e.gif)
 
+</details>
 
-- **`Download douyin videos`** - Download all video from user by input user link. Example:
+
+
+
+- **`Download douyin videos`** - Download all video from user by input user link.
+
+<details>
+<summary>Tutorial</summary>
+
 ```html
 https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
 ```
  <img src="https://user-images.githubusercontent.com/44894784/200826881-0051ef41-a59a-4b39-ae01-d252dc796acc.gif" alt="animated"  width="640"/>
 
+</details>
 
 - **`Download tiktok videos`** - Download all video from user by input username with @. Example:
+
+<details>
+<summary>Tutorial</summary>
+
 ```html
 @tiktok
 ```
 <img src="https://user-images.githubusercontent.com/44894784/200826983-a45fc5d0-343a-4921-9077-6f97ebca67a8.gif" alt="animated"  width="640"/>
 
+</details>
 
 - **`Download kuaishou videos`** - Remember to input your own **User-Agent** and **Cookie**. Otherwise it won't work. Example:
+
+<details>
+<summary>Tutorial</summary>
+
 <img src="https://user-images.githubusercontent.com/44894784/200830971-90ee9df9-4b7d-4648-a6a0-0ac327dd9ac7.jpg" alt="tutorial"  width="640"/>
 
 ```html
@@ -54,6 +77,9 @@ Enter User ID: 3xnpgvvuei3umwk
 ```
 <img src="https://user-images.githubusercontent.com/44894784/200831086-9e880d15-6921-4593-a46a-c9462e58cd5e.jpg" alt="tutorial"  width="640"/>
 Tips: If you still getting error, try changing your Browser, use Incognito/Private mode and reset your Internet/IP.
+
+</details>
+
 
 ## 🔎 Requirements
 - Python 3.6 or better
