@@ -4,6 +4,7 @@ pip install inquirer
 pip install colorama
 pip install moviepy
 pip install rich
+pip install requests-html
 
 cls
 @echo off
