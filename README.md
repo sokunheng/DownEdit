@@ -25,6 +25,17 @@ https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUata
 ```html
 @tiktok
 ```
+- `Download kuaishou videos` - Remember to input your own User-Agent and Cookie. Otherwise it won't work. Example:
+```html
+Input User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/201101 Firefox/106.0
+```
+```html
+Input Cookie 'did': web_66ae10a56e8687e821a7dcf5979428aa
+```
+```html
+Enter User ID: 3xnpgvvuei3umwk
+```
+
 ## 🔎 Requirements
 - Python 3.6 or better
 
@@ -54,6 +65,7 @@ You can also download the application and install on your Window. <br/>
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
 - [TiktokAPI1](https://github.com/yi005/Tiktok-Video-No-Watermark)
 - [TiktokAPI2](https://rapidapi.com/yi005/api/tiktok-video-no-watermark2/)
+- [KuaishouAPI](https://www.videofk.com/en3886)
 ## Author
 
 👤 **Sokun Heng**
