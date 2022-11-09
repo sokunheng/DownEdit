@@ -13,7 +13,7 @@
 - `Download all videos` from a user (no watermark) such as Tiktok, Kuaishou and Douyin. Will be updated more in the future!
 
 ## 🚀 Usage
-- `Edit Video` - Simply copy and paste(right click) whatever directory location you would like to process. Example:
+- `Edit Video` - Simply copy and paste (right click) whatever directory location you would like to process. Example:
 ```html
 C:\Users\Name\Desktop\Folder\Video
 ```
