@@ -53,7 +53,7 @@ Input Cookie 'did': web_66ae10a56e8687e821a7dcf5979428aa
 Enter User ID: 3xnpgvvuei3umwk
 ```
 <img src="https://user-images.githubusercontent.com/44894784/200831086-9e880d15-6921-4593-a46a-c9462e58cd5e.jpg" alt="tutorial"  width="640"/>
-Tips: If you still getting error, try to change your browser and reset your internet/IP.
+Tips: If you still getting error, try changing your Browser, use Incognito/Private mode and reset your Internet/IP.
 
 ## 🔎 Requirements
 - Python 3.6 or better
