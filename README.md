@@ -21,14 +21,12 @@
 <summary>Tutorial</summary>
 
 ```html
-C:\Users\Name\Desktop\Folder\Video
+Enter Folder: C:\Users\Name\Desktop\Folder\Video
 ```
 
 ![Edit_Video_AdobeExpress](https://user-images.githubusercontent.com/44894784/200826802-58b223ea-dd01-4f3a-b896-d87228cddd4e.gif)
 
 </details>
-
-
 
 
 - **`Download douyin videos`** - Download all video from user by input user link.
@@ -37,7 +35,7 @@ C:\Users\Name\Desktop\Folder\Video
 <summary>Tutorial</summary>
 
 ```html
-https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
+Enter User Link: https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
 ```
  <img src="https://user-images.githubusercontent.com/44894784/200826881-0051ef41-a59a-4b39-ae01-d252dc796acc.gif" alt="animated"  width="640"/>
 
@@ -49,7 +47,7 @@ https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUata
 <summary>Tutorial</summary>
 
 ```html
-@tiktok
+Enter User: @tiktok
 ```
 <img src="https://user-images.githubusercontent.com/44894784/200826983-a45fc5d0-343a-4921-9077-6f97ebca67a8.gif" alt="animated"  width="640"/>
 
@@ -60,22 +58,42 @@ https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUata
 <details>
 <summary>Tutorial</summary>
 
+ Step 1. Right click and select on Inspect element.
+  
 <img src="https://user-images.githubusercontent.com/44894784/200830971-90ee9df9-4b7d-4648-a6a0-0ac327dd9ac7.jpg" alt="tutorial"  width="640"/>
 
+-----
+  
 ```html
 Input User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/201101 Firefox/106.0
 ```
+  
+Step 2. Click on Network and copy your User-Agent.
+  
 <img src="https://user-images.githubusercontent.com/44894784/200831024-91664a6e-dbbd-40f2-ae1b-83db8f6288a0.jpg" alt="tutorial"  width="640"/>
 
+-----  
+  
 ```html
 Input Cookie 'did': web_66ae10a56e8687e821a7dcf5979428aa
 ```
+  
+Step 3. Copy your Cookie 'did'.
+  
 <img src="https://user-images.githubusercontent.com/44894784/200831062-65397e37-d6cd-41fe-8a7f-1032d160abe4.jpg" alt="tutorial"  width="640"/>
 
+-----  
+  
 ```html
 Enter User ID: 3xnpgvvuei3umwk
 ```
+  
+Step 4. Copy user ID you want to download.  
+
 <img src="https://user-images.githubusercontent.com/44894784/200831086-9e880d15-6921-4593-a46a-c9462e58cd5e.jpg" alt="tutorial"  width="640"/>
+  
+-----  
+  
 Tips: If you still getting error, try changing your Browser, use Incognito/Private mode and reset your Internet/IP.
 
 </details>
