@@ -49,7 +49,7 @@ Step 2. Run the script
  main.py
 ```
 
-If you're a non coder can also download the application and install on your Window. <br/>
+If you're a non coder, you can also download the application and install on your Window. <br/>
 => [Download](https://github.com/SokunHeng/DownEdit/releases)
 
 ## 🔨 Module
