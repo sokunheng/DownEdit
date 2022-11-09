@@ -48,6 +48,7 @@ You can also download the application and install on your Window. <br/>
 - [Rich](https://github.com/Textualize/rich)
 - [Requests](https://requests.readthedocs.io/en/latest/)
 - [Pystyle](https://github.com/billythegoat356/pystyle)
+- [Request_HTML](https://github.com/kennethreitz/requests-html)
  
 ## 📡 API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
