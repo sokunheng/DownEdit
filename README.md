@@ -25,7 +25,7 @@ https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUata
 ```html
 @tiktok
 ```
-- `Download kuaishou videos` - Remember to input your own User-Agent and Cookie. Otherwise it won't work. Example:
+- `Download kuaishou videos` - Remember to input your own **User-Agent** and **Cookie**. Otherwise it won't work. Example:
 ```html
 Input User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/201101 Firefox/106.0
 ```
