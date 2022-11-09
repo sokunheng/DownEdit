@@ -19,14 +19,23 @@
 ```html
 C:\Users\Name\Desktop\Folder\Video
 ```
+![Edit_Video_AdobeExpress](https://user-images.githubusercontent.com/44894784/200826802-58b223ea-dd01-4f3a-b896-d87228cddd4e.gif)
+
+
 - `Download douyin videos` - Download all video from user by input user link. Example:
 ```html
 https://www.douyin.com/user/MS4wLjABAAAAzknqQznbR4gNJFBtYQE8ptAbM4Djr8bGDdfCUataDVSfQK8YMkSI8J5v
 ```
+ <img src="https://user-images.githubusercontent.com/44894784/200826881-0051ef41-a59a-4b39-ae01-d252dc796acc.gif" alt="animated"  width="640"/>
+
+
 - `Download tiktok videos` - Download all video from user by input username with @. Example:
 ```html
 @tiktok
 ```
+<img src="https://user-images.githubusercontent.com/44894784/200826983-a45fc5d0-343a-4921-9077-6f97ebca67a8.gif" alt="animated"  width="640"/>
+
+
 - `Download kuaishou videos` - Remember to input your own **User-Agent** and **Cookie**. Otherwise it won't work. Example:
 ```html
 Input User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/201101 Firefox/106.0
