@@ -7,12 +7,12 @@ import json
 import time
 import os
 import re
-from bs4 import BeautifulSoup
 from colorama import *
 from pystyle import *
 from colorama import *
 from rich.traceback import install
 from rich.console import Console
+from requests_html import HTMLSession
 
 
 install()
@@ -26,8 +26,8 @@ class Crawler:
 
     param_did = ""
 
-    s = requests.Session()
-    gen = s.headers['User-Agent']
+    user = ""
+    
     headers_web = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -39,9 +39,10 @@ class Crawler:
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
         # User-Agent/Cookie - Modify according to your computer
-        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+        'User-Agent': '',
         'Cookie': ''
     }
+
     headers_mobile = {
         'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; BLA-AL00 Build/HUAWEIBLA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.9 Mobile Safari/537.36'
     }
@@ -51,13 +52,17 @@ class Crawler:
     date_cache = ""
     date_pic_count = 0
 
+    def set_agent(self, agent):
+        self.user = agent
+        self.headers_web['User-Agent'] = f'{agent}'
+
     def set_did(self, did):
         self.param_did = did
         self.headers_web['Cookie'] = 'did=' + did + "; userId="
         self.headers_mobile['Cookie'] = 'did=' + did
     
     def crawl(self):
-        print("Ready to start crawling total of %d users." % len(self.crawl_list))
+        print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Ready to start crawling total of {Fore.GREEN}{str(len(self.crawl_list))} {Fore.WHITE}users.")
         time.sleep(1.5)
         for uid in self.crawl_list:
             #self.date_count = 0
@@ -90,26 +95,30 @@ class Crawler:
         # resulting in the acquisition of information as NoneType
         # if works[0]['id'] is None:
         #     works.pop(0)
-        name = re.sub(r'[\\/:*?"<>|\r\n]+', "", works[0]['user']['name'])
+        try: 
+            name = re.sub(r'[\\/:*?"<>|\r\n]+', "", works[0]['user']['name'])
 
-        dir = "kuaishou/" + name + "(" + uid + ")"
-        # print(len(works))
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+            dir = "kuaishou/" + name
+
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+        except IndexError as e:
+            print(f"{Fore.CYAN}[Programs] {Fore.RED}[Status] {Fore.WHITE}Error:{Fore.RED}", e)
+            time.sleep(1)
 
         # if not os.path.exists(dir + ".list"):
         #     print("")
 
 
-        print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] Start crawling users " + name + ", saved in " + dir)
-        print(f"""\n{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.RED}@{name} {Fore.YELLOW}Have Published {Fore.BLUE}{str(len(works))} {Fore.YELLOW}works. Downloading them...""")
+        print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Start crawling users {Fore.GREEN}{name}{Fore.WHITE}, saved in {Fore.GREEN}" + dir)
+        print(f"""\n{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.RED}@{name} {Fore.YELLOW}Have Published {Fore.BLUE}{str(len(works))} {Fore.YELLOW}videos. Downloading them...""")
         console.log("[cyan][Status][/cyan] Already Downloaded Videos Will Be Skipped.\n")
         # for j in range(len(works)):
         #     self.__crawl_work(dir, works[j], j + 1)
         #     time.sleep(1)
         self.__crawl_work()
 
-        console.log("[cyan][Status][/cyan] Completed crawling " + name + " user.")
+        console.log(f"[cyan][Status][/cyan] Completed crawling [green]{name}[/green] user.")
         time.sleep(1)
 
     def __switch_id(self, uid):
@@ -133,40 +142,60 @@ class Crawler:
 
             count += 1
             item = video["id"]
-            url = f"https://www.videofk.com/https://www.kuaishou.com/short-video/{item}"
-            header = {
-                'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8 rv:4.0) Gecko/20140131 Firefox/35.0"
-            }
-            link = requests.get(url=url, headers=header)
-            soup = BeautifulSoup(link.content, 'html.parser')
-            download_url = soup.select('.video_files > div:nth-child(2) > a:nth-child(1)')[0]['href']
+            w_caption = re.sub(r"\s+", " ", video['caption'])
+            w_name = re.sub(r'[\\/:*?"<>|\r\n]+', "", w_caption)[0:30]
+            print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[Title] {Fore.GREEN}{w_name}\r""")
+
+            AttributeError = False
+            while not AttributeError:
+                try:
+                    url = f"https://www.videofk.com/https://www.kuaishou.com/short-video/{item}"
+                    s = requests.Session()
+                    gen = s.headers['User-Agent']
+                    header = {
+                        'User-Agent': gen
+                    }
+                    session = HTMLSession()
+                    link = session.get(url=url, headers=header)
+                    sel = '#wrap > div.body-result > div > div.video_item_body > div > div.video_info > div.video_files > div > a'
+                    get = link.html.find(sel, first=True).absolute_links
+                    break         
+                except:
+                    time.sleep(1)
+                    pass
 
             start = time.time()
+            # Initialize downloaded size                                     
+            size = 0     
             # data size of each download                                        
             chunk_size = 1024
 
-            if not os.path.exists(f"{dir} + "/"+ {item}.mp4"):
+            for download_url in get:
 
-                video_bytes = requests.get(download_url, stream=True)
-                total_length = int(video_bytes.headers.get("Content-Length"))
-                console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = total_length / chunk_size /1024)) 
-                with open(f'{dir} + "/"+ {item}.mp4', 'wb') as out_file:
-                    out_file.write(video_bytes.content)
-                    end = time.time()
+                if not os.path.exists(dir + '/' + f"{str(w_name)}.mp4"):
+
+                    video_bytes = requests.get(download_url, stream=True)
+                    total_length = int(video_bytes.headers.get("Content-Length"))
+                    console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = total_length / chunk_size /1024)) 
+                    with open(dir + '/' + f"{w_name}.mp4", 'wb') as out_file:
+                        out_file.write(video_bytes.content)
+                        end = time.time()
 
                     print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Timelapse:{Fore.YELLOW}"+ " %.2fs" % (end - start))
-                    print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{item}.mp4{Fore.YELLOW} Downloaded\n""")
-                    time.sleep(0.7)
-            else:
-                print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{item}.mp4{Fore.WHITE} already exists! Skipping...\n")
-                time.sleep(0.7) 
-                continue
+                    print(f"""{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{item}.mp4{Fore.YELLOW} Downloaded ✓\n""")
+                    time.sleep(1)
+                else:
+                    print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[File] {Fore.GREEN}{item}.mp4{Fore.WHITE} already exists! Skipping...\n")
+                    time.sleep(1) 
+                    continue
         time.sleep(1) 
         console.log(f"[cyan][Status][/cyan] Successfully downloaded [green]{count}[/green] videos ✓")
+        time.sleep(1)
 
 def crawl():
     crawler = Crawler()
-
+    usr_agent = input(f"{Fore.YELLOW}Input Your User-Agent:{Fore.WHITE} ")
+    crawler.set_agent(usr_agent)
     param_did = input(f"{Fore.YELLOW}Input Your Cookie 'did':{Fore.WHITE} ")
     crawler.set_did(param_did)
 
@@ -191,5 +220,5 @@ if __name__ == "__main__":
     """
     print(Center.XCenter(banner))
     print(f'{Fore.GREEN}')
-    print(Box.DoubleCube(f"""Example Below\nCookie 'did': web_ff20177777baea2a2808135f0595b77f \nUser ID: 3xnpgvvuei3umwk"""))
+    print(Box.DoubleCube(f"""Example Below\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64;\nCookie 'did': web_ff20177777baea2a2808135f0595b77f \nUser ID: 3xnpgvvuei3umwk"""))
     crawl()
