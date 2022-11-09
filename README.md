@@ -58,6 +58,8 @@ Enter User: @tiktok
 <details>
 <summary>Tutorial</summary>
 
+-----
+
  Step 1. Right click and select on Inspect element.
   
 <img src="https://user-images.githubusercontent.com/44894784/200830971-90ee9df9-4b7d-4648-a6a0-0ac327dd9ac7.jpg" alt="tutorial"  width="640"/>
