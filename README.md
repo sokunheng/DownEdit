@@ -6,7 +6,7 @@
 ## <a href="https://www.buymeacoffee.com/iamnamheng" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## ✨ Preview
-<img src="https://user-images.githubusercontent.com/44894784/200809403-2cee8c01-7f24-400e-8c13-734ea0a47abc.gif" width="1080" height="520"/>
+![Header-_Trim_AdobeExpress](https://user-images.githubusercontent.com/44894784/200809403-2cee8c01-7f24-400e-8c13-734ea0a47abc.gif)
 
 
 ## 🔥 Current Features
