@@ -5,6 +5,7 @@ pip install colorama
 pip install moviepy
 pip install rich
 pip install requests-html
+pip install requests-random-user-agent
 
 cls
 @echo off
