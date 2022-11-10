@@ -118,6 +118,10 @@ If you're a non coder, you can also download the application and install on your
 => [Download](https://github.com/SokunHeng/DownEdit/releases)
 
 ## 🔨 Module
+  
+  <details>
+<summary>List</summary>
+    
 - [Moviepy](https://github.com/Zulko/moviepy)
 - [Inquirer](https://pypi.org/project/inquirer/)
 - [Colorama](https://github.com/tartley/colorama)
@@ -126,6 +130,9 @@ If you're a non coder, you can also download the application and install on your
 - [Pystyle](https://github.com/billythegoat356/pystyle)
 - [Request_HTML](https://github.com/kennethreitz/requests-html)
 - [Random_User_Agent](https://pypi.org/project/requests-random-user-agent/)
+ 
+</details>
+
 
 ## 📡 API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
