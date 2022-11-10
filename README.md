@@ -53,7 +53,7 @@ Enter User: @tiktok
 
 </details>
 
-- **`Download kuaishou videos`** - Remember to input your own **User-Agent** and **Cookie**. Otherwise it won't work.
+- **`Download kuaishou videos`** - Remember to input your own **Cookie**. Otherwise it won't work.
 
 <details>
 <summary>Tutorial</summary>
@@ -67,20 +67,10 @@ Enter User: @tiktok
 -----
   
 ```html
-Input User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/201101 Firefox/106.0
+Input Cookie: kpf=PC_WEB; kpn=KUAISHOU_VISION; clientid=3; did=web_dfe556cf2a809f194bf54a1d5125ad31; didv=1667716807591; _bl_uid=2bl0haaF5Fnfjd5Ft0tXkm0ksz17; client_key=65890b29; userId=3114192403; ktrace-context=1|MS43NjQ1ODM2OTgyODY2OTgyLjI2NzI4OTgxLjE2NjgwOTQzMTUzNzQuMjM3MDQw|MS43NjQ1ODM2OTgyODY2OTgyLjM5ODM1Mzg4LjE2NjgwOTQzMTUzNzQuMjM3MDQx|0|graphql-server|webservice|false|NA; kuaishou.server.web_st=ChZrdWFpc2hvdS5zZXJ2ZXIud2ViLnN0EqAB8CBZs_S_PC_PFDJL2Do4j19XodeBMi9XmTD_kxJalX8oHZtLxNadJ2HpJKDvkuyRCU52pxMA7ulFKo32pyr3PO4phQTmcghw3M1pjL6gCVW5KyVSo-nJMvTcXhpDn501B6Yz0-XbxYHTdWZw7ITl-lgpWwO_hYalq68Wt5Q7ut7iEPGAVjIXH-r-y5DteaqG1ocz5k0PH3QMaqQSytJN5xoS-1Rj5-IBBNoxoIePYcxZFs4oIiBVPhNOHXk5SvSU1kq6lB8hpXv9CiiIqe6gJihLWZAsVCgFMAE; kuaishou.server.web_ph=8b579bf7ba4c2f740ca6486d022008b01ed1
 ```
   
-Step 2. Click on Network and copy your User-Agent.
-  
-<img src="https://user-images.githubusercontent.com/44894784/200831024-91664a6e-dbbd-40f2-ae1b-83db8f6288a0.jpg" alt="tutorial"  width="640"/>
-
------  
-  
-```html
-Input Cookie 'did': web_66ae10a56e8687e821a7dcf5979428aa
-```
-  
-Step 3. Copy your Cookie 'did'.
+Step 2. Copy your Cookie browser.
   
 <img src="https://user-images.githubusercontent.com/44894784/200831062-65397e37-d6cd-41fe-8a7f-1032d160abe4.jpg" alt="tutorial"  width="640"/>
 
@@ -90,7 +80,7 @@ Step 3. Copy your Cookie 'did'.
 Enter User ID: 3xnpgvvuei3umwk
 ```
   
-Step 4. Copy user ID you want to download.  
+Step 3. Copy user ID you want to download.  
 
 <img src="https://user-images.githubusercontent.com/44894784/200831086-9e880d15-6921-4593-a46a-c9462e58cd5e.jpg" alt="tutorial"  width="640"/>
   
