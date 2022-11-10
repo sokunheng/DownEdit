@@ -667,6 +667,7 @@ while True:
 
                     if len(works) == 0:
                         print(f"{Fore.CYAN}[Programs] {Fore.RED}[Status] {Fore.RED}Error connection, {Fore.WHITE}please try again!")
+                        time.sleep(2.5)
                     else:
                         if not os.path.exists("./kuaishou"):
                             os.makedirs("./kuaishou")
