@@ -723,6 +723,8 @@ while True:
                         for video in works:
 
                             if video['id'] is None:
+                                print(f"""{Fore.CYAN}[Programs] {Fore.RED}[File] {Fore.RED}No video found!""")
+                                time.sleep(1.7)
                                 break
                             else:
                                 pass
