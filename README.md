@@ -143,6 +143,7 @@ If you're a non coder, you can also download the application and install on your
 Please ⭐️ this repository if this project helped you!
 
 ## Security Policy
+We will not responsible for any actions resulting from your use or inability to utilize the service, copyright, or anything else arising under this agreement and use at your own risk under Copyright law. Please show respect to the copyright owner and original creator. Thanks
 
 ## Supported Versions
 
