@@ -13,6 +13,7 @@ import colorama
 from colorama import *
 from rich.traceback import install
 from rich.console import Console
+import requests_random_user_agent
 
 install()
 console = Console()
