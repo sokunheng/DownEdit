@@ -13,7 +13,7 @@ from colorama import *
 from rich.traceback import install
 from rich.console import Console
 from requests_html import HTMLSession
-
+import requests_random_user_agent
 
 install()
 console = Console()
