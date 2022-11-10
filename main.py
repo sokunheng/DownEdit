@@ -784,11 +784,12 @@ while True:
                                     }
                                     session = HTMLSession()
                                     link = session.get(url=url, headers=header)
+                                    time.sleep(1.3)
                                     sel = '#wrap > div.body-result > div > div.video_item_body > div > div.video_info > div.video_files > div > a'
                                     get = link.html.find(sel, first=True).absolute_links
                                     break         
                                 except:
-                                    time.sleep(1)
+                                    time.sleep(0.3)
                                     pass
 
                             start = time.time()
