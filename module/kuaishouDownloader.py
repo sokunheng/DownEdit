@@ -27,7 +27,7 @@ class Crawler:
     param_did = ""
 
     user = ""
-    
+
     headers_web = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -60,7 +60,7 @@ class Crawler:
         self.param_did = did
         self.headers_web['Cookie'] = 'did=' + did + "; userId="
         self.headers_mobile['Cookie'] = 'did=' + did
-    
+
     def crawl(self):
         print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Ready to start crawling total of {Fore.GREEN}{str(len(self.crawl_list))} {Fore.WHITE}users.")
         time.sleep(1.5)
@@ -123,8 +123,8 @@ class Crawler:
 
     def __switch_id(self, uid):
         payload = {"operationName": "SearchOverviewQuery",
-                   "variables": {"keyword": uid, "ussid": None},
-                   "query": "query SearchOverviewQuery($keyword: String, $ussid: String) {\n  pcSearchOverview(keyword: $keyword, ussid: $ussid) {\n    list {\n      ... on SearchCategoryList {\n        type\n        list {\n          categoryId\n          categoryAbbr\n          title\n          src\n          __typename\n        }\n        __typename\n      }\n      ... on SearchUserList {\n        type\n        ussid\n        list {\n          id\n          name\n          living\n          avatar\n          sex\n          description\n          counts {\n            fan\n            follow\n            photo\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      ... on SearchLivestreamList {\n        type\n        lssid\n        list {\n          user {\n            id\n            avatar\n            name\n            __typename\n          }\n          poster\n          coverUrl\n          caption\n          id\n          playUrls {\n            quality\n            url\n            __typename\n          }\n          quality\n          gameInfo {\n            category\n            name\n            pubgSurvival\n            type\n            kingHero\n            __typename\n          }\n          hasRedPack\n          liveGuess\n          expTag\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}
+                "variables": {"keyword": uid, "ussid": None},
+                "query": "query SearchOverviewQuery($keyword: String, $ussid: String) {\n  pcSearchOverview(keyword: $keyword, ussid: $ussid) {\n    list {\n      ... on SearchCategoryList {\n        type\n        list {\n          categoryId\n          categoryAbbr\n          title\n          src\n          __typename\n        }\n        __typename\n      }\n      ... on SearchUserList {\n        type\n        ussid\n        list {\n          id\n          name\n          living\n          avatar\n          sex\n          description\n          counts {\n            fan\n            follow\n            photo\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      ... on SearchLivestreamList {\n        type\n        lssid\n        list {\n          user {\n            id\n            avatar\n            name\n            __typename\n          }\n          poster\n          coverUrl\n          caption\n          id\n          playUrls {\n            quality\n            url\n            __typename\n          }\n          quality\n          gameInfo {\n            category\n            name\n            pubgSurvival\n            type\n            kingHero\n            __typename\n          }\n          hasRedPack\n          liveGuess\n          expTag\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}
 
         res = requests.post(DATA_URL, headers=self.headers_web, json=payload)
         dt = json.loads(res.content.decode(encoding='utf-8', errors='strict'))['data']
@@ -157,11 +157,12 @@ class Crawler:
                     }
                     session = HTMLSession()
                     link = session.get(url=url, headers=header)
+                    time.sleep(1.3)
                     sel = '#wrap > div.body-result > div > div.video_item_body > div > div.video_info > div.video_files > div > a'
                     get = link.html.find(sel, first=True).absolute_links
                     break         
                 except:
-                    time.sleep(1)
+                    time.sleep(0.3)
                     pass
 
             start = time.time()
@@ -207,16 +208,15 @@ def crawl():
     print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
 
 if __name__ == "__main__":
-
+    os.system('cls')
     banner = f"""{Fore.MAGENTA} 
-    
 ██╗░░██╗██╗░░░██╗░█████╗░██╗░██████╗██╗░░██╗░█████╗░██╗░░░██╗░░░░░░██████╗░██╗░░░░░
 ██║░██╔╝██║░░░██║██╔══██╗██║██╔════╝██║░░██║██╔══██╗██║░░░██║░░░░░░██╔══██╗██║░░░░░
 █████═╝░██║░░░██║███████║██║╚█████╗░███████║██║░░██║██║░░░██║█████╗██║░░██║██║░░░░░
 ██╔═██╗░██║░░░██║██╔══██║██║░╚═══██╗██╔══██║██║░░██║██║░░░██║╚════╝██║░░██║██║░░░░░
 ██║░╚██╗╚██████╔╝██║░░██║██║██████╔╝██║░░██║╚█████╔╝╚██████╔╝░░░░░░██████╔╝███████╗
 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚═════╝░░░░░░░╚═════╝░╚══════╝
-                                  by HengSok
+                         by HengSok
     """
     print(Center.XCenter(banner))
     print(f'{Fore.GREEN}')
