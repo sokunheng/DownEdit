@@ -114,8 +114,9 @@ Step 2. Run the script
  main.py
 ```
 
-If you're a non coder, you can also download the application and install on your Window. <br/>
-=> [Download](https://github.com/SokunHeng/DownEdit/releases)
+If you're a non coder, you can also download the application and install on your Window. [Download here.](https://github.com/SokunHeng/DownEdit/releases)
+
+**Additional**: Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
 
 ## 🔨 Module
   
