@@ -72,7 +72,7 @@ Input Cookie: kpf=PC_WEB; kpn=KUAISHOU_VISION; clientid=3; did=web_dfe556cf2a809
   
 Step 2. Copy your Cookie browser.
   
-<img src="https://user-images.githubusercontent.com/44894784/200831062-65397e37-d6cd-41fe-8a7f-1032d160abe4.jpg" alt="tutorial"  width="640"/>
+<img src="https://user-images.githubusercontent.com/44894784/201191235-1abda841-7ae1-4bef-a06a-b7c06d12c927.jpg" alt="tutorial"  width="640"/>
 
 -----  
   
