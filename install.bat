@@ -11,4 +11,8 @@ cls
 @echo off
 echo " Installed Library Successfully! Please close the script. " 
 pause
+@RD /S /Q ".\history"
+@RD /S /Q ".\module"
+Del LICENSE
+Del README.md
 Del install.bat
