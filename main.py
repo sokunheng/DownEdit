@@ -328,7 +328,7 @@ while True:
                         # Filter illegal characters in video copy and author names
                         print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Wait for the replacement of illegal characters in the copy!")
                         author_list = self.replaceT(author_list)
-                        console.log(f"[cyan][Status][/cyan] :receipt: Waiting to replace the author's illegal characters...\r \n")
+                        console.log(f"[cyan][Status][/cyan] Waiting to replace the author's illegal characters...\r \n")
                         nickname = self.replaceT(nickname)
                         self.videos_download(author_list, video_list, uri_list, aweme_id, nickname, max_cursor)
                         return self,author_list,video_list,uri_list,aweme_id,nickname,max_cursor
@@ -381,7 +381,10 @@ while True:
                             # Check if the video has been downloaded
                             try:
                                 if creat_time + author_list[i] + '.mp4' in v_info:
-                                    console.log(f"[red][File][/red] {Fore.GREEN}", author_list[i], f'{Fore.WHITE}[File already exists, skipping...]') 
+                                    time.sleep(1)
+                                    title = author_list[i]
+                                    limit1 = str(f'{title:80.80}')  
+                                    console.log(f"[red][File][/red] [green]{limit1}[/green] [File already exists, skipping...]") 
                                     print('\r')
                                     continue
                             except:
@@ -409,7 +412,9 @@ while True:
                                     try:
                                         # Check whether the response is successful
                                         if video.status_code == 200:                        
-                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Video] {Fore.WHITE}" + creat_time + " " + author_list[i])
+                                            title = author_list[i]
+                                            limit = str(f'{title:80.80}')                        
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Video] {Fore.WHITE}" + creat_time + " " + limit)
                                             console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = content_size / chunk_size /1024))    # 开始下载，显示下载文件大小
 
                                             if self.mode == 'post':
