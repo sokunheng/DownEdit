@@ -95,16 +95,20 @@ Tips: If you still getting error, try changing your Browser, use Incognito/Priva
 - Python 3.6 or better
 
 ## ⚙ Installation 
-Step 1. Click <u>install.bat<u> for automatic python libraries installation
+Step 1. Download and install [python](https://www.python.org/downloads/) on your pc.
+```html
+https://www.python.org/downloads/
+```
+Step 2. Click <u>install.bat<u> for automatic python libraries installation
 ```html
  install.bat
 ```
-Step 2. Run the script
+Step 3. Run the script
 ```ht
  main.py
 ```
-
-If you're a non coder, you can also download the application and install on your Window. [Download here.](https://github.com/SokunHeng/DownEdit/releases)
+-----
+If you're a non coder, you can also download the application and use it on your Window without installing python. [Download here.](https://github.com/SokunHeng/DownEdit/releases)
 
 **Additional**: Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
 
