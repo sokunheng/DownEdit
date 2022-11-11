@@ -208,18 +208,18 @@ while True:
                         print(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}User's sec_id:{Fore.GREEN} "+"%s\r" % self.sec)
                         #else:
                         #    r = requests.get(url = self.Find(self.uid)[0])
-                        #    print('[  提示  ]:为您下载多个视频!\r')
-                        #    # 获取用户sec_uid
-                        #    # 因为某些情况链接中会有?previous_page=app_code_link参数，为了不影响key结果做二次过滤
-                        #    # 2022/03/02: 用户主页链接中不应该出现?previous_page,?enter_from参数
-                        #    # 原user/([\d\D]*?)([?])
+                        #    print('[hint]: download multiple videos for you! \r')
+                        #    # get user sec_uid
+                        #    # Because in some cases there will be a ?previous_page=app_code_link parameter in the link, in order not to affect the key result, do secondary filtering
+                        #    # 2022/03/02: ? previous_page, ? enter_from parameters should not appear in user homepage links
+                        #    # Original user/([\d\D]*?)([?])
                         #    # try:
                         #    #     for one in re.finditer(r'user\/([\d\D]*)([?])',str(r.url)):
                         #    #         key = one.group(1)
                         #    # except:
                         #    for one in re.finditer(r'user\/([\d\D]*)',str(r.url)):
                         #        self.sec = one.group(1)
-                        #    print('[  提示  ]:用户的sec_id=%s\r' % self.sec)
+                        #    print('[Prompt]: User's sec_id=%s\r' % self.sec)
 
                         # first visit page number
                         max_cursor = 0
