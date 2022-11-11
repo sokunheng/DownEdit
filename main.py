@@ -231,8 +231,8 @@ while True:
                         response = requests.get(url = api_post_url, headers = self.headers)
                         html = json.loads(response.content.decode())
                         self.nickname = html['aweme_list'][0]['author']['nickname']
-                        if not os.path.exists(self.nickname):
-                                os.makedirs(self.nickname)
+                        if not os.path.exists(self.save + '\\' + self.nickname):
+                                os.makedirs(self.save + '\\' + self.nickname)
 
                         self.get_data(api_post_url, max_cursor)
                         return api_post_url,max_cursor,self.sec
@@ -338,7 +338,7 @@ while True:
                         if nickname == []:
                             return
                         else:
-                            v_info = os.listdir((nickname))
+                            v_info = os.listdir((self.save + '\\' + nickname))
                         return v_info
 
                     # video download
@@ -347,7 +347,7 @@ while True:
                         new_video_list = [];uri_url = 'https://aweme.snssdk.com/aweme/v1/play/?video_id=%s&radio=1080p&line=0'
                         # Create and check if the download directory exists
                         try:
-                            os.makedirs(nickname[0])
+                            os.makedirs(self.save + '\\' + nickname[0])
                         except:
                             pass
 
@@ -418,10 +418,10 @@ while True:
                                             console.log(f"[green][Status][/green] File size: " + "{size:.2f} MB".format(size = content_size / chunk_size /1024))    # 开始下载，显示下载文件大小
 
                                             if self.mode == 'post':
-                                                v_url = nickname[i] + '\\' + creat_time + re.sub(
+                                                v_url = self.save + '\\' + nickname[i] + '\\' + creat_time + re.sub(
                                                     r'[\\/:*?"<>|\r\n] + ', "_", author_list[i]) + '.mp4'
                                             else:
-                                                v_url = self.nickname + '\\' + str(self.like_counts)+ '、' + re.sub(
+                                                v_url = self.save + '\\' + self.nickname + '\\' + str(self.like_counts)+ '、' + re.sub(
                                                     r'[\\/:*?"<>|\r\n] + ', "_", author_list[i]) + '.mp4'
 
                                             with open(v_url,'wb') as file:                
@@ -453,7 +453,10 @@ while True:
                     
                 # main
                 if __name__ == "__main__":
-
+                    
+                    if not os.path.exists("./douyin"):
+                        os.makedirs("./douyin")
+                        
                     os.system('cls')
                     txt = f"""{Fore.MAGENTA}
         ██████╗░░█████╗░██╗░░░██╗██╗░░░██╗██╗███╗░░██╗░░░░░░██████╗░██╗░░░░░
@@ -473,7 +476,7 @@ while True:
                     user = input(f"{Fore.YELLOW}Enter User Link:{Fore.WHITE} ")
                     music = 'no'
                     count = int(35)
-                    dir = ''
+                    dir = 'douyin/'
                     mode = 'post'
                     TK.setting(user,music,count,dir,mode)
                     time.sleep(1.5) 
