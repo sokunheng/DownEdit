@@ -63,7 +63,7 @@ while True:
         ██╔══╝░░██║░░██║██║░░░██║░░░  ░╚████╔╝░██║██║░░██║██╔══╝░░██║░░██║
         ███████╗██████╔╝██║░░░██║░░░  ░░╚██╔╝░░██║██████╔╝███████╗╚█████╔╝
         ╚══════╝╚═════╝░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝╚═════╝░╚══════╝░╚════╝░
-                            Created by HengSok{Fore.YELLOW}
+                             Created by HengSok{Fore.YELLOW}
                     """
                     print(Center.XCenter(banner))
 
@@ -71,7 +71,6 @@ while True:
                         # Get input directory
                         print(f'{Fore.GREEN}')
                         print(Box.DoubleCube(r"Example: C:\Users\Name\Desktop\Folder\Video"))
-                        #video_folder = Write.Input("Enter folder: ", Colors.red_to_yellow, interval=0.001)
                         video_folder = input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
 
                         # check if the folder exists or not
@@ -475,7 +474,6 @@ while True:
                     # Create a new instance
                     TK = TikTok()
                     user = input(f"{Fore.YELLOW}Enter User Link:{Fore.WHITE} ")
-                    #user = Write.Input("Enter User Link: ", Colors.red_to_yellow, interval=0.001)
                     music = 'no'
                     count = int(35)
                     dir = 'douyin/'
@@ -503,7 +501,6 @@ while True:
 
                             querystring = {"unique_id":"", "count":"35","cursor":"0"}
                             querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
-                            #querystring["unique_id"] = Write.Input("Enter User: ", Colors.red_to_yellow, interval=0.0001)
 
                             s = requests.Session()
                             gen = s.headers['User-Agent']
@@ -576,7 +573,6 @@ while True:
                     api_key = random.choice(key)
 
                     querystring = {"unique_id":"", "count":"35","cursor":"0"}
-                    #querystring["unique_id"] = Write.Input("Enter User: ", Colors.red_to_yellow, interval=0.0001)
                     querystring["unique_id"] = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
 
                     headers = {
@@ -660,10 +656,8 @@ while True:
                 
                 def downKuai():
 
-                    #cookie = input(f"{Fore.YELLOW}Input Your Cookie:{Fore.WHITE} ")
-                    cookie = Write.Input("Input Your Cookie: ", Colors.red_to_yellow, interval=0.001)
+                    cookie = input(f"{Fore.YELLOW}Input Your Cookie:{Fore.WHITE} ")
                     uid = input(f"{Fore.YELLOW}Enter User ID:{Fore.WHITE} ")
-                    #uid = Write.Input("Enter User ID: ", Colors.red_to_yellow, interval=0.001)
                     header = {
                         'content-type': 'application/json',
                         # Paste your cookies here
@@ -816,17 +810,17 @@ while True:
         if __name__ == "__main__":
             
             os.system("cls" if os.name == "nt" else "clear"); os.system("title MMO by @HengSok" if os.name == "nt" else "")
-            txt = Center.XCenter("""
+            txt = f"""{Fore.MAGENTA}
     ██████╗░░█████╗░░██╗░░░░░░░██╗███╗░░██╗░░░░░░███████╗██████╗░██╗████████╗
     ██╔══██╗██╔══██╗░██║░░██╗░░██║████╗░██║░░░░░░██╔════╝██╔══██╗██║╚══██╔══╝
     ██║░░██║██║░░██║░╚██╗████╗██╔╝██╔██╗██║█████╗█████╗░░██║░░██║██║░░░██║░░░
     ██║░░██║██║░░██║░░████╔═████║░██║╚████║╚════╝██╔══╝░░██║░░██║██║░░░██║░░░
     ██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║░░░░░░███████╗██████╔╝██║░░░██║░░░
     ╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝░░░░░░╚══════╝╚═════╝░╚═╝░░░╚═╝░░░
-                           Created by HengSok - v0.3.2
-                  """)
-            print(Colorate.Horizontal(Colors.red_to_purple, txt))
-            #print(Center.XCenter(txt))
+                           Created by HengSok - v0.3.3
+                  """
+            
+            print(Center.XCenter(txt))
             print(f'{Fore.GREEN}')
             print(Box.DoubleCube("Use arrow key to select the options"))
             questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Edit Video', ' Download Douyin Video', ' Download Tiktok Video', ' Download Kuaishou Video'],),]   
