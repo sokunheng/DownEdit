@@ -823,9 +823,9 @@ while True:
     ██║░░██║██║░░██║░░████╔═████║░██║╚████║╚════╝██╔══╝░░██║░░██║██║░░░██║░░░
     ██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║░░░░░░███████╗██████╔╝██║░░░██║░░░
     ╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝░░░░░░╚══════╝╚═════╝░╚═╝░░░╚═╝░░░
-                           Created by HengSok - v0.3.1
+                           Created by HengSok - v0.3.2
                   """)
-            print(Colorate.Horizontal(Colors.blue_to_purple, txt))
+            print(Colorate.Horizontal(Colors.red_to_purple, txt))
             #print(Center.XCenter(txt))
             print(f'{Fore.GREEN}')
             print(Box.DoubleCube("Use arrow key to select the options"))
