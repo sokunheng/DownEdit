@@ -170,4 +170,4 @@ If you encounter any problems, please report them by visiting [here](https://git
 
 
 ## 📝 License
-Copyright [©](https://justpaste.it/reference-heng) 2022 [SokunHeng](https://github.com/SokunHeng).<br />
+Copyright © 2022 [Sokun](https://github.com/SokunHeng)[Heng](https://justpaste.it/reference-heng).<br />
