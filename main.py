@@ -50,11 +50,94 @@ while True:
                     clip = clip.fx(vfx.mirror_x)
                     name = clip.filename
                     clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac")
+                    clip.close()
+                    
+                # change speed of video
+                def speed(input, speed, output, xxx):
+                    clip = VideoFileClip(input)
+                    #audio = AudioFileClip(input)
+                    clip = clip.fx(vfx.speedx, speed)
+                    name = clip.filename
+                    clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac", preset=xxx)
+                    clip.close()
+                
+                # flip and speed
+                def speednflip(input, speed, output, xxx):
+                    clip = VideoFileClip(input)
+                    #audio = AudioFileClip(input)
+                    clip = clip.fx(vfx.mirror_x)
+                    clip = clip.fx(vfx.speedx, speed)
+                    name = clip.filename
+                    clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac", preset=xxx)
+                    clip.close()
+                
+                # add background music
+                def addmusic(input, music, output, xxx):
+                    videoclip = VideoFileClip(input)
+                    clip_duration = videoclip.duration
+
+                    audioclip = AudioFileClip(music)#.set_duration(clip_duration)
+                    # new_audioclip = CompositeAudioClip([audioclip])
+                    new_audioclip = afx.audio_loop(audioclip, duration=clip_duration)
+                    
+                    clip = videoclip.set_audio(new_audioclip)
+                    
+                    clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac", preset=xxx)
+                    clip.close()
+                
+                # change speed of video and add background-music
+                def musicnspeed(input, music, speed, output, xxx):
+                    videoclip = VideoFileClip(input)
+                    clip_duration = videoclip.duration
+
+                    final_duration = clip_duration / speed
+
+                    audioclip = AudioFileClip(music)#.set_duration(final_duration)
+                    # new_audioclip = CompositeAudioClip([audioclip])
+                    new_audioclip = afx.audio_loop(audioclip, duration=final_duration)
+
+                    clipf = videoclip.fx(vfx.speedx, speed)
+                    clip = clipf.set_audio(new_audioclip)
+
+                    clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac", preset=xxx)
+                    clip.close()
+                
+                # change speed of video, add background-music and flip video    
+                def musicnspeednflip(input, music, speed, output, xxx):
+                    videoclip = VideoFileClip(input)
+                    clip_duration = videoclip.duration
+
+                    final_duration = clip_duration / speed
+
+                    audioclip = AudioFileClip(music)#.set_duration(final_duration)
+                    # new_audioclip = CompositeAudioClip([audioclip])
+                    new_audioclip = afx.audio_loop(audioclip, duration=final_duration)
+                    
+                    flipx = videoclip.fx(vfx.mirror_x)
+                    clipf = flipx.fx(vfx.speedx, speed)
+                    clip = clipf.set_audio(new_audioclip)
+
+                    clip.write_videofile(output, verbose= False, logger= None, codec='libx264', audio_codec="aac", preset=xxx)
+                    clip.close()
                 
                 #Main 
                 if __name__ == "__main__":
-                    if not os.path.exists("./edited"):
+                    if not os.path.exists("./edited/"):
                         os.makedirs("./edited")
+                    if not os.path.exists("./edited/flip"):
+                        os.makedirs("./edited/flip")
+                    if not os.path.exists("./edited/speed"):
+                        os.makedirs("./edited/speed")
+                    if not os.path.exists("./edited/flip_speed"):
+                        os.makedirs("./edited/flip_speed")
+                    if not os.path.exists("./edited/add_music"):
+                        os.makedirs("./edited/add_music")
+                    if not os.path.exists("./edited/music_speed"):
+                        os.makedirs("./edited/music_speed")
+                    if not os.path.exists("./edited/flip_speed_music"):
+                        os.makedirs("./edited/flip_speed_music")
+                    if not os.path.exists("./edited/split_video"):
+                        os.makedirs("./edited/split_video")    
                     os.system('cls')
                     banner = f"""{Fore.MAGENTA}
         ███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
@@ -72,52 +155,380 @@ while True:
                         print(f'{Fore.GREEN}')
                         print(Box.DoubleCube(r"Example: C:\Users\Name\Desktop\Folder\Video"))
                         video_folder = input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
-
-                        # check if the folder exists or not
-                        if os.path.exists(video_folder):
-
-                            # Get input files
-                            file_list = os.listdir(video_folder)
-                            clip_list = get_clip_list(file_list)
-
-                            # Number of files found
-                            console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
-                            # Process status
-                            console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]')
-                            counter = 0
-
-                            # status or waiting
+                        print()
+                        #print(Box.DoubleCube("Use arrow key to select the options"))
+                        questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[' Flip Horizontal', ' Custom Speed', ' Flip And Speed', ' Add Music', ' Speed And Music', ' Flip, Speed And Music'],),]   
+                        answers = inquirer.prompt(questions)
                         
-                            with console.status('[cyan] Processing the video...') as status:
-                                
-                                if not clip_list:
-                                    pass
-                                else:
-                                    # make a new folder with counter += 1 everytime it runs.
-                                    while True:
-                                        counter += 1
-                                        dir = "./edited/Video{}".format(counter)
-                                        if os.path.isdir(dir):
-                                            pass
-                                        else:
-                                            os.makedirs(dir)
-                                            break
+                        questions2 = [inquirer.List('list', message=f"{Fore.YELLOW}Process Speed{Fore.WHITE}", choices=[' Ultrafast', ' Superfast', ' Veryfast', ' Faster', ' Fast', ' Medium', ' Slow'],),]   
+                        answers2 = inquirer.prompt(questions2)
+                        
+                        if answers2['list'] == ' Ultrafast':
+                            xxx = 'ultrafast'
+                        elif answers2['list'] == ' Superfast':
+                            xxx = 'superfast'
+                        elif answers2['list'] == ' Veryfast':
+                            xxx = 'veryfast'
+                        elif answers2['list'] == ' Faster':
+                            xxx = 'faster'
+                        elif answers2['list'] == ' Fast':
+                            xxx = 'fast'
+                        elif answers2['list'] == ' Medium':
+                            xxx = 'medium'
+                        elif answers2['list'] == ' Slow':
+                            xxx = 'slow'
+                            
+                        if answers['list'] == ' Flip Horizontal':
 
-                                # Process files
-                                for file in clip_list:
-                                    output = dir + "/" + file[:-4] + "_edited.mp4"
+                            # check if the folder exists or not
+                            if os.path.exists(video_folder):
 
-                                    # Check if output exists in folder. If exists then skip else process
-                                    if os.path.exists(output) == True:
-                                        console.log(f'[cyan][File][/cyan] [green]{file}[/green] already exist, skip...')
-                                        # function skip
-                                        clip_list.remove(file)
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
                                     else:
-                                        process(video_folder + "/" + file, output)
-                                        console.log(f'[cyan][File][/cyan] [green]{file}[/green] has been created.')
-                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/flip/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_edited.mp4"
+
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            flip(video_folder + "/" + file, output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
                             time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
                             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+
+                        elif answers['list'] == ' Custom Speed':
+
+                            # check if the folder exists or not
+                            if os.path.exists(video_folder):
+
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                speedf = eval(input(f"{Fore.WHITE}[{Fore.MAGENTA}?{Fore.WHITE}] {Fore.YELLOW}Select Speed:{Fore.WHITE} "))
+                                print()
+
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
+                                    else:
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/speed/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_speed.mp4"
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            speed(video_folder + "/" + file, speedf,  output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
+                            time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+
+                        elif answers['list'] == ' Flip And Speed':
+
+                            # check if the folder exists or not
+                            if os.path.exists(video_folder):
+
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                speedf = eval(input(f"{Fore.WHITE}[{Fore.MAGENTA}?{Fore.WHITE}] {Fore.YELLOW}Select Speed:{Fore.WHITE} "))
+                                print()
+                                
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
+                                    else:
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/flip_speed/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_speed_flip.mp4"
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            speednflip(video_folder + "/" + file, speedf, output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
+                            time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+                            
+                        elif answers['list'] == ' Add Music':
+                            
+                            if os.path.exists(video_folder):
+
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                music = input(f"{Fore.YELLOW}Enter Music:{Fore.WHITE} ")
+                                print()
+                                
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
+                                    else:
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/add_music/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_added_music.mp4"
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            addmusic(video_folder + "/" + file, music, output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
+                            time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+                            
+                        elif answers['list'] == ' Speed And Music':
+                            
+                            if os.path.exists(video_folder):
+
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                music = input(f"{Fore.YELLOW}Enter Music:{Fore.WHITE} ")
+                                speedf = eval(input(f"{Fore.WHITE}[{Fore.MAGENTA}?{Fore.WHITE}] {Fore.YELLOW}Select Speed:{Fore.WHITE} "))
+                                print()
+                                
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
+                                    else:
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/music_speed/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_speed_music.mp4"
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            musicnspeed(video_folder + "/" + file, music, speedf, output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
+                            time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+                        
+                        elif answers['list'] == ' Flip, Speed And Music':
+                            
+                            if os.path.exists(video_folder):
+
+                                # Get input files
+                                file_list = os.listdir(video_folder)
+                                clip_list = get_clip_list(file_list)
+
+                                music = input(f"{Fore.YELLOW}Enter Music:{Fore.WHITE} ")
+                                speedf = eval(input(f"{Fore.WHITE}[{Fore.MAGENTA}?{Fore.WHITE}] {Fore.YELLOW}Select Speed:{Fore.WHITE} "))
+                                print()
+                                
+                                # Number of files found
+                                console.log(f"[cyan][File][/cyan] Found [green]{len(clip_list)}[/green] videos")
+                                time.sleep(1)
+                                # Process status
+                                console.log(f'[cyan][File][/cyan] [green]Start processing the video...[/green]\n')
+                                counter = 0
+
+                                # status or waiting
+                            
+                                with console.status('[cyan]Processing... please wait!', spinner='line') as status:
+                                    
+                                    if not clip_list:
+                                        pass
+                                    else:
+                                        # make a new folder with counter += 1 everytime it runs.
+                                        while True:
+                                            counter += 1
+                                            dir = "./edited/flip_speed_music/Video{}".format(counter)
+                                            if os.path.isdir(dir):
+                                                pass
+                                            else:
+                                                os.makedirs(dir)
+                                                break
+
+                                    # Process files
+                                    for file in clip_list:
+                                        output = dir + "/" + file[:-4] + "_speed_music_flip.mp4"
+                                        limit = str(f'{file:60.60}')
+                                        # Check if output exists in folder. If exists then skip else process
+                                        if os.path.exists(output) == True:
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green] already exist, skip...')
+                                            # function skip
+                                            clip_list.remove(file)
+                                        else:
+                                            start = time.time()
+                                            musicnspeednflip(video_folder + "/" + file, music, speedf, output, xxx)
+                                            console.log(f'[cyan][File][/cyan] [green]{limit}[/green]')
+                                            end = time.time()
+                                            print(f"{Fore.CYAN}[Programs] {Fore.GREEN}[Status] {Fore.WHITE}Processed:{Fore.YELLOW}"+ " %.2fs" % (end - start))
+                                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been created.\n")
+
+                            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Saved] {Fore.GREEN}{dir}{Fore.WHITE}")
+                            time.sleep(1)
+                            console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
+                            time.sleep(0.5)
+                            print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue..")) 
+                                    
                         else:
                             console.log("[red][Folder][/red] No such directory")
                             time.sleep(3)
