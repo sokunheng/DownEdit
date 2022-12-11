@@ -136,8 +136,7 @@ while True:
                         os.makedirs("./edited/music_speed")
                     if not os.path.exists("./edited/flip_speed_music"):
                         os.makedirs("./edited/flip_speed_music")
-                    if not os.path.exists("./edited/split_video"):
-                        os.makedirs("./edited/split_video")    
+  
                     os.system('cls')
                     banner = f"""{Fore.MAGENTA}
         ███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
