@@ -28,23 +28,20 @@ Enter Folder: C:\Users\Name\Desktop\Folder\Video
 
 
 
-
+ Change it according to your desired video speed.
 ```html
 Select Speed: 1.2 or 2 
 ```
- Change it according to your desired video speed.
 
+ Input your music file location
 ```html
 Enter Music: C:\Users\Name\Desktop\Folder\music_name.mp3
 ```
 ```html
 Enter Music: music_name.mp3
 ```
- Input your music file location
  
- ```html
-Enter Music: music_name.mp3
-```
+
 </details>
 
 
