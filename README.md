@@ -26,6 +26,25 @@ Enter Folder: C:\Users\Name\Desktop\Folder\Video
 
 ![Edit_Video_AdobeExpress](https://user-images.githubusercontent.com/44894784/200826802-58b223ea-dd01-4f3a-b896-d87228cddd4e.gif)
 
+
+
+
+```html
+Select Speed: 1.2 or 2 
+```
+ Change it according to your desired video speed.
+
+```html
+Enter Music: C:\Users\Name\Desktop\Folder\music_name.mp3
+```
+```html
+Enter Music: music_name.mp3
+```
+ Input your music file location
+ 
+ ```html
+Enter Music: music_name.mp3
+```
 </details>
 
 
