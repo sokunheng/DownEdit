@@ -42,7 +42,7 @@ while True:
                     return clip_list_input
 
                 #Edit Video Function
-                def process(input, output):
+                def flip(input, output):
 
                     #print(path_name_list)
                     clip = VideoFileClip(input)
