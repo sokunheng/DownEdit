@@ -634,7 +634,9 @@ while True:
                         # first visit page number
                         max_cursor = 0
 
+
                         # Construct first visit link
+                        # Doesn't work, will be update soon
                         api_post_url = 'https://www.iesdouyin.com/web/api/v2/aweme/%s/?sec_uid=%s&count=%s&max_cursor=%s&aid=1128&_signature=PDHVOQAAXMfFyj02QEpGaDwx1S&dytk=' % ( 
                                 self.mode, self.sec, str(self.count), max_cursor)
 
