@@ -14,6 +14,14 @@
 - `Edit Video` - by flipping it from left to right or right to left throughout the entire directory (folder)
 - `Download all videos` from a user (no watermark) such as Tiktok, Kuaishou and Douyin. Will be updated more in the future!
 
+## 🌐 Service
+
+| Website| Provider| Single Video | User's Videos | Stream | Status | Auth Required|
+| --- | --- | --- | --- | --- | --- | --- |
+| [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) | ❌ |
+| [douyin.com](https://you.com) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
+| [kuaishou.com](https://bing.com/chat) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
+
 ## 🚀 Usage
 - **`Edit Video`** - Simply copy and paste (right click) whatever directory location you would like to process.
 
