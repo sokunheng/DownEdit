@@ -1,0 +1,12 @@
+pystyle
+requests 
+inquirer
+colorama
+moviepy
+rich
+requests-html
+requests-random-user-agent
+playwright
+undetected-chromedriver
+beautifulsoup4
+selenium
