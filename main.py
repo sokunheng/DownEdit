@@ -4,10 +4,10 @@ import sys
 import inquirer
 from pystyle import *
 from colorama import *
-from util.site.douyin import __main__ as douyin
-from util.site.kuaishou import __main__ as kuaishou
-from util.site.tiktok import __main__ as tiktok
-from util.video import __main__ as video_edit
+from downedit.site.douyin import __main__ as douyin
+from downedit.site.kuaishou import __main__ as kuaishou
+from downedit.site.tiktok import __main__ as tiktok
+from downedit.video import __main__ as video_edit
 
 
 def display_banner():
