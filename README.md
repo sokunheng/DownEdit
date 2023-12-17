@@ -155,11 +155,11 @@ If you're a non coder, you can also download the application and use it on your 
 </details>
 
 
-## 📡 API
+<!-- ## 📡 API
 - [DouyinAPI](https://github.com/Johnserf-Seed/TikTokDownload)
 - [TiktokAPI1](https://github.com/yi005/Tiktok-Video-No-Watermark)
 - [TiktokAPI2](https://rapidapi.com/yi005/api/tiktok-video-no-watermark2/)
-- [KuaishouAPI](https://www.videofk.com/en3886)
+- [KuaishouAPI](https://www.videofk.com/en3886) -->
 ## Author
 
 👤 **Sokun Heng**

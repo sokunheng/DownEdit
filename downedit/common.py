@@ -9,17 +9,22 @@ from rich.traceback import install
 from rich.console import Console
 from pystyle import *
 from downedit.video import *
+from downedit.download.downloader import Download as dl
 
 EDITED_PATH = "Edited"
 TIK_TOK = "Tiktok"
 DOUYIN = "Douyin"
 KUAISHOU = "Kuaishou"
 
+IMG_GEN = "AI_Art"
+
 video_editor = VideoEditor()
 install()
 console = Console()
 tool_selector = ToolSelector()
-    
+
+DE_VERSION = open('version', 'r').read().strip()
+
 class Common:
 
     @staticmethod
@@ -43,6 +48,5 @@ class Common:
                 os.makedirs(dir_path)
                 return dir_path
             counter += 1
-        
     
             

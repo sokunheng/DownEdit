@@ -4,11 +4,10 @@ import sys
 import inquirer
 from pystyle import *
 from colorama import *
-from downedit.site.douyin import __main__ as douyin
-from downedit.site.kuaishou import __main__ as kuaishou
-from downedit.site.tiktok import __main__ as tiktok
+from downedit.site import __main__ as vid_dl
+from downedit.image import __main__ as gen_img_ai
 from downedit.video import __main__ as video_edit
-
+from downedit.common import DE_VERSION
 
 def display_banner():
     os.system("cls" if os.name == "nt" else "clear")
@@ -20,7 +19,7 @@ def display_banner():
 ██║░░██║██║░░██║░░████╔═████║░██║╚████║╚════╝██╔══╝░░██║░░██║██║░░░██║░░░
 ██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║░░░░░░███████╗██████╔╝██║░░░██║░░░
 ╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝░░░░░░╚══════╝╚═════╝░╚═╝░░░╚═╝░░░
-                    Created by HengSok - v2.0
+                      Created by HengSok - v{DE_VERSION}
             """
 
     print(Center.XCenter(txt))
@@ -33,17 +32,15 @@ def main():
         try:
             display_banner()
             questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[
-                ' Edit Video', ' Download Douyin Video', ' Download Tiktok Video', ' Download Kuaishou Video', ' Exit'])]
+                ' Edit Video', ' Download Video', ' AI-Generative Image', ' Exit'])]
             answers = inquirer.prompt(questions)
 
             if answers['list'] == ' Edit Video':
                 video_edit.main()
-            elif answers['list'] == ' Download Douyin Video':
-                douyin.main()
-            elif answers['list'] == ' Download Tiktok Video':
-                tiktok.main()
-            elif answers['list'] == ' Download Kuaishou Video':
-                kuaishou.main()
+            elif answers['list'] == ' Download Video':
+                vid_dl.main()
+            elif answers['list'] == ' AI-Generative Image':
+                gen_img_ai.main()
             elif answers['list'] == ' Exit':
                 break
         except Exception as e:

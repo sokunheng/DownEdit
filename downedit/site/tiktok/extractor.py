@@ -7,7 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .api import TiktokAPI
-from downedit.download.downloader import Download as dl
 
 
 class TikTokExtractor:
