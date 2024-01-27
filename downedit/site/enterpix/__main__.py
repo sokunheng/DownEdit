@@ -17,7 +17,10 @@ def download_in_chunks(user_prompt, img_folder_path, total_amount, download_chun
 
         ai_generative = api.search_img(user_prompt, download_amount, start_gen)
         generated_img = ai_generative["images"]
-
+        
+        if len(generated_img) == 0:
+            break
+        
         for img in generated_img:
             img_title = img["id"]
             download_link = img["compressedUrl"]
