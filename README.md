@@ -13,8 +13,11 @@
 </p>
 
 ## 🔥 Current Features
-- `Edit Video` - by flipping it from left to right or right to left throughout the entire directory (folder)
-- `Download all videos` from a user (no watermark) such as Tiktok, Kuaishou and Douyin. Will be updated more in the future!
+- `Edit Video`: Enhance videos with versatile functions across entire directories.
+- `Edit Photo`: Quickly enhance images in bulk with various functions in bulk.
+- `Download all videos`: Retrieve videos from users (TikTok, Kuaishou, Douyin, etc.) without watermarks.
+- `Bulk AI Generator`: Process images and videos in bulk using powerful generative AI.
+- `AI Editor`: Transform your visual content effortlessly with an AI editor designed for both images and videos.
 
 ## 🌐 Service
 
@@ -23,6 +26,11 @@
 | [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) | ❌ |
 | [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
 | [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
+
+## 🤖 AI
+| Type | Model | Param | Provider| Slighter | Bulk | API | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Image | `Stable-diffusion` `Midjourney` | 137B | Enterpix | ✔️ | ✔️ | ✔️ | ✔️ |
 
 ## 🚀 Usage
 - **`Edit Video`** - Simply copy and paste (right click) whatever directory location you would like to process.

@@ -51,8 +51,7 @@ def main():
         
         for tiktok_user in user_list:
             print(f'{Fore.GREEN}')
-            console.log(
-                    f'[cyan][Site][/cyan] User [green]{tiktok_user}[/green]')
+            console.log(f'[cyan][Site][/cyan] User [green]{tiktok_user}[/green]')
             
             dir_path = os.path.join(tikt_prnt_path, tiktok_user)
                 

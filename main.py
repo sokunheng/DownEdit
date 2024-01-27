@@ -9,6 +9,7 @@ from downedit.image import __main__ as gen_img_ai
 from downedit.video import __main__ as video_edit
 from downedit.common import DE_VERSION
 
+
 def display_banner():
     os.system("cls" if os.name == "nt" else "clear")
     os.system("title DownEdit" if os.name == "nt" else "")
@@ -31,17 +32,35 @@ def main():
     while True:
         try:
             display_banner()
-            questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=[
-                ' Edit Video', ' Download Video', ' AI-Generative Image', ' Exit'])]
-            answers = inquirer.prompt(questions)
+            choices = [ ' Edit Video',
+                       f' AI Edit Video',
+                       f' Edit Photo',
+                       f' AI Edit Photo',
+                        ' Download Video',
+                        ' AI-Generative Image',
+                       f' AI-Generative Video',
+                        ' Exit']
 
-            if answers['list'] == ' Edit Video':
+            questions = [inquirer.List(
+                'list', message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=choices)]
+            answers = inquirer.prompt(questions)
+            selected_tool = answers['list']
+
+            if selected_tool == ' Edit Video':
                 video_edit.main()
-            elif answers['list'] == ' Download Video':
+            elif selected_tool == ' AI ':
+                pass
+            elif selected_tool == ' ':
+                pass
+            elif selected_tool == ' AI ':
+                pass
+            elif selected_tool == ' Download Video':
                 vid_dl.main()
-            elif answers['list'] == ' AI-Generative Image':
+            elif selected_tool == ' AI-Generative Image':
                 gen_img_ai.main()
-            elif answers['list'] == ' Exit':
+            elif selected_tool == ' AI-Genera':
+                pass
+            elif selected_tool == ' Exit':
                 break
         except Exception as e:
             print(
