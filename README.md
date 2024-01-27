@@ -9,7 +9,7 @@
 
 ## ✨ Preview
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/44894784/200809403-2cee8c01-7f24-400e-8c13-734ea0a47abc.gif" alt="animated" />
+  <img src="https://github.com/sokunheng/DownEdit/assets/44894784/d48f25d4-17ea-47ea-b5df-df8c411ba542.gif" alt="animated" />
 </p>
 
 ## 🔥 Current Features
