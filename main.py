@@ -33,12 +33,12 @@ def main():
         try:
             display_banner()
             choices = [ ' Edit Video',
-                       f' AI Edit Video',
-                       f' Edit Photo',
-                       f' AI Edit Photo',
+                       f' AI Edit Video {Fore.RED}(Soon)',
+                       f' Edit Photo {Fore.RED}(Soon)',
+                       f' AI Edit Photo {Fore.RED}(Soon)',
                         ' Download Video',
                         ' AI-Generative Image',
-                       f' AI-Generative Video',
+                       f' AI-Generative Video {Fore.RED}(Soon)',
                         ' Exit']
 
             questions = [inquirer.List(
@@ -48,17 +48,17 @@ def main():
 
             if selected_tool == ' Edit Video':
                 video_edit.main()
-            elif selected_tool == ' AI ':
+            elif selected_tool == ' AI Edit Video (Soon)':
                 pass
-            elif selected_tool == ' ':
+            elif selected_tool == ' Edit Photo (Soon)':
                 pass
-            elif selected_tool == ' AI ':
+            elif selected_tool == ' AI Edit Photo (Soon)':
                 pass
             elif selected_tool == ' Download Video':
                 vid_dl.main()
             elif selected_tool == ' AI-Generative Image':
                 gen_img_ai.main()
-            elif selected_tool == ' AI-Genera':
+            elif selected_tool == ' AI-Generative Video (Soon)':
                 pass
             elif selected_tool == ' Exit':
                 break
