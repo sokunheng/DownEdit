@@ -1,9 +1,6 @@
 from colorama import *
 import requests
 import requests_random_user_agent
-import random
-import string
-
 
 class EnterpixAPI:
     def __init__(self) -> None:
@@ -36,7 +33,7 @@ class EnterpixAPI:
         self.headers['User-Agent'] = user_gen
         self.headers['Referer'] = f"{self.base_url}/search/{prompt}"
         
-        param = { "prompt": prompt, "start": start, "length": amount, "platform": self.platform}
+        param = {"prompt": prompt, "start": start, "length": amount, "platform": self.platform}
 
         with requests.Session() as s:
             response = s.post(self.base_url + self.search_endpoint, headers=self.headers, json=param)

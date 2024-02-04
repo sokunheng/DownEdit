@@ -3,7 +3,7 @@ import time
 
 from pystyle import *
 from colorama import *
-from downedit.common import *
+from downedit.utils.common import *
 
 def main():
     pass

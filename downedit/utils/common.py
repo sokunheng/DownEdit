@@ -1,29 +1,32 @@
 import os
+import random
 import time
 
-from colorama import *
-import inquirer
-from downedit.tool_selector import ToolSelector
-from downedit.video.video_editor import *
+from downedit.utils.tool_selector import ToolSelector
+from downedit.utils.video.video_editor import *
+from downedit.utils.image.image_editor import *
+from downedit.utils.image.image_process import *
+from downedit.video import *
+from downedit.download.downloader import Download
 from rich.traceback import install
 from rich.console import Console
+from colorama import *
 from pystyle import *
-from downedit.video import *
-from downedit.download.downloader import Download as dl
 
 EDITED_PATH = "Edited"
 TIK_TOK = "Tiktok"
 DOUYIN = "Douyin"
 KUAISHOU = "Kuaishou"
-
 IMG_GEN = "AI_Art"
+AI_EDITOR = "AI_Editor"
+DE_VERSION = open('version', 'r').read().strip()
 
 video_editor = VideoEditor()
+ai_img_editor = ImageEditor()
 install()
 console = Console()
 tool_selector = ToolSelector()
-
-DE_VERSION = open('version', 'r').read().strip()
+download = Download()
 
 class Common:
 
@@ -49,4 +52,14 @@ class Common:
                 return dir_path
             counter += 1
     
-            
+    def generate_prompt():
+        subjects = ['A cat', 'The sun', 'A dog',
+                    'The ocean', 'The moon', 'The Earth', 'A robot']
+        verbs = ['jumps', 'shines', 'laughs', 'reflects', 'dances', 'sleeps']
+        adjectives = ['happy', 'bright', 'playful',
+                    'mysterious', 'colorful', 'beautiful']
+        objects = ['on the roof', 'on galaxy', 'in the sky',
+                'at the party', 'under the moon', 'in the forest']
+
+        sentence = f"{random.choice(subjects)} {random.choice(verbs)} {random.choice(adjectives)} {random.choice(objects)}"
+        return sentence

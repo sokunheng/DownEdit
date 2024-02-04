@@ -5,7 +5,7 @@ from colorama import *
 from rich.traceback import install
 from rich.console import Console
 from pystyle import *
-from downedit.common import * 
+from downedit.utils.common import * 
 
 class RenderVideo:
     
@@ -14,7 +14,7 @@ class RenderVideo:
     
     def process_videos(video_folder, output_folder, process_function: int, threads: int, preset, speed_factor = 1, music_path=None):
 
-        next_folder= None
+        next_folder = None
         
         file_list = os.listdir(video_folder)
         
@@ -100,7 +100,7 @@ class RenderVideo:
         else:
             print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}No videos were processed.")
         
-        time.sleep(1)
+        time.sleep(0.5)
         console.log(f'[cyan][File][/cyan] Processed [green]{len(clip_list)}[/green] videos successfully.')
         time.sleep(0.5)
         print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))

@@ -1,12 +1,12 @@
 from selenium import webdriver
 import undetected_chromedriver as uc
 
-from downedit.common import *
+from downedit.utils.common import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from .api import TiktokAPI
+from ...utils.requests.tiktok_api import TiktokAPI
 
 
 class TikTokExtractor:
@@ -54,7 +54,7 @@ class TikTokExtractor:
                     
                     download_link, video_title = api.tmate_dl(link=video_url)
                 
-                dl.download_video(folder_path=folder_path, download_url=download_link, file_name=video_title)
+                download._video(folder_path=folder_path, download_url=download_link, file_name=video_title, file_extension=".mp4")
 
                 if button.is_enabled():
                     button.click()

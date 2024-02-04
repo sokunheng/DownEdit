@@ -3,12 +3,11 @@ import time
 
 from pystyle import *
 from colorama import *
-from downedit.common import *
+from downedit.utils.common import *
 from downedit.site.enterpix import __main__ as enterpix
+from downedit.site.lexica import __main__ as lexica
 
 def display_banner():
-    os.system("cls" if os.name == "nt" else "clear")
-    os.system("title DownEdit" if os.name == "nt" else "")
     banner_display = f"""{Fore.MAGENTA} 
 ░█████╗░██╗  ██╗███╗░░░███╗░█████╗░░██████╗░███████╗░░░░░░░██████╗░███████╗███╗░░██╗
 ██╔══██╗██║  ██║████╗░████║██╔══██╗██╔════╝░██╔════╝░░░░░░██╔════╝░██╔════╝████╗░██║
@@ -23,20 +22,19 @@ def display_banner():
 
 
 def main():
-    while True:
+    while tool_selector.running:
         banner_display, banner_msg = display_banner()
-        print(Center.XCenter(banner_display))
-        print(f'{Fore.GREEN}')
-        print(Box.DoubleCube(banner_msg))
-        questions = [inquirer.List('list', message=f"{Fore.YELLOW}Select Models{Fore.WHITE}", choices=[
-                        ' Enterpix', ' Back'])]
-        answers = inquirer.prompt(questions)
-        selected_tool = answers['list']
+        tool_selector.display_banner(banner_display, banner_msg, "- generative ai")
         
-        if selected_tool == ' Enterpix':
-            enterpix.main()
-        elif selected_tool == ' Back':
-            break
+        choices = [" Stable Diffusion", " Lexica Aperture", " Back"]
+        selected_tool = tool_selector.select_menu(message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=choices)
+        menu_list = {
+            " Stable Diffusion": enterpix.main,
+            " Lexica Aperture": lexica.main,
+            " Back": lambda: None
+        }
+        
+        tool_selector.execute_menu(selected_tool, menu_list)
 
 if __name__ == "__main__":
     main()

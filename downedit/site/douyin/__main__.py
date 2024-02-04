@@ -5,7 +5,7 @@ from pystyle import *
 from colorama import *
 from rich.traceback import install
 from rich.console import Console
-from downedit.common import *
+from downedit.utils.common import *
 
 def display_banner():
     

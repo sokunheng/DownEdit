@@ -1,0 +1,4 @@
+$(VENV_NAME)/
+__pycache__/:
+    @echo "Removing __pycache__"
+    @find . -name __pycache__ -exec rm -rf {} \;
