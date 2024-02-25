@@ -17,3 +17,5 @@ torchvision
 pillow
 opencv-python
 gdown
+wmi
+psutil
