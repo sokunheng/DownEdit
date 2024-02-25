@@ -1,7 +1,11 @@
 import os
 import sys
+import platform
 
 try:
+    import wmi
+    import psutil
+    
     from downedit.site import __main__ as vid_dl
     from downedit.image.ai_gen import __main__ as gen_img_ai
     from downedit.image.ai_editor import __main__ as ai_img_editor
@@ -17,18 +21,37 @@ except ImportError as e:
     os.system("pip install -r requirements.txt")
     print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
 
+def get_pc_cpu():
+    cpu_info = wmi.WMI().Win32_Processor()[0]
+    cpu_name = cpu_info.Name
+    cpu_cores = os.cpu_count()
+    
+    return f"{cpu_name} ({cpu_cores} cores)"
+
+def pc_info():
+    pc_os = platform.system() + " " + platform.release() + f" ({platform.architecture()[0]})"
+    pc_user = platform.node()
+    pc_cpu = get_pc_cpu()
+    pc_ram = psutil.virtual_memory().total / (1024**3)
+    gpu_info = wmi.WMI().Win32_VideoController()[0]
+    pc_gpu = gpu_info.Description if gpu_info.Description else "No GPU found"
+
+    return pc_os, pc_user, pc_cpu, pc_ram, pc_gpu
 
 def display_banner():
-    banner_display = f"""{Fore.MAGENTA}
-██████╗░░█████╗░░██╗░░░░░░░██╗███╗░░██╗░░░░░░███████╗██████╗░██╗████████╗
-██╔══██╗██╔══██╗░██║░░██╗░░██║████╗░██║░░░░░░██╔════╝██╔══██╗██║╚══██╔══╝
-██║░░██║██║░░██║░╚██╗████╗██╔╝██╔██╗██║█████╗█████╗░░██║░░██║██║░░░██║░░░
-██║░░██║██║░░██║░░████╔═████║░██║╚████║╚════╝██╔══╝░░██║░░██║██║░░░██║░░░
-██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██║░╚███║░░░░░░███████╗██████╔╝██║░░░██║░░░
-╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝░░╚══╝░░░░░░╚══════╝╚═════╝░╚═╝░░░╚═╝░░░
-                      Created by HengSok - v{DE_VERSION}
-            """
-    banner_msg = "Use arrow key to select the options"
+    pc_os, pc_user, pc_cpu, pc_ram, pc_gpu = pc_info()
+
+    banner_display = f"""
+{Fore.MAGENTA}██████╗░███████╗{Back.RESET}  {Back.RED}{Fore.BLACK}sokunheng@GitHub - DownEdit v{DE_VERSION}{Fore.RESET}{Back.RESET}
+{Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}--------------------------{Back.RESET}
+{Fore.MAGENTA}██║░░██║█████╗░░{Back.RESET}  {Fore.CYAN}OS:  {Fore.YELLOW}{pc_os}, {pc_user}{Fore.RESET}
+{Fore.MAGENTA}██║░░██║██╔══╝░░{Back.RESET}  {Fore.CYAN}CPU: {Fore.YELLOW}{pc_cpu}{Fore.RESET}
+{Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.CYAN}RAM: {Fore.YELLOW}{pc_ram:.3f} GB{Fore.RESET}
+{Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.CYAN}GPU: {Fore.YELLOW}{pc_gpu}{Fore.RESET}
+"""
+            
+    banner_msg = """Use arrow key to select the options"""
+    
     return banner_display, banner_msg
 
 
@@ -37,7 +60,7 @@ def main():
         tool_selector.running = True
         try:
             banner_display, banner_msg = display_banner()
-            tool_selector.display_banner(banner_display, banner_msg)
+            tool_selector.display_banner(banner_display, banner_msg, title=" - Main Menu")
             choices = [' Edit Video',
                        f' AI Edit Video {Fore.RED}(Soon)',
                        f' Edit Photo',
