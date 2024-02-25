@@ -1,4 +1,6 @@
-<h1 align="center">DownEdit</h1>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sokunheng/DownEdit/docs/asset/logo.png" alt="logo" />
+</p>
 
 ![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
 
