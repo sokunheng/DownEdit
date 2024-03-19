@@ -19,11 +19,20 @@ class Download:
         current_time = datetime.now().strftime("%H:%M:%S")
         return current_time
 
-    def clean_file_name(self, file_name):
-        cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)        
+    def clean_file_name(self, folder_location: str, file_name: str, file_extension: str) -> str:
+        cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)
+        dir_path = os.path.join(folder_location, cleaned_name + file_extension)
+        
         if cleaned_name == "" or cleaned_name.isspace():
-            cleaned_name = str(time.time()).replace(".", "")
-        return cleaned_name
+            counter = 1
+            while True:
+                final_name = f"{cleaned_name}{counter}{file_extension}"
+                dir_path = os.path.join(folder_location, final_name)
+                if not os.path.exists(dir_path):
+                    return dir_path
+                counter += 1
+                
+        return dir_path
     
     def _get_file_info(self, download_url):
         file_bytes = requests.get(download_url, stream=True)
@@ -74,9 +83,8 @@ class Download:
         limit_title = file_name[:80]
         print(f"\n{Fore.CYAN}[{self.get_time()}] {Fore.YELLOW}[Title] {Fore.GREEN}{limit_title}\r")
 
-        cleaned_name = self.clean_file_name(file_name)
-        file_path = os.path.join(folder_path, f"{cleaned_name}{file_extension}")
-
+        file_path = self.clean_file_name(folder_path, file_name, file_extension)
+        
         if not os.path.exists(file_path):
             return file_path
         elif os.path.exists(file_path):
