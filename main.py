@@ -46,13 +46,13 @@ def display_banner():
     pc_os, pc_user, pc_cpu, pc_ram, pc_gpu = pc_info()
 
     banner_display = f"""
-{Fore.MAGENTA}██████╗░███████╗{Back.RESET}  {Back.RED}{Fore.BLACK}sokunheng@GitHub - DownEdit v{DE_VERSION}{Fore.RESET}{Back.RESET}
-{Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}--------------------------{Back.RESET}
-{Fore.MAGENTA}██║░░██║█████╗░░{Back.RESET}  {Fore.CYAN}OS:  {Fore.YELLOW}{pc_os}, {pc_user}{Fore.RESET}
-{Fore.MAGENTA}██║░░██║██╔══╝░░{Back.RESET}  {Fore.CYAN}CPU: {Fore.YELLOW}{pc_cpu}{Fore.RESET}
-{Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.CYAN}RAM: {Fore.YELLOW}{pc_ram:.3f} GB{Fore.RESET}
-{Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.CYAN}GPU: {Fore.YELLOW}{pc_gpu}{Fore.RESET}
-"""
+    {Fore.MAGENTA}██████╗░███████╗{Back.RESET}  {Back.RED}{Fore.BLACK}sokunheng@GitHub - DownEdit v{DE_VERSION}{Fore.RESET}{Back.RESET}
+    {Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}--------------------------{Back.RESET}
+    {Fore.MAGENTA}██║░░██║█████╗░░{Back.RESET}  {Fore.CYAN}OS:  {Fore.YELLOW}{pc_os}, {pc_user}{Fore.RESET}
+    {Fore.MAGENTA}██║░░██║██╔══╝░░{Back.RESET}  {Fore.CYAN}CPU: {Fore.YELLOW}{pc_cpu}{Fore.RESET}
+    {Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.CYAN}RAM: {Fore.YELLOW}{pc_ram:.3f} GB{Fore.RESET}
+    {Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.CYAN}GPU: {Fore.YELLOW}{pc_gpu}{Fore.RESET}
+    """
             
     banner_msg = """Use arrow key to select the options"""
     
