@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/sokunheng/DownEdit/blob/main/docs/asset/logo.png?raw=true" alt="logo" />
+  <img src="https://github.com/sokunheng/DownEdit/blob/main/docs/logo.png?raw=true" alt="logo" />
 </p>
 
 ![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
