@@ -1,4 +1,4 @@
-from downedit.agents.models.de_net import DownEditNet
+from downedit.agents.models.denet.de_net import DownEditNet
 
 import torch
 import torch.nn as nn
