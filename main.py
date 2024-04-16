@@ -2,13 +2,16 @@ import os
 import sys
 import platform
 
+logger = Logger("Programs")
+
 try:
     import wmi
     import psutil
 
     from pystyle import *
     from colorama import *
-
+    
+    from downedit.utils.logger import Logger
     from downedit.site import __main__ as vid_dl
     from downedit.edit.image.ai_gen import __main__ as gen_img_ai
     from downedit.edit.image.ai_editor import __main__ as ai_img_editor
@@ -17,13 +20,10 @@ try:
     from downedit.utils.common import DE_VERSION, tool_selector
     
 except ImportError as e:
-    print(f"[Programs] [Error] {str(e)}")
+    logger.error(str(e))
     os.system("pip install -r requirements.txt")
-    print(
-        input(
-            f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."
-        )
-    )
+    logger.info(input("Press enter to continue..."))
+
 
 def get_pc_cpu():
     cpu_info = wmi.WMI().Win32_Processor()[0]
@@ -103,19 +103,11 @@ def main():
             )
 
         except Exception as e:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}{str(e[:80])}"
-            )
-            print(
-                input(
-                    f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."
-                )
-            )
+            logger.error(str(e[:80]))
+            logger.info(input("Press enter to continue..."))
             
         except KeyboardInterrupt as e:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[System] {Fore.RED} Skipping the process.."
-            )
+            logger.info("Skipping the process..")
         
 
 if __name__ == "__main__":
