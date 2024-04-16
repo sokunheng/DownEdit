@@ -2,7 +2,6 @@ import os
 import sys
 import platform
 
-logger = Logger("Programs")
 
 try:
     import wmi
@@ -11,13 +10,12 @@ try:
     from pystyle import *
     from colorama import *
     
-    from downedit.utils.logger import Logger
     from downedit.site import __main__ as vid_dl
     from downedit.edit.image.ai_gen import __main__ as gen_img_ai
     from downedit.edit.image.ai_editor import __main__ as ai_img_editor
     from downedit.edit.image.editor import __main__ as img_editor
     from downedit.edit.video import __main__ as video_edit
-    from downedit.utils.common import DE_VERSION, tool_selector
+    from downedit.utils.common import DE_VERSION, tool_selector, logger
     
 except ImportError as e:
     logger.error(str(e))

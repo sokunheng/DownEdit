@@ -2,18 +2,21 @@ import os
 import random
 import time
 
+from colorama import *
+from pystyle import *
+from rich.traceback import install
+from rich.console import Console
+
+from downedit.edit.video import *
 from downedit.utils.tool_selector import ToolSelector
 from downedit.utils.video.video_editor import *
 from downedit.utils.image.image_editor import *
 from downedit.utils.image.image_process import *
-from downedit.edit.video import *
+from downedit.utils.logger import Logger
 from downedit.download.downloader import Download
 from downedit.download.downloader import ImageDL
 from downedit.download.downloader import VideoDL
-from rich.traceback import install
-from rich.console import Console
-from colorama import *
-from pystyle import *
+
 
 EDITED_VIDEO = "Edited_Video"
 EDITED_IMG = "Edited_Photo"
@@ -29,6 +32,8 @@ ai_img_editor = ImageEditor()
 install()
 console = Console()
 tool_selector = ToolSelector()
+
+logger = Logger("Programs")
 
 class Common:
 
