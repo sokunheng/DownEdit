@@ -6,6 +6,9 @@ try:
     import wmi
     import psutil
     
+    from pystyle import *
+    from colorama import *
+    
     from downedit.site import __main__ as vid_dl
     from downedit.image.ai_gen import __main__ as gen_img_ai
     from downedit.image.ai_editor import __main__ as ai_img_editor
@@ -13,13 +16,14 @@ try:
     from downedit.video import __main__ as video_edit
     from downedit.utils.common import DE_VERSION, tool_selector
     
-    from pystyle import *
-    from colorama import *
-    
 except ImportError as e:
     print(f"[Programs] [Error] {str(e)}")
     os.system("pip install -r requirements.txt")
-    print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+    print(
+        input(
+            f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."
+        )
+    )
 
 def get_pc_cpu():
     cpu_info = wmi.WMI().Win32_Processor()[0]
@@ -60,15 +64,22 @@ def main():
         tool_selector.running = True
         try:
             banner_display, banner_msg = display_banner()
-            tool_selector.display_banner(banner_display, banner_msg, title=" - Main Menu")
-            choices = [' Edit Video',
-                       f' AI Edit Video {Fore.RED}(Soon)',
-                       f' Edit Photo',
-                       f' AI Edit Photo',
-                       ' Download Video',
-                       ' AI-Generative Image',
-                       f' AI-Generative Video {Fore.RED}(Soon)',
-                       ' Exit']
+            
+            tool_selector.display_banner(
+                banner_display,
+                banner_msg, title=" - Main Menu"
+            )
+            
+            choices = [
+                ' Edit Video',
+                f' AI Edit Video {Fore.RED}(Soon)',
+                ' Edit Photo',
+                ' AI Edit Photo',
+                ' Download Video',
+                ' AI-Generative Image',
+                f' AI-Generative Video {Fore.RED}(Soon)',
+                ' Exit'
+            ]
 
             menu_list = {
                 " Edit Video": video_edit.main,
@@ -81,15 +92,30 @@ def main():
                 " Exit": lambda: sys.exit(0)
             }
 
-            selected = tool_selector.select_menu(message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=choices)
-            tool_selector.execute_menu(selected, menu_list)
+            selected = tool_selector.select_menu(
+                message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
+                choices=choices
+            )
+            
+            tool_selector.execute_menu(
+                selected,
+                menu_list
+            )
 
         except Exception as e:
-            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}{str(e[:80])}")
-            print(input(f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+            print(
+                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}{str(e[:80])}"
+            )
+            print(
+                input(
+                    f"\n{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."
+                )
+            )
             
         except KeyboardInterrupt as e:
-            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[System] {Fore.RED} Skipping the process..")
+            print(
+                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[System] {Fore.RED} Skipping the process.."
+            )
         
 
 if __name__ == "__main__":
