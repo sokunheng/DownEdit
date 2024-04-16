@@ -43,8 +43,8 @@ def lexica_generate(user_prompt, img_folder_path, total_amount, download_chunk=2
                     if total_amount > 0:
                         img_title = img.get("id")
                         download_link = "https://image.lexica.art/full_webp/" + img_title
-                        download._image(folder_path=img_folder_path, download_url=download_link,
-                                        file_name=img_title, file_extension=".jpg")
+                        image_dl = ImageDL(download_link, img_folder_path)
+                        image_dl.download(img_title, img_folder_path)
                         total_amount -= 1
 
         start_gen = next_page

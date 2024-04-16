@@ -54,7 +54,8 @@ class TikTokExtractor:
                     
                     download_link, video_title = api.tmate_dl(link=video_url)
                 
-                download._video(folder_path=folder_path, download_url=download_link, file_name=video_title, file_extension=".mp4")
+                video_dl = VideoDL(download_link, folder_path)
+                video_dl.download(video_title, folder_path)
 
                 if button.is_enabled():
                     button.click()

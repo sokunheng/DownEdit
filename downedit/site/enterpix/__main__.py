@@ -38,8 +38,9 @@ def enterpix_generate(user_prompt, img_folder_path, total_amount, download_chunk
         for img in generated_img:
             img_title = img.get("id")
             download_link = img.get("compressedUrl")
-            download._image(folder_path=img_folder_path, download_url=download_link,
-                            file_name=img_title, file_extension=".jpg")
+                        
+            image_dl = ImageDL(download_link, img_folder_path)
+            image_dl.download(img_title, img_folder_path)
 
         start_gen += download_amount
         total_amount -= download_amount

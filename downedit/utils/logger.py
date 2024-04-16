@@ -10,7 +10,13 @@ console = Console()
 class Logger:
     def __init__(self, name=None):
         self.name = name
-
+    
+    def time(self, time, info, message):
+        print(
+            f"\n{Fore.CYAN}[{time}] {Fore.YELLOW}[{info}] {Fore.WHITE}",
+            message
+        )
+        
     def info(self, message):
         print(
             f"\n{Fore.CYAN}[{self.name}] {Fore.YELLOW}[Status]{Fore.WHITE}",
@@ -25,24 +31,24 @@ class Logger:
     
     def folder_info(self, message):
         console.log(
-            "[red][Folder][/red]",
+            "[red][FOLDER][/red]",
             message
         ) 
         
     def folder_error(self, message):
         console.log(
-            "[red][Folder][/red]",
+            "[red][FOLDER][/red]",
             message
         ) 
         
     def file_info(self, message):
         console.log(
-            "[red][Folder][/red]",
+            "[red][FILE][/red]",
             message
         )
         
     def file_error(self, message):
         console.log(
-            "[red][Folder][/red]",
+            "[red][FILE][/red]",
             message
         )

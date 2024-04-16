@@ -8,6 +8,8 @@ from downedit.utils.image.image_editor import *
 from downedit.utils.image.image_process import *
 from downedit.edit.video import *
 from downedit.download.downloader import Download
+from downedit.download.downloader import ImageDL
+from downedit.download.downloader import VideoDL
 from rich.traceback import install
 from rich.console import Console
 from colorama import *
@@ -27,7 +29,6 @@ ai_img_editor = ImageEditor()
 install()
 console = Console()
 tool_selector = ToolSelector()
-download = Download()
 
 class Common:
 
