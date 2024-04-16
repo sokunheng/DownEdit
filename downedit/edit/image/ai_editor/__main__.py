@@ -1,13 +1,13 @@
 import os
 import time
-
+import gdown
 
 from pystyle import *
 from colorama import *
-from downedit.utils.common import *
-from ...utils.image.image_process import *
 from pathlib import Path
-import gdown
+
+from downedit.utils.common import *
+from downedit.utils.image.image_process import *
 
 def check_model():
             
@@ -37,11 +37,11 @@ def check_model():
 def rm_background(image_folder, output_folder=None):
     try:  
         check_ml_dir = check_model()
-         
+        
         file_folder = os.listdir(image_folder)
         file_list = ai_img_editor.get_img_list(file_folder)
-        
         file_list_check = Common.check_file_folder_exist(image_folder)
+        
         if not file_list_check:
             return
 
@@ -51,8 +51,14 @@ def rm_background(image_folder, output_folder=None):
                 image_filename = Path(file).stem
                 input_path = os.path.join(image_folder, file)
 
-                RenderImage._remove_bg(model_dir = check_ml_dir, input_imag_path=input_path, img_name=image_filename,
-                                       img_extension="_rm_bg.png", output_imag_path=output_folder)
+                RenderImage._remove_bg(
+                    model_dir=check_ml_dir,
+                    input_imag_path=input_path,
+                    img_name=image_filename,
+                    img_extension="_rm_bg.png",
+                    output_imag_path=output_folder
+                )
+                
         time.sleep(0.2)
         console.log(f'[cyan][File][/cyan] Processed [green]{len(file_list)}[/green] photos successfully.')
         time.sleep(0.3)

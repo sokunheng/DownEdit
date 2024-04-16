@@ -20,8 +20,13 @@ class ToolSelector:
         self.show_box(message)
 
     def select_menu(self, message, choices):
-        questions = [inquirer.List(
-            'list', message=message, choices=choices)]
+        questions = [
+            inquirer.List(
+                'list',
+                message=message,
+                choices=choices
+            )
+        ]
         answers = inquirer.prompt(questions)
         return answers['list']
 
@@ -38,7 +43,9 @@ class ToolSelector:
         self.display_banner(banner=banner, message=message)
         choices = [ ' Single User', ' Batch Users', ' Exit' ]
         question = self.select_menu(
-            message=f"{Fore.YELLOW}Select Option{Fore.WHITE}", choices=choices)
+            message=f"{Fore.YELLOW}Select Option{Fore.WHITE}",
+            choices=choices
+        )
         return question
 
     def single_user_select(self, banner, message):
@@ -47,7 +54,8 @@ class ToolSelector:
         user_input = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
         if user_input is None:
             print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter User Name!")
+                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter User Name!"
+            )
         return user_input
 
     def batch_user_select(self, banner, message):
@@ -56,7 +64,8 @@ class ToolSelector:
         file_path = input(f"{Fore.YELLOW}Enter File Path:{Fore.WHITE} ")
         if file_path is None:
             print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter File Path!")
+                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter File Path!"
+            )
         try:
             with open(file_path, 'r') as file:
                 users = file.readlines()
@@ -64,5 +73,6 @@ class ToolSelector:
                 return users
         except FileNotFoundError:
             print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}File not found or could not be opened.")
+                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}File not found or could not be opened."
+            )
             return []

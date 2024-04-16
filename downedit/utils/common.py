@@ -6,7 +6,7 @@ from downedit.utils.tool_selector import ToolSelector
 from downedit.utils.video.video_editor import *
 from downedit.utils.image.image_editor import *
 from downedit.utils.image.image_process import *
-from downedit.video import *
+from downedit.edit.video import *
 from downedit.download.downloader import Download
 from rich.traceback import install
 from rich.console import Console

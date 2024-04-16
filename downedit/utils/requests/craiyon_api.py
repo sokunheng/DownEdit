@@ -48,8 +48,11 @@ class CraiyonAPI:
         )
 
         with requests.Session() as s:
-            response = s.post(self.base_url + self.search_endpoint,
-                              headers=self.headers, data=bytes(multipart_body, 'utf-8'))
+            response = s.post(
+                self.base_url + self.search_endpoint,
+                headers=self.headers,
+                data=bytes(multipart_body, 'utf-8')
+            )
             
             if response.status_code == 200:
                 return response.json()

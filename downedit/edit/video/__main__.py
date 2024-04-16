@@ -2,8 +2,8 @@ import os
 from enum import Enum
 from colorama import *
 from pystyle import *
-from ..utils.common import *
-from ..utils.video.video_process import *
+from ...utils.common import *
+from ...utils.video.video_process import *
 import multiprocessing
 
 

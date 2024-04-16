@@ -35,7 +35,11 @@ class LexicaAPI:
         param = {"text": prompt, "model": self.platform, "searchMode": "images", "source": "search", "cursor": amount}
 
         with requests.Session() as s:
-            response = s.post(self.base_url + self.search_endpoint, headers=self.headers, json=param)
+            response = s.post(
+                self.base_url + self.search_endpoint,
+                headers=self.headers,
+                json=param
+            )
 
             if response.status_code == 200:
                 return response.json()
