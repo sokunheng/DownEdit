@@ -6,8 +6,11 @@ from datetime import datetime
 from typing import Optional, Union
 from colorama import Fore
 
-from .common import logger
+from .logger import Logger
 from .constants import CHUNK_SIZE
+
+
+logger = Logger("Programs")
 
 
 def _current_time():
