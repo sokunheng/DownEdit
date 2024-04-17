@@ -1,6 +1,7 @@
 import os
-from colorama import Fore
 import inquirer
+
+from colorama import Fore
 from pystyle import *
 from colorama import *
 
