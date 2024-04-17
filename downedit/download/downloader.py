@@ -11,9 +11,9 @@ from abc import ABC, abstractmethod
 from ..utils.common import *
 from ..utils.logger import Logger
 from ..utils.file import FileUtil, _current_time
+from ..utils.constants import CHUNK_SIZE
 
 logger = Logger("Programs")
-CHUNK_SIZE = 1024
 
 class Download(ABC):
     
