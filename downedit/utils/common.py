@@ -18,13 +18,12 @@ from downedit.download.downloader import Download
 from downedit.download.downloader import ImageDL
 from downedit.download.downloader import VideoDL
 
+install()
 
 video_editor = VideoEditor()
 ai_img_editor = ImageEditor()
-install()
 console = Console()
 tool_selector = ToolSelector()
-
 logger = Logger("Programs")
 
 class Common:
