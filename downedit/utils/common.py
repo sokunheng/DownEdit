@@ -9,9 +9,9 @@ from rich.console import Console
 
 from ..edit.video import *
 from ..utils.tool_selector import ToolSelector
-from ..utils.video.video_editor import *
-from ..utils.image.image_editor import *
-from ..utils.image.image_process import *
+from ..edit.video.video_editor import *
+from ..edit.image.editor.image_editor import *
+from ..edit.image.editor.image_process import *
 from ..utils.constants import *
 from ..utils.logger import Logger
 from ..download.downloader import Download

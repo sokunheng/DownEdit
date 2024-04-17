@@ -6,7 +6,7 @@ from colorama import *
 from pystyle import *
 
 from ...utils.common import *
-from ...utils.video.video_process import *
+from .video_process import *
 
 
 class Tools(Enum):

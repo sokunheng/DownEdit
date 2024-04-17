@@ -9,7 +9,7 @@ from datetime import datetime
 from PIL import Image
 
 from downedit.utils.common import *
-from downedit.utils.image.ml.ai_remove_bg import remove_background
+from downedit.edit.image.ai_editor.ai_remove_bg import remove_background
 
 class RenderImage:
     def __init__(self) -> None:

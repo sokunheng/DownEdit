@@ -7,7 +7,7 @@ from colorama import *
 from pathlib import Path
 
 from downedit.utils.common import *
-from downedit.utils.image.image_process import *
+from downedit.edit.image.editor.image_process import *
 
 def check_model():
             
