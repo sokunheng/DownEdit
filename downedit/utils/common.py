@@ -12,20 +12,12 @@ from downedit.utils.tool_selector import ToolSelector
 from downedit.utils.video.video_editor import *
 from downedit.utils.image.image_editor import *
 from downedit.utils.image.image_process import *
+from downedit.utils.constants import *
 from downedit.utils.logger import Logger
 from downedit.download.downloader import Download
 from downedit.download.downloader import ImageDL
 from downedit.download.downloader import VideoDL
 
-
-EDITED_VIDEO = "Edited_Video"
-EDITED_IMG = "Edited_Photo"
-TIK_TOK = "Tiktok"
-DOUYIN = "Douyin"
-KUAISHOU = "Kuaishou"
-IMG_GEN = "AI_Art"
-AI_EDITOR = "AI_Editor"
-DE_VERSION = open('version', 'r').read().strip()
 
 video_editor = VideoEditor()
 ai_img_editor = ImageEditor()
