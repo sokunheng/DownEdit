@@ -6,7 +6,7 @@ import json as JSON
 from pystyle import *
 from colorama import *
 from downedit.utils.common import *
-from downedit.utils.requests.enterpix_api import EnterpixAPI
+from downedit.site.enterpix.enterpix_api import EnterpixAPI
 
 
 def enterpix_generate(user_prompt, img_folder_path, total_amount, download_chunk=100):

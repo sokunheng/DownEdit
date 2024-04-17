@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from ...utils.requests.tiktok_api import TiktokAPI
+from .tiktok_api import TiktokAPI
 
 
 class TikTokExtractor:

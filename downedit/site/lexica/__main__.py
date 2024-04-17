@@ -6,7 +6,7 @@ import json as JSON
 from pystyle import *
 from colorama import *
 from downedit.utils.common import *
-from downedit.utils.requests.lexica_api import LexicaAPI
+from downedit.site.lexica.lexica_api import LexicaAPI
 
 
 def lexica_generate(user_prompt, img_folder_path, total_amount, download_chunk=200):
