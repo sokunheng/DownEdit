@@ -10,84 +10,11 @@ from abc import ABC, abstractmethod
 
 from ..utils.common import *
 from ..utils.logger import Logger
-
+from ..utils.file import FileUtil, _current_time
 
 logger = Logger("Programs")
 CHUNK_SIZE = 1024
 
-
-def _current_time():
-    return datetime.now().strftime("%H:%M:%S")
-
-def _normalize_filename(
-    folder_location: str,
-    file_name: str,
-    file_extension: str
-) -> str:
-    cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)
-    
-    dir_path = os.path.join(
-        folder_location,
-        cleaned_name + file_extension
-    )
-    
-    if cleaned_name == "" or cleaned_name.isspace():
-        counter = 1
-        while True:
-            final_name = f"{cleaned_name}{counter}{file_extension}"
-            dir_path = os.path.join(folder_location, final_name)
-            if not os.path.exists(dir_path):
-                return dir_path
-            counter += 1
-            
-    return dir_path
-
-def _check_file(
-    folder_path: str, 
-    file_name: str, 
-    file_extension: str
-) -> Union[str, bool]:
-        
-    limit_title = file_name[:80]
-    
-    logger.time(
-        time=_current_time(),
-        info="Title",
-        message=f"{Fore.GREEN}{limit_title}\r"
-    )
-    
-    file_path = _normalize_filename(
-        folder_path,
-        file_name, 
-        file_extension
-    )
-    
-    if not os.path.exists(file_path):
-        return file_path
-    elif os.path.exists(file_path):
-        logger.file_error(f"{Fore.GREEN}{file_name}{file_extension}{Fore.WHITE} already exists! Skipping...")
-        time.sleep(0.3)
-        return False
-    else:
-        logger.file_error("Invalid file! Skipping...")
-        time.sleep(0.3)
-        return False
-
-def _write_file(
-    file_path,
-    file_bytes,
-    size_default=0,
-    total_length=Optional[int]
-):                
-    with open(file_path, 'wb') as out_file:
-        for data in file_bytes.iter_content(chunk_size=CHUNK_SIZE):
-            size_default += len(data)
-            print('\r' +
-                    f"{Fore.CYAN}[Programs] {Fore.GREEN}[Download]{Fore.WHITE} " + '%s %.2f%%' %
-                    ('>' * int(size_default * 50 / total_length), float(size_default / total_length * 100)), end=' ')
-            out_file.write(data)
-            
-    
 class Download(ABC):
     
     def __init__(self, url, file_path):
@@ -102,7 +29,7 @@ class Download(ABC):
     def _start(self):
         pass
 
-        
+
 class VideoDL(Download):
     """
     Class for downloading video files.
@@ -125,9 +52,9 @@ class VideoDL(Download):
         
         logger.info(f"File size: {size:.4f} MB".format(size=total_length / CHUNK_SIZE / 1024))
         
-        _write_file(self.file_path, file_bytes, size, total_length)
+        FileUtil.write_file(self.file_path, file_bytes, size, total_length)
 
-    
+
     def download(
         self,
         file_name: str,
@@ -141,7 +68,7 @@ class VideoDL(Download):
         - file_name: The name of the file.
         - file_extension: The extension of the file.
         """
-        file_path = _check_file(folder_path, file_name, file_extension)
+        file_path = FileUtil.check_file(folder_path, file_name, file_extension)
         start_time = time.time()
         
         if not file_path:
@@ -178,14 +105,11 @@ class ImageDL(Download):
     def _start(self):
         """
         Starts the download process and provides feedback.
-        
-        - show_request_size: Shows the size of the file requested if true.
-        - show_file_size: Shows the size of the file downloaded.
         """
         size = 0
         file_bytes, total_length = self._get_file_info()
 
-        _write_file(self.file_path, file_bytes, size, total_length)
+        FileUtil.write_file(self.file_path, file_bytes, size, total_length)
 
         f_length = os.path.getsize(self.file_path)
         f_size = f_length / (1024 ** 2)
@@ -204,7 +128,7 @@ class ImageDL(Download):
         - file_name: The name of the file.
         - file_extension: The extension of the file.
         """
-        file_path = _check_file(folder_path, file_name, file_extension)
+        file_path = FileUtil.check_file(folder_path, file_name, file_extension)
         
         if not file_path:
             return
