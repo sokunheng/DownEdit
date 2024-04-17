@@ -7,15 +7,24 @@ from typing import Optional, Union
 from colorama import Fore
 
 from .common import logger
+from .constants import CHUNK_SIZE
 
-CHUNK_SIZE = 1024
 
 def _current_time():
     return datetime.now().strftime("%H:%M:%S")
 
 class FileUtil:
-    
-    def __init__(self, folder_path):
+    """
+    A class that provides utility functions for managing files.
+    """
+    def __init__(self, folder_path: str) -> None:
+        """
+        Initializes the FileUtil object with the specified folder path.
+
+        Args:
+            folder_path (str): The base folder path for file operations.
+        """
+
         self.folder_path = folder_path
     
     def check_file(
@@ -24,7 +33,19 @@ class FileUtil:
         file_name: str, 
         file_extension: str
     ) -> Union[str, bool]:
+        """
+        Checks if a file exists with the given name and extension within the specified folder path.
 
+        Args:
+            folder_path (str): The folder path to check.
+            file_name (str): The name of the file.
+            file_extension (str): The extension of the file (including the dot, e.g., ".mp4", ".jpeg").
+
+        Returns:
+            Union[str, bool]:
+                - str: The full file path if the file does not exist.
+                - bool: False if the file already exists, indicating skipping.
+        """
         limit_title = file_name[:80]
         
         logger.time(
@@ -52,11 +73,20 @@ class FileUtil:
 
     def write_file(
         self,
-        file_path,
-        file_bytes,
-        size_default=0,
-        total_length=Optional[int]
-    ):                
+        file_path: str,
+        file_bytes: bytes,
+        size_default: int = 0,
+        total_length: Optional[int] = 0,
+    ):   
+        """
+        Writes a file to the specified path with progress bar visualization.
+
+        Args:
+            file_path (str): The path to write the file to.
+            file_bytes (bytes): The content of the file as bytes.
+            size_default (int, optional): The starting size for tracking progress (defaults to 0).
+            total_length (int, optional): The total length of the file for calculating progress (optional).
+        """             
         with open(file_path, 'wb') as out_file:
             for data in file_bytes.iter_content(chunk_size=CHUNK_SIZE):
                 size_default += len(data)
@@ -71,6 +101,17 @@ class FileUtil:
         file_name: str,
         file_extension: str
     ) -> str:
+        """
+        Normalizes a filename by removing special characters and handling empty names.
+
+        Args:
+            folder_location (str): The folder location for the file.
+            file_name (str): The original filename.
+            file_extension (str): The extension of the file (including the dot, e.g., ".mp4", ".jpeg").
+
+        Returns:
+            str: The normalized filename with a path.
+        """
         cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)
         
         dir_path = os.path.join(
@@ -86,3 +127,24 @@ class FileUtil:
                 if not os.path.exists(dir_path):
                     return dir_path
                 counter += 1
+                
+    def get_file_list(
+        self,
+        file_list,
+        extension
+    ):
+        """
+        This function filters a list of files and returns a new list containing only files with the specified extension.
+
+        Args:
+            file_list: A list of filenames (strings).
+            extension: The extension to filter by (including the dot, e.g., ".mp4", ".jpeg").
+
+        Returns:
+            A list of filenames that have the provided extension.
+        """
+        filtered_files = []
+        for file in file_list:
+            if file.lower().endswith(extension):
+                filtered_files.append(file)
+        return filtered_files
