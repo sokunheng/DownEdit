@@ -7,16 +7,16 @@ from pystyle import *
 from rich.traceback import install
 from rich.console import Console
 
-from downedit.edit.video import *
-from downedit.utils.tool_selector import ToolSelector
-from downedit.utils.video.video_editor import *
-from downedit.utils.image.image_editor import *
-from downedit.utils.image.image_process import *
-from downedit.utils.constants import *
-from downedit.utils.logger import Logger
-from downedit.download.downloader import Download
-from downedit.download.downloader import ImageDL
-from downedit.download.downloader import VideoDL
+from ..edit.video import *
+from ..utils.tool_selector import ToolSelector
+from ..utils.video.video_editor import *
+from ..utils.image.image_editor import *
+from ..utils.image.image_process import *
+from ..utils.constants import *
+from ..utils.logger import Logger
+from ..download.downloader import Download
+from ..download.downloader import ImageDL
+from ..download.downloader import VideoDL
 
 install()
 
