@@ -1,10 +1,12 @@
 import os
+import multiprocessing
+
 from enum import Enum
 from colorama import *
 from pystyle import *
+
 from ...utils.common import *
 from ...utils.video.video_process import *
-import multiprocessing
 
 
 class Tools(Enum):
