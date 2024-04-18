@@ -29,6 +29,12 @@ class Logger:
             message
         )
     
+    def keybind(self, message):
+        print(
+            input(
+                f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}{message}"
+        ))
+    
     def folder_info(self, message):
         console.log(
             "[red][FOLDER][/red]",
