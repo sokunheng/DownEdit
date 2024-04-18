@@ -5,6 +5,9 @@ from colorama import Fore
 from pystyle import *
 from colorama import *
 
+from .logger import Logger 
+
+logger = Logger("Program")
 
 class ToolSelector:
     def __init__(self) -> None:
@@ -54,9 +57,7 @@ class ToolSelector:
         self.display_banner(banner=banner, message=message)
         user_input = input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
         if user_input is None:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter User Name!"
-            )
+            logger.error("Please Enter Username!")
         return user_input
 
     def batch_user_select(self, banner, message):
@@ -64,16 +65,12 @@ class ToolSelector:
         self.display_banner(banner=banner, message=message)
         file_path = input(f"{Fore.YELLOW}Enter File Path:{Fore.WHITE} ")
         if file_path is None:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}Please Enter File Path!"
-            )
+            logger.error("Please Enter File Path!")
         try:
             with open(file_path, 'r') as file:
                 users = file.readlines()
                 users = [user.strip() for user in users]
                 return users
         except FileNotFoundError:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}File not found or could not be opened."
-            )
+            logger.error("File not found or could not be opened.")
             return []
