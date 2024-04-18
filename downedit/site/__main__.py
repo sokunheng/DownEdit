@@ -26,22 +26,31 @@ def main():
     while tool_selector.running:
         try:
             banner_display, banner_msg = display_banner()
-            tool_selector.display_banner(banner_display, banner_msg)
-            questions = [' Douyin', ' Tiktok', ' Kuaishou', ' Back']
-
+            tool_selector.display_banner(
+                banner_display,
+                banner_msg
+            )
+            # TODO: Media Video Downloader Algorithm
+            questions = [
+                " Douyin",
+                " Tiktok",
+                " Kuaishou",
+                " Back"
+            ]
             selected = tool_selector.select_menu(
                 message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
                 choices=questions
             )
-
             menu_list = {
                 " Douyin": douyin.main,
                 " Tiktok": tiktok.main,
                 " Kuaishou": kuaishou.main,
-                " Back": lambda: None
+                " Back": lambda: None,
             }
-
-            tool_selector.execute_menu(selected, menu_list)
+            tool_selector.execute_menu(
+                selected,
+                menu_list
+            )
 
         except Exception as e:
             logger.error(f"{Fore.RED}{str(e[:80])}")
