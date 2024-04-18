@@ -38,7 +38,7 @@ class Common:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            console.log("[red][Folder][/red] Error Creating directory!")
+            logger.folder_error("Error Creating directory!")
             return directory_name
 
     def get_next_video_folder(output_folder):
@@ -52,7 +52,7 @@ class Common:
             
     def check_folder_exist(folder):
         if not os.path.exists(folder):
-            console.log("[red][Folder][/red] No such directory")
+            logger.folder_error("No such directory!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
@@ -60,7 +60,7 @@ class Common:
     
     def check_file_folder_exist(file_folder):
         if not file_folder:
-            console.log("[red][File][/red] No such file")
+            logger.file_error(" No such file!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
