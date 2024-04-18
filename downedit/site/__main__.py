@@ -31,22 +31,16 @@ def main():
                 banner_msg
             )
             # TODO: Media Video Downloader Algorithm
-            questions = [
-                " Douyin",
-                " Tiktok",
-                " Kuaishou",
-                " Back"
-            ]
-            selected = tool_selector.select_menu(
-                message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
-                choices=questions
-            )
             menu_list = {
                 " Douyin": douyin.main,
                 " Tiktok": tiktok.main,
                 " Kuaishou": kuaishou.main,
                 " Back": lambda: None,
             }
+            selected = tool_selector.select_menu(
+                message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
+                choices=list(menu_list.keys())
+            )
             tool_selector.execute_menu(
                 selected,
                 menu_list
