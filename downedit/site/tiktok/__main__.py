@@ -31,6 +31,11 @@ def main():
 
     if user_selection == ' Single User':
         tiktok_user = tool_selector.single_user_select(banner_display, "Example: tiktok")
+        
+        if not tiktok_user: 
+            logger.keybind("Press enter to continue...")
+            return
+        
         print(f'{Fore.GREEN}')
         dir_path = os.path.join(tikt_prnt_path, tiktok_user)
                 
@@ -40,11 +45,9 @@ def main():
         folder_path=user_folder, username=tiktok_user)
 
         if total_videos != 0:
-            console.log(
-                f'[cyan][File][/cyan] Downloaded [green]{total_videos}[/green] videos successfully.')
+            console.log(f'[cyan][File][/cyan] Downloaded [green]{total_videos}[/green] videos successfully.')
         else:
-            print(
-                f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}No videos were processed.")
+            print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}No videos were processed.")
             
     elif user_selection == ' Batch Users':
         user_list = tool_selector.batch_user_select(banner_display, "Example: C:\\Users\\User\\Desktop\\tiktok_users.txt")
@@ -61,11 +64,9 @@ def main():
                 folder_path=user_folder, username=tiktok_user)
 
             if total_videos != 0:
-                console.log(
-                    f'[cyan][File][/cyan] Downloaded [green]{total_videos}[/green] videos successfully.')
+                console.log(f'[cyan][File][/cyan] Downloaded [green]{total_videos}[/green] videos successfully.')
             else:
-                print(
-                    f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}No videos were processed.")
+                print(f"{Fore.YELLOW}[Programs] {Fore.MAGENTA}[Error] {Fore.RED}No videos were processed.")
 
     time.sleep(0.5)
     print(input(
