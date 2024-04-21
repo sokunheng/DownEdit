@@ -15,15 +15,35 @@ from ..utils.constants import CHUNK_SIZE
 
 logger = Logger("Programs")
 
+class DownloadFactory:
+    
+    @staticmethod
+    def create_dl(
+        self,
+        file_type: str, 
+        url: str,
+        file_path: str
+    ):
+        if file_type.lower() == "video":
+            return VideoDL(url, file_path)
+        elif file_type.lower() == "image":
+            return ImageDL(url, file_path)
+        else:
+            raise ValueError("Invalid file type")
+
 class Download(ABC):
     
     def __init__(self, url, file_path):
         self.url = url
         self.file_path = file_path
     
-    @abstractmethod
     def _get_file_info(self):
-        pass
+        file_bytes = requests.get(self.url, stream=True)
+        try:
+            total_length = int(file_bytes.headers.get("Content-Length"))
+        except:
+            total_length = None
+        return file_bytes, total_length
 
     @abstractmethod
     def _start(self):
@@ -34,14 +54,6 @@ class VideoDL(Download):
     """
     Class for downloading video files.
     """
-    
-    def _get_file_info(self):
-        file_bytes = requests.get(self.url, stream=True)
-        try:
-            total_length = int(file_bytes.headers.get("Content-Length"))
-        except:
-            total_length = None
-        return file_bytes, total_length
                 
     def _start(self):
         """
@@ -69,11 +81,11 @@ class VideoDL(Download):
         - file_extension: The extension of the file.
         """
         file_path = FileUtil.check_file(folder_path, file_name, file_extension)
-        start_time = time.time()
-        
+
         if not file_path:
             return
         
+        start_time = time.time()
         self._start()
         end_time = time.time()
         
@@ -87,20 +99,13 @@ class VideoDL(Download):
         )
 
         time.sleep(0.2)
+        return 
 
 
 class ImageDL(Download):
     """
     Class for downloading image files.
     """
-    
-    def _get_file_info(self):
-        file_bytes = requests.get(self.url, stream=True)
-        try:
-            total_length = int(file_bytes.headers.get("Content-Length"))
-        except:
-            total_length = None
-        return file_bytes, total_length
     
     def _start(self):
         """
