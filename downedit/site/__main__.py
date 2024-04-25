@@ -37,13 +37,10 @@ def main():
                 " Kuaishou": kuaishou.main,
                 " Back": lambda: None,
             }
-            selected = tool_selector.select_menu(
-                message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
-                choices=list(menu_list.keys())
-            )
-            tool_selector.execute_menu(
-                selected,
-                menu_list
+
+            tool_selector.start(
+                menu_options=menu_list,
+                input_message=f"{Fore.YELLOW}Select Media Platform{Fore.WHITE}"
             )
 
         except Exception as e:
