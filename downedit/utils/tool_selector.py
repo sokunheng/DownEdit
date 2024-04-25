@@ -92,7 +92,7 @@ class ToolSelector:
             if selected == " Back":
                 self.running = False
                 return
-            functions[selected].execute()
+            functions[selected]()
 
     def manual_select(
         self,
