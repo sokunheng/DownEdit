@@ -49,7 +49,7 @@ def main():
                 banner_msg, title=" - Main Menu"
             )
             
-            menu_list = {
+            available_tools = {
                 " Edit Video": video_edit.main,
                 f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
                 " Edit Photo": img_editor.main,
@@ -60,13 +60,9 @@ def main():
                 " Exit": lambda: sys.exit(0)
             }
             
-            selected = tool_selector.select_menu(
-                message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}",
-                choices=list(menu_list.keys())
-            )
-            tool_selector.execute_menu(
-                selected,
-                menu_list
+            tool_selector.start(
+                menu_options=available_tools,
+                input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
             )
 
         except Exception as e:
