@@ -81,7 +81,6 @@ class VideoDL(Download):
         - file_extension: The extension of the file.
         """
         file_path = FileUtil.check_file(folder_path, file_name, file_extension)
-
         if not file_path:
             return
         
@@ -97,7 +96,7 @@ class VideoDL(Download):
             info="File",
             message=f"{Fore.GREEN}{file_name}{file_extension}{Fore.YELLOW} Downloaded"
         )
-
+        
         time.sleep(0.2)
         return 
 
@@ -113,9 +112,9 @@ class ImageDL(Download):
         """
         size = 0
         file_bytes, total_length = self._get_file_info()
-
+        
         FileUtil.write_file(self.file_path, file_bytes, size, total_length)
-
+        
         f_length = os.path.getsize(self.file_path)
         f_size = f_length / (1024 ** 2)
         logger.info(f"File size: {f_size:.3f} MB")
@@ -134,12 +133,10 @@ class ImageDL(Download):
         - file_extension: The extension of the file.
         """
         file_path = FileUtil.check_file(folder_path, file_name, file_extension)
-        
         if not file_path:
             return
         
         self._start()
-
         logger.time(
             time=_current_time(),
             info="File",
@@ -147,3 +144,4 @@ class ImageDL(Download):
         )
 
         time.sleep(0.2)
+        return
