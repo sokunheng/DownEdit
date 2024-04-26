@@ -9,7 +9,7 @@ from rich.console import Console
 
 from ..edit.video import *
 from ..utils.tool_selector import ToolSelector
-from ..edit.video.video_editor import *
+from ..edit.video._editor import *
 from ..edit.image.editor.image_editor import *
 from ..edit.image.editor.image_process import *
 from ..utils.constants import *
