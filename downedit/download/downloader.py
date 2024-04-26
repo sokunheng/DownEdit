@@ -15,7 +15,7 @@ from ..utils.constants import CHUNK_SIZE
 
 logger = Logger("Programs")
 
-class DownloadFactory:
+class Downloader:
     
     @staticmethod
     def create_dl(
