@@ -48,7 +48,6 @@ def main():
                 banner_display,
                 banner_msg, title=" - Main Menu"
             )
-            
             available_tools = {
                 " Edit Video": video_edit.main,
                 f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
@@ -59,16 +58,15 @@ def main():
                 f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
                 " Exit": lambda: sys.exit(0)
             }
-            
             tool_selector.start(
                 menu_options=available_tools,
                 input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
             )
-
+            
         except Exception as e:
             logger.error(str(e[:80]))
-            logger.info(input("Press enter to continue..."))
-            
+            logger.info(input("Press enter to continue..."))    
+
         except KeyboardInterrupt as e:
             logger.info("Skipping the process..")
         
