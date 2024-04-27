@@ -1,92 +1,114 @@
 from moviepy.editor import *
 
-class VideoEditor:
+from ...edit.editor import Editor
+
+
+class VideoEditor(Editor):
+    def __init__(self, input_path, output_path):
+        super().__init__(input_path, output_path)
+        self.clip = VideoFileClip(self.input_path)
+
+    def flip(self):
+        """
+        Flips the video horizontally.
+        """
+        self.clip = self.clip.fx(vfx.mirror_x)
+        return self
+
+    def speed(self, factor = 1.0):
+        """
+        Changes the playback speed of the video based on the provided speed factor.
+
+        Args:
+            factor (float, optional): The speed factor to apply. Values:
+
+                - Less than 1.0: Slows down the video (e.g., 0.5 for half speed).
+                - Equal to 1.0: Plays the video at normal speed.
+                - Greater than 1.0: Speeds up the video (e.g., 2.0 for double speed).
+
+            Defaults to 1.0 (normal speed).
+        """
+        self.clip = self.clip.fx(vfx.speedx, factor)
+        return self
+
+    def add_music(self, music_path):
+        """
+        Adds background music to the video
+        
+        Args:
+            music_path (str): The path to the audio file to be used as background music.
+        """
+        audio_clip = AudioFileClip(music_path)
+        final_duration = self.clip.duration / self.clip.speed_ratio
+        new_audio_clip = afx.audio_loop(audio_clip, duration=final_duration)
+        self.clip = self.clip.set_audio(new_audio_clip)
+        
+        return self
     
-    def __init__(self):
-        self.clip_list = []
+    def loop(self, amount=1):
+        """
+        Loops the video a specified number of times.
+        
+        Args:
+            amount (int, optional): The number of times to loop the video. Defaults to 1.
+        """
+        self.clip = self.clip.fx(vfx.loop, n=amount)
+        return self
 
-    def get_clip_list(self, file_list):
-        """ 
-        Filter the provided list of files to return a list of video files 
-        with extensions: 
-        - mp4
-        - mkv
-        - avi
-        - webm
-        - mov
+    def adjust_color(self, brightness=1, contrast=1, saturation=1):
         """
-        return [file for file in file_list if file.lower().endswith(('.mp4', '.mkv', '.avi', '.webm', '.mov'))]
+        Adjusts the color properties (brightness, contrast, saturation) of the video.
+        
+        Args:
+            brightness (float, optional): The brightness factor to apply. Defaults to 1.0.
+            contrast (float, optional): The contrast factor to apply. Defaults to 1.0.
+            saturation (float, optional): The saturation factor to apply. Defaults to 1.0.
+        """
+        self.clip = self.clip.fx(
+            vfx.colorx,
+            factor=brightness
+        ).fx(
+            vfx.colorx,
+            contrast=contrast
+        ).fx(
+            vfx.colorx,
+            saturation=saturation
+        )
+        return self
 
-    def flip(self, input_path, output_path, threads: int, preset):
+    def render(
+        self, 
+        threads: int = 1,
+        preset: str = "medium"
+    ):
         """
-        Flips the video horizontally and writes the modified video to the output path.
-        """
-        clip = VideoFileClip(input_path)
-        clip = clip.fx(vfx.mirror_x)
-        clip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        clip.close()
+        Writes the modified video to the specified output path.
 
-    def change_speed(self, input_path, speed_factor, output_path, threads: int, preset):
-        """
-        Changes the speed of the video based on the provided speed factor and writes the modified video to the output path.
-        """
-        clip = VideoFileClip(input_path)
-        clip = clip.fx(vfx.speedx, speed_factor)
-        clip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        clip.close()
+        Args:
+            `threads (int, optional)`: The number of threads to use for video encoding. This can improve performance on multi-core systems.
+                - Defaults to 1 (single thread).
+                - Choose a value based on your system's capabilities and workload.
 
-    def flip_and_change_speed(self, input_path, speed_factor, output_path, threads: int, preset):
-        """
-        Flips the video horizontally and changes its speed, then writes the modified video to the output path.
-        """
-        clip = VideoFileClip(input_path)
-        clip = clip.fx(vfx.mirror_x).fx(vfx.speedx, speed_factor)
-        clip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        clip.close()
+            `preset (str, optional)`: The encoding preset to use, affecting speed and quality. Options include:
 
-    def add_background_music(self, input_path, music_path, output_path, threads: int, preset):
-        """
-        Adds background music to the video and writes the modified video to the output path.
-        """
-        videoclip = VideoFileClip(input_path)
-        clip_duration = videoclip.duration
-        audioclip = AudioFileClip(music_path)
-        new_audioclip = afx.audio_loop(audioclip, duration=clip_duration)
-        videoclip = videoclip.set_audio(new_audioclip)
-        videoclip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        videoclip.close()
+                - ultrafast (fastest, lowest quality)
+                - superfast (very fast, low quality)
+                - veryfast (fast, lower quality)
+                - faster (balanced speed and quality)
+                - fast (slightly slower, better quality)
+                - medium (moderate speed, good quality)
+                - slow (slower, highest quality)
 
-    def change_speed_and_add_music(self, input_path, music_path, speed_factor, output_path, threads: int, preset):
+                Defaults to 'medium' for a balance of speed and quality.
+                - Consider your target audience and desired video file size when choosing a preset.
         """
-        Changes the speed of the video, adds background music, and writes the modified video to the output path.
-        """
-        videoclip = VideoFileClip(input_path)
-        clip_duration = videoclip.duration
-        final_duration = clip_duration / speed_factor
-        audioclip = AudioFileClip(music_path)
-        new_audioclip = afx.audio_loop(audioclip, duration=final_duration)
-        videoclip = videoclip.fx(vfx.speedx, speed_factor).set_audio(new_audioclip)
-        videoclip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        videoclip.close()
-
-    def change_speed_add_music_and_flip(self, input_path, music_path, speed_factor, output_path, threads: int, preset):
-        """
-        Flips the video horizontally, changes its speed, adds background music, and writes the modified video to the output path.
-        """
-        videoclip = VideoFileClip(input_path)
-        clip_duration = videoclip.duration
-        final_duration = clip_duration / speed_factor
-        audioclip = AudioFileClip(music_path)
-        new_audioclip = afx.audio_loop(audioclip, duration=final_duration)
-        videoclip = videoclip.fx(vfx.mirror_x).fx(vfx.speedx, speed_factor).set_audio(new_audioclip)
-        videoclip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        videoclip.close()
-
-    def color_correction(self, input_path, output_path, threads: int, preset, brightness=1, contrast=1, saturation=1):
-        """
-        Adjusts the color properties (brightness, contrast, saturation) of the video and writes the modified video to the output path.
-        """
-        clip = VideoFileClip(input_path)
-        clip = clip.fx(vfx.colorx, factor=brightness).fx(vfx.colorx, contrast=contrast).fx(vfx.colorx, saturation=saturation)
-        clip.write_videofile(output_path, verbose=False, logger=None, codec='libx264', audio_codec="aac", threads=threads ,preset=preset)
-        clip.close()
+        self.clip.write_videofile(
+            self.output_path,
+            verbose=False,
+            logger=None,
+            codec='libx264',
+            audio_codec="aac",
+            threads=threads,
+            preset=preset
+        )
+        self.clip.close()
