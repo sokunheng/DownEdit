@@ -20,16 +20,34 @@ class FileUtil:
     """
     A class that provides utility functions for managing files.
     """
-    def __init__(self, folder_path: str) -> None:
+    def __init__(self, folder_root: str) -> None:
         """
         Initializes the FileUtil object with the specified folder path.
 
         Args:
             folder_path (str): The base folder path for file operations.
         """
-
-        self.folder_path = folder_path
+        self.folder_root = folder_root
     
+    def check_folder_path(self, folder_path: str) -> Union[str, bool]:
+        """
+        Checks if the specified folder path exists.
+        
+        Args:
+            folder_path (str): The folder path to check.
+        
+        Returns:
+            Union[str, bool]:
+                - str: The folder path if it exists.
+                - bool: False if the folder does not exist.
+        """
+        if not os.path.exists(folder_path):
+            logger.folder_error("No such directory!")
+            time.sleep(0.5)
+            logger.info(input("Press enter to continue..."))
+            return False
+        return folder_path
+        
     def check_file(
         self,
         folder_path: str, 
