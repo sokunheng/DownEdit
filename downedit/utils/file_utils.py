@@ -29,7 +29,7 @@ class FileUtil:
         """
         self.folder_root = folder_root
     
-    def check_folder_path(self, folder_path: str) -> Union[str, bool]:
+    def get_folder_path(self, folder_path: str) -> Union[str, bool]:
         """
         Checks if the specified folder path exists.
         
