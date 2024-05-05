@@ -74,7 +74,9 @@ def main():
             max_cpu_cores + 1
         )
     ]
-    user_folder = FileUtil.validate_folder(input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} "))
+    user_folder = FileUtil.validate_folder(
+        input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
+    )
     selected_tool = tool_selector.select_menu(
         message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
         choices=available_tools
