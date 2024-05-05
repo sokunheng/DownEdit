@@ -1,9 +1,0 @@
-CHUNK_SIZE = 1024
-EDITED_VIDEO = "Edited_Video"
-EDITED_IMG = "Edited_Photo"
-TIK_TOK = "Tiktok"
-DOUYIN = "Douyin"
-KUAISHOU = "Kuaishou"
-IMG_GEN = "AI_Art"
-AI_EDITOR = "AI_Editor"
-DE_VERSION = open('version', 'r').read().strip()

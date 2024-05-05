@@ -12,7 +12,7 @@ from ..utils.tool_selector import ToolSelector
 from ..edit.video._editor import *
 from ..edit.image.editor.image_editor import *
 from ..edit.image.editor.image_process import *
-from ..utils.constants import *
+from ..__config__ import *
 from ..utils.logger import Logger
 from ..download.downloader import Download
 from ..download.downloader import ImageDL

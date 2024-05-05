@@ -7,7 +7,7 @@ from typing import Optional, Union
 from colorama import Fore
 
 from .logger import Logger
-from .constants import CHUNK_SIZE
+from ..__config__ import CHUNK_SIZE
 
 
 logger = Logger("Programs")
@@ -28,14 +28,14 @@ class FileUtil:
             folder_path (str): The base folder path for file operations.
         """
         self.folder_root = folder_root
-    
-    def get_folder_path(self, folder_path: str) -> Union[str, bool]:
+        
+    def validate_folder(self, folder_path: str) -> Union[str, bool]:
         """
-        Checks if the specified folder path exists.
-        
+        Validates a folder path by checking if it exists.
+
         Args:
-            folder_path (str): The folder path to check.
-        
+            folder_path (str): The folder path to validate.
+
         Returns:
             Union[str, bool]:
                 - str: The folder path if it exists.
@@ -47,6 +47,20 @@ class FileUtil:
             logger.info(input("Press enter to continue..."))
             return False
         return folder_path
+    
+    def folder_path(self, directory_name: str) -> Union[str, bool]:
+        """
+        Ensures a directory exists. If not, it creates one and returns the absolute path.
+        """
+        try:
+            dir_path = os.path.join(".", directory_name)
+            abs_path = os.path.abspath(dir_path)
+            if not os.path.exists(abs_path):
+                os.makedirs(abs_path)
+            return abs_path
+        except Exception as e:
+            logger.folder_error("Error Creating directory!")
+            return directory_name
         
     def check_file(
         self,
