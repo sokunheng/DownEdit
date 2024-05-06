@@ -14,7 +14,7 @@
 ## 🔥 Current Features
 - `Edit Video`: Enhance videos with various functions designed to streamline editing tasks across entire directories.
 - `Edit Photo`: Quickly enhance images in bulk with various functions, including AI-powered functions,
-- `Edit Sound`: Improve audio in bulk using a range of powerful functions, including cutting-edge AI-powered tools, to enhance sound quality and clarity.
+- `Edit Sound`: Improve audio in bulk using powerful functions, including cutting-edge AI-powered tools.
 - `Download all videos`: Retrieve videos from users (TikTok, Kuaishou, Douyin, etc.) without watermarks.
 - `Bulk AI Generator`: Process images and videos in bulk using powerful generative AI.
 - `AI Editor`: Transform your visual content effortlessly with an AI editor designed for both images and videos.
