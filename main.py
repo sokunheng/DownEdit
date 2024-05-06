@@ -49,13 +49,13 @@ def main():
                 banner_msg, title=" - Main Menu"
             )
             available_tools = {
+                " Download Video": vid_dl.main,
                 " Edit Video": video_edit.main,
                 f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
                 " Edit Photo": img_editor.main,
                 " AI Edit Photo": ai_img_editor.main,
                 f" Edit Sound {Fore.RED}(Soon)": lambda: None,
                 f" AI Edit Sound {Fore.RED}(Soon)": lambda: None,
-                " Download Video": vid_dl.main,
                 " AI-Generative Image": gen_img_ai.main,
                 f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
                 " Exit": lambda: sys.exit(0)
