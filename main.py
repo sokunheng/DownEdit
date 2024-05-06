@@ -17,7 +17,7 @@ try:
     from downedit.edit.image.ai_editor import __main__ as ai_img_editor
     from downedit.edit.image.editor import __main__ as img_editor
     from downedit.edit.video import __main__ as video_edit
-    from downedit.utils.constants import DE_VERSION
+    from downedit.__config__ import DE_VERSION
     from downedit.utils.common import tool_selector
     
 except ImportError as e:
@@ -53,6 +53,8 @@ def main():
                 f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
                 " Edit Photo": img_editor.main,
                 " AI Edit Photo": ai_img_editor.main,
+                f" Edit Sound {Fore.RED}(Soon)": lambda: None,
+                f" AI Edit Sound {Fore.RED}(Soon)": lambda: None,
                 " Download Video": vid_dl.main,
                 " AI-Generative Image": gen_img_ai.main,
                 f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
