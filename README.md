@@ -17,7 +17,7 @@
 - `Edit Sound`: Improve audio in bulk using powerful functions, including cutting-edge AI-powered tools.
 - `Download all videos`: Retrieve videos from users (TikTok, Kuaishou, Douyin, etc.) without watermarks.
 - `Bulk AI Generator`: Process images and videos in bulk using powerful generative AI.
-- `AI Editor`: Transform your visual content effortlessly with using AI editor designed for images, sounds and videos.
+- `AI Editor`: Enhance your content effortlessly with using AI editor designed for images, sounds and videos.
 
 ## 🌐 Service
 
