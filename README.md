@@ -12,8 +12,9 @@
 </p>
 
 ## 🔥 Current Features
-- `Edit Video`: Enhance videos with versatile functions across entire directories.
-- `Edit Photo`: Quickly enhance images in bulk with various functions in bulk.
+- `Edit Video`: Enhance videos with various functions designed to streamline editing tasks across entire directories.
+- `Edit Photo`: Quickly enhance images in bulk with various functions, including AI-powered functions,
+- `Edit Sound`: Improve audio in bulk using a range of powerful functions, including cutting-edge AI-powered tools, to enhance sound quality and clarity.
 - `Download all videos`: Retrieve videos from users (TikTok, Kuaishou, Douyin, etc.) without watermarks.
 - `Bulk AI Generator`: Process images and videos in bulk using powerful generative AI.
 - `AI Editor`: Transform your visual content effortlessly with an AI editor designed for both images and videos.
@@ -25,6 +26,7 @@
 | [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) | ❌ |
 | [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
 | [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
+| [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |  |
 
 ## 🤖 AI
 | Type | Model | Param | Provider| Minimal | Bulk | API | Status |
