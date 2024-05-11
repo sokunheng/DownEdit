@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Operation(ABC):
     def __init__(self, name: str, function: callable, suffix: str):
         """
-        Initializes an ImageAction object.
+        Initializes an Operation object.
 
         Args:
             name (str): The human-readable name of the action.
