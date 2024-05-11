@@ -11,6 +11,18 @@ class Operation(ABC):
             function (callable): The function reference that performs the action.
             suffix (str): The suffix to be appended to processed filenames.
         """
-        self.name = name
-        self.function = function
-        self.suffix = suffix
+        self._name = name
+        self._function = function
+        self._suffix = suffix
+    
+    @property
+    def name(self):
+        return self._name 
+    
+    @property
+    def function(self):
+        return self._function
+    
+    @property
+    def suffix(self):
+        return self._suffix
