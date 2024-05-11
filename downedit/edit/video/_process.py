@@ -1,6 +1,8 @@
 
 
 import time
+
+from ..handler import Handler
 from ._editor import VideoEditor
 from ._task import VideoTask
 from ._operation import (
@@ -38,7 +40,7 @@ class VideoProcess:
         loop = Loop()
         adjust_color = AdjustColor()
 
-        operations = { 
+        operations = Handler({
             " Flip Horizontal": flip,
             " Custom Speed": speed,
             " Loop Video": loop,
@@ -47,8 +49,8 @@ class VideoProcess:
             " Speed + Music": [speed, add_music],
             " Flip + Speed + Music": [flip, speed, add_music],
             " Adjust Color": adjust_color,
-        }
-        video_operation = operations.get(self.tool)
+        })
+        video_operation = operations._get(self.tool)
 
         for clip in self.input_folder:
             video_editor = VideoEditor(
