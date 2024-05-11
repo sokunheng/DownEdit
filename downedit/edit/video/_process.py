@@ -25,18 +25,18 @@ class VideoProcess:
         process_folder: str,
         output_folder: str
     ):
-        self.tool = tool
-        self.video_speed = video_speed
-        self.music_path = music_path
-        self.video_preset = video_preset
-        self.cpu_threads = cpu_threads
-        self.input_folder = process_folder
-        self.output_folder = output_folder
+        self._tool = tool
+        self._video_speed = video_speed
+        self._music_path = music_path
+        self._video_preset = video_preset
+        self._cpu_threads = cpu_threads
+        self._input_folder = process_folder
+        self._output_folder = output_folder
 
     def process(self):
         flip  = Flip()
-        speed = Speed(self.video_speed)
-        add_music = AddMusic(self.music_path)
+        speed = Speed(self._video_speed)
+        add_music = AddMusic(self._music_path)
         loop = Loop()
         adjust_color = AdjustColor()
 
@@ -50,16 +50,16 @@ class VideoProcess:
             " Flip + Speed + Music": [flip, speed, add_music],
             " Adjust Color": adjust_color,
         })
-        video_operation = operations._get(self.tool)
+        video_operation = operations._get(self._tool)
 
-        for clip in self.input_folder:
+        for clip in self._input_folder:
             video_editor = VideoEditor(
                 clip,
-                self.output_folder
+                self._output_folder
             )
             task_video = VideoTask(video_editor)
             task_video.execute(
                 video_operation,
-                self.cpu_threads,
-                self.video_preset
+                self._cpu_threads,
+                self._video_preset
             )
