@@ -67,16 +67,46 @@ class ToolSelector:
         return self._user_input.get_user_input(message)
     
     def show_box(self, message):
+        """
+        Display the message in a box.
+        
+        Args:
+            message (str): The message to display.
+        
+        Returns:
+            String: The message in a box.
+        """
         print(f'{Fore.GREEN}')
         print(Box.DoubleCube(message))
 
     def display_banner(self, banner, message, title=None):
+        """
+        Display the banner and message.
+        
+        Args:
+            banner (str): The banner to display.
+            message (str): The message to display.
+            title (str): The title to display.
+        
+        Returns:
+            None
+        """
         os.system("cls" if os.name == "nt" else "clear")
         os.system(f"title DownEdit {title}" if os.name == "nt" else "")
         print(Center.XCenter(banner))
         self.show_box(message)
 
-    def select_menu(self, message, choices):
+    def select_menu(self, message, choices) -> str:
+        """
+        Selects an option from the menu.
+        
+        Args:
+            message (str): The message to display.
+            choices (list): The choices to select from.
+            
+        Returns:
+            String: The selected choice.
+        """
         questions = [
             inquirer.List(
                 'list',
@@ -88,6 +118,16 @@ class ToolSelector:
         return answers['list']
 
     def execute_menu(self, selected, functions):
+        """
+        Executes the selected function.
+        
+        Args:
+            selected (str): The selected function.
+            functions (dict): The functions to execute.
+        
+        Returns:
+            Function: The selected function.
+        """
         if selected in functions:
             if selected == " Back":
                 self.running = False
@@ -122,6 +162,13 @@ class ToolSelector:
     ) -> None:
         """
         Starts the tool selection process.
+        
+        Args:
+            menu_options (dict): The menu options.
+            input_message (str): The input message.
+        
+        Returns:
+            None
         """
         chosen_tool = self.select_menu(
             message=input_message,
