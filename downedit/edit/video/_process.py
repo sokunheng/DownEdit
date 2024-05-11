@@ -75,5 +75,6 @@ class VideoProcess:
         end = time.time()
         
         self.logger.info(f"Processed:{Fore.YELLOW} "+ f"%.2fs" % (end - start))
+        self.logger.file_info(f"Saved at [green]{self._output_folder}[/green]")
         self.logger.file_info(f"Processed [green]{proceed_count}[/green] videos successfully.")
         self.logger.info(input("Press enter to continue..."))    
