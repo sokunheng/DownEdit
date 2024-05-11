@@ -53,11 +53,11 @@ def start_process(
         extensions=Extensions.VIDEO
     )
     # Create the output folder.
-    output_folder = FileUtil.create_folder(
+    video_folder = FileUtil.create_folder(
         folder_type="EDITED_VIDEO"
     )
     # Get the output folder path based on the tool.
-    FileUtil.folder_path(output_folder, tool)
+    output_folder = FileUtil.folder_path(video_folder, tool)
     
     # Process the video.
     video_process = VideoProcess(
