@@ -1,6 +1,6 @@
-
-
 import time
+
+from colorama import Fore
 
 from ..handler import Handler
 from ...utils.logger import Logger
@@ -54,6 +54,7 @@ class VideoProcess:
         })
         video_operation = operations._get(self._tool)
         
+        start = time.time()
         proceed_count = 0
         for clip in self._input_folder:
             try:          
@@ -71,6 +72,8 @@ class VideoProcess:
             except Exception as e:
                 self.logger.file_error(f"Error: {e}")
                 continue
-            
+        end = time.time()
+        
+        self.logger.info(f"Processed:{Fore.YELLOW} "+ f"%.2fs" % (end - start))
         self.logger.file_info(f"Processed [green]{proceed_count}[/green] videos successfully.")
-        self.logger.info(input("Press enter to continue..."))  
+        self.logger.info(input("Press enter to continue..."))    
