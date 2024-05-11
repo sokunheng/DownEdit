@@ -13,19 +13,16 @@ class EditFolder:
     """
     A class that provides constants for different types of edits.
     """
-    def __init__(self):
-        self.EDITED_VIDEO = "Edited_Video"
-        self.EDITED_IMG = "Edited_Photo"
-        self.AI_Photo_Gen = "AI_Art"
-        self.AI_Photo_Editor = "AI_Editor"
-
+    EDITED_VIDEO = "Edited_Video"
+    EDITED_IMG = "Edited_Photo"
+    AI_Photo_Gen = "AI_Art"
+    AI_Photo_Editor = "AI_Editor"
 
 class Media:
     """
     A class that provides constants for different types of media.
     """
-    def __init__(self):
-        self.YOUTUBE = "YouTube"
-        self.TIKTOK = "Tiktok"
-        self.DOUYIN = "Douyin"
-        self.KUAISHOU = "Kuaishou"
+    YOUTUBE = "YouTube"
+    TIKTOK = "Tiktok"
+    DOUYIN = "Douyin"
+    KUAISHOU = "Kuaishou"
