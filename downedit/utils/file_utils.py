@@ -186,23 +186,25 @@ class FileUtil:
     
     @staticmethod
     def get_file_list(
-        file_list,
+        directory,
         extensions
     ):
         """
         This function filters a list of files and returns a new list containing only files with the specified extension.
 
         Args:
-            file_list: A list of filenames (strings).
+            directory: directory: The path to the directory to search for files (string).
             extension: The extension to filter by (including the dot, e.g., ".mp4", ".jpeg").
 
         Returns:
             A list of filenames that have the provided extension.
         """
         filtered_files = []
-        for file in os.listdir(file_list):
-            if file.lower().endswith(extensions):
-                filtered_files.append(file)
+        for root, _, files in os.walk(directory):
+                for file in files:
+                    if file.lower().endswith(extensions):
+                        full_file_path = os.path.join(root, file)
+                        filtered_files.append(full_file_path)
         return filtered_files
     
     def get_output_file(
