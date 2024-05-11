@@ -16,6 +16,9 @@ from ._operation import (
 
 
 class VideoProcess:
+    """
+    Process the video based on the selected tool.
+    """
     def __init__(
         self,
         tool: str,
@@ -36,12 +39,14 @@ class VideoProcess:
         self.logger = Logger("Programs")
 
     def process(self):
+        # Video operations functionalities.
         flip  = Flip()
         speed = Speed(self._video_speed)
         add_music = AddMusic(self._music_path)
         loop = Loop()
         adjust_color = AdjustColor()
-
+        
+        # Operations to be performed on the video.
         operations = Handler({
             " Flip Horizontal": flip,
             " Custom Speed": speed,
@@ -52,16 +57,19 @@ class VideoProcess:
             " Flip + Speed + Music": [flip, speed, add_music],
             " Adjust Color": adjust_color,
         })
+        # Get the selected operation.
         video_operation = operations._get(self._tool)
         
         start = time.time()
         proceed_count = 0
         for clip in self._input_folder:
-            try:          
+            try:
+                # Initialize the video editor.
                 video_editor = VideoEditor(
                     clip,
                     self._output_folder
                 )
+                # Perform the video operation.
                 task_video = VideoTask(video_editor)
                 task_video.execute(
                     video_operation,
