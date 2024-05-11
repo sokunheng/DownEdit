@@ -1,3 +1,4 @@
+import time
 import colorama
 
 from colorama import Fore
@@ -83,6 +84,7 @@ class Logger:
         Returns:
             None
         """
+        time.sleep(0.5)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -98,6 +100,7 @@ class Logger:
         Returns:
             None
         """
+        time.sleep(0.5)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -113,6 +116,7 @@ class Logger:
         Returns:
             None
         """
+        time.sleep(0.5)
         console.log(
             "[cyan][FILE][/cyan]",
             message
@@ -128,6 +132,7 @@ class Logger:
         Returns:
             None
         """
+        time.sleep(0.5)
         console.log(
             "[red][FILE][/red]",
             message
