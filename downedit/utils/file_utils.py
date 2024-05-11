@@ -7,7 +7,10 @@ from typing import Optional, Union
 from colorama import Fore
 
 from .logger import Logger
-from ..__config__ import CHUNK_SIZE
+from ..__config__ import (
+    CHUNK_SIZE,
+    EditFolder
+)
 
 
 logger = Logger("Programs")
@@ -20,7 +23,7 @@ class FileUtil:
     """
     A class that provides utility functions for managing files.
     """
-    def __init__(self, folder_root: str) -> None:
+    def __init__(self, folder_root: str = ".") -> None:
         """
         Initializes the FileUtil object with the specified folder path.
 
@@ -28,8 +31,9 @@ class FileUtil:
             folder_path (str): The base folder path for file operations.
         """
         self.folder_root = folder_root
-        
-    def validate_folder(self, folder_path: str) -> Union[str, bool]:
+    
+    @staticmethod
+    def validate_folder(folder_path: str) -> Union[str, bool]:
         """
         Validates a folder path by checking if it exists.
 
@@ -48,12 +52,13 @@ class FileUtil:
             return False
         return folder_path
     
-    def folder_path(self, directory_name: str) -> Union[str, bool]:
+    @staticmethod
+    def folder_path(folder_root, directory_name: str) -> Union[str, bool]:
         """
         Ensures a directory exists. If not, it creates one and returns the absolute path.
         """
         try:
-            dir_path = os.path.join(".", directory_name)
+            dir_path = os.path.join(folder_root, directory_name)
             abs_path = os.path.abspath(dir_path)
             if not os.path.exists(abs_path):
                 os.makedirs(abs_path)
@@ -61,6 +66,21 @@ class FileUtil:
         except Exception as e:
             logger.folder_error("Error Creating directory!")
             return directory_name
+    
+    @classmethod
+    def create_folder(cls, folder_type: str) -> str:
+        """
+        Creates a folder based on the specified type and returns its absolute path.
+
+        Args:
+            folder_type (str): The type of folder to create (e.g., "EDITED_VIDEO").
+
+        Returns:
+            str: The absolute path of the created folder.
+        """
+        folder_root = cls().folder_root
+        folder_name = getattr(EditFolder, folder_type)
+        return cls.folder_path(folder_root, folder_name)
         
     def check_file(
         self,
@@ -162,11 +182,11 @@ class FileUtil:
                 if not os.path.exists(dir_path):
                     return dir_path
                 counter += 1
-                
+    
+    @staticmethod
     def get_file_list(
-        self,
         file_list,
-        extension
+        extensions
     ):
         """
         This function filters a list of files and returns a new list containing only files with the specified extension.
@@ -179,7 +199,26 @@ class FileUtil:
             A list of filenames that have the provided extension.
         """
         filtered_files = []
-        for file in file_list:
-            if file.lower().endswith(extension):
+        for file in os.listdir(file_list):
+            if file.lower().endswith(extensions):
                 filtered_files.append(file)
         return filtered_files
+    
+    def get_output_file(
+        self,
+        folder_path: str,
+        file_name: str,
+        file_extension: str
+    ) -> str:
+        """
+        Returns the output file path for the processed video.
+
+        Args:
+            folder_path (str): The folder path to save the processed video.
+            file_name (str): The name of the processed video.
+            file_extension (str): The extension of the processed video.
+
+        Returns:
+            str: The output file path for the processed video.
+        """
+        return os.path.join(folder_path, f"{file_name}{file_extension}")
