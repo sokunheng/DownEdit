@@ -57,7 +57,10 @@ def start_process(
         folder_type="EDITED_VIDEO"
     )
     # Get the output folder path based on the tool.
-    output_folder = FileUtil.folder_path(video_folder, tool)
+    output_folder = FileUtil.folder_path(
+        folder_root=video_folder,
+        directory_name=tool
+    )
     
     # Process the video.
     video_process = VideoProcess(
