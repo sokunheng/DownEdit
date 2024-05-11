@@ -26,3 +26,10 @@ class Media:
     TIKTOK = "Tiktok"
     DOUYIN = "Douyin"
     KUAISHOU = "Kuaishou"
+
+class Extensions:
+    """
+    A class that provides constants for different types of media.
+    """
+    VIDEO = (".mp4", ".avi", ".mov", ".flv", ".wmv")
+    IMAGE = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
