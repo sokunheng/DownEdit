@@ -57,15 +57,16 @@ class FileUtil:
         """
         Ensures a directory exists. If not, it creates one and returns the absolute path.
         """
+        directory = directory_name.lstrip()
         try:
-            dir_path = os.path.join(folder_root, directory_name)
+            dir_path = os.path.join(folder_root, directory)
             abs_path = os.path.abspath(dir_path)
             if not os.path.exists(abs_path):
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
             logger.folder_error("Error Creating directory!")
-            return directory_name
+            return directory
     
     @classmethod
     def create_folder(cls, folder_type: str) -> str:
