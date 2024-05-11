@@ -29,16 +29,33 @@ def start_process(
     video_preset: str,
     cpu_threads: int,
     input_folder: str
-):
+) -> None:
+    """
+    Start the video processing based on the selected tool.
+    
+    Args:
+        tool (str): The selected tool.
+        video_speed (float): The speed factor of the video.
+        music_path (str): The path to the music file.
+        video_preset (str): The video preset.
+        cpu_threads (int): The number of CPU threads.
+        input_folder (str): The folder containing the video files.
+    
+    Returns:
+        None
+    """
     input_folder = FileUtil.get_file_list(
         directory=input_folder,
         extensions=Extensions.VIDEO
     )
+    # Create the output folder.
     output_folder = FileUtil.create_folder(
         folder_type="EDITED_VIDEO"
     )
+    # Get the output folder path based on the tool.
     FileUtil.folder_path(output_folder, tool)
-
+    
+    # Process the video.
     video_process = VideoProcess(
         tool,
         video_speed,
@@ -97,6 +114,7 @@ def main():
     user_folder = FileUtil.validate_folder(
         folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
     )
+    if not user_folder: return
     selected_tool = tool_selector.select_menu(
         message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
         choices=available_tools
