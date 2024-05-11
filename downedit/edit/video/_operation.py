@@ -12,6 +12,9 @@ class VideoOperation(Operation, ABC):
         pass
     
 class Flip(VideoOperation):
+    """
+    Flips the video clip horizontally.
+    """
     def __init__(self):
         super().__init__(
             name="Flip Horizontal",
@@ -23,6 +26,9 @@ class Flip(VideoOperation):
         editor.flip()
 
 class Speed(VideoOperation):
+    """
+    Speeds up the video clip by a factor.
+    """
     def __init__(self, factor=1.0):
         super().__init__(
             name=f"Speed Up",
@@ -35,6 +41,9 @@ class Speed(VideoOperation):
         editor.speed(self.factor)
 
 class AddMusic(VideoOperation):
+    """
+    Adds music to the video clip.
+    """
     def __init__(self, music_path):
         super().__init__(
             name="Add Music",
@@ -47,6 +56,9 @@ class AddMusic(VideoOperation):
         editor.add_music(self.music_path)
 
 class Loop(VideoOperation):
+    """
+    Loops the video for a specified number of times.
+    """
     def __init__(self, amount=1):
         super().__init__(
             name=f"Loop",
@@ -59,6 +71,9 @@ class Loop(VideoOperation):
         editor.loop(self.amount)
 
 class AdjustColor(VideoOperation):
+    """
+    Adjusts the color properties (brightness, contrast, saturation) of the video.
+    """
     def __init__(self, brightness=1, contrast=1, saturation=1):
         super().__init__(
             name="Adjust Color",
