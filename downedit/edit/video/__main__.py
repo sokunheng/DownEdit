@@ -135,7 +135,7 @@ def main():
         selected_presets = tool_selector.select_menu(
             message=f"{Fore.YELLOW}Video Preset{Fore.WHITE}",
             choices=video_presets
-        )
+        ).lower().lstrip()
         selected_threads = tool_selector.select_menu(
             message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
             choices=cpu_cores_choices
