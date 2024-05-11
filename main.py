@@ -58,6 +58,7 @@ def main():
                 f" AI Edit Sound {Fore.RED}(Soon)": lambda: None,
                 " AI-Generative Image": gen_img_ai.main,
                 f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
+                f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
                 " Exit": lambda: sys.exit(0)
             }
             tool_selector.start(
