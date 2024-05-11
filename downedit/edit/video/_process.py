@@ -1,3 +1,4 @@
+import os
 import time
 
 from colorama import Fore
@@ -5,8 +6,8 @@ from colorama import Fore
 from ..handler import Handler
 from ...utils.logger import Logger
 from ._editor import VideoEditor
-from ._task import VideoTask
 from ._operation import (
+    VideoOperation,
     Flip,
     Speed,
     AddMusic,
@@ -59,24 +60,37 @@ class VideoProcess:
         })
         # Get the selected operation.
         video_operation = operations._get(self._tool)
-        
+            
         start = time.time()
         proceed_count = 0
         for clip in self._input_folder:
+            # Get the input filename without the extension
+            file_name = os.path.splitext(os.path.basename(clip))[0]
+            file_extension = os.path.splitext(os.path.basename(clip))[1]
+            output_suffix = "" 
+                        
             try:
-                # Initialize the video editor.
-                video_editor = VideoEditor(
-                    clip,
-                    self._output_folder
+                # Execute the operations and build the suffix
+                video_editor = VideoEditor(clip, None)  # No output path yet
+                if isinstance(video_operation, VideoOperation):
+                    output_suffix = video_operation.handle(video_editor, output_suffix)
+                elif isinstance(video_operation, list):
+                    for operation in video_operation:
+                        output_suffix = operation.handle(video_editor, output_suffix)
+                        
+                # Construct the output file path with filename, suffix, and extension
+                output_file_path = os.path.join(
+                    self._output_folder,
+                    f"{file_name}{output_suffix}{file_extension}"
                 )
-                # Perform the video operation.
-                task_video = VideoTask(video_editor)
-                task_video.execute(
-                    video_operation,
-                    self._cpu_threads,
-                    self._video_preset
+                video_editor.output_path = output_file_path  # Set the final output path
+                # Render the video using the final output path
+                video_editor.render(
+                    threads=self._cpu_threads, 
+                    preset=self._video_preset
                 )
                 proceed_count += 1
+                
             except Exception as e:
                 self.logger.file_error(f"Error: {e}")
                 continue
