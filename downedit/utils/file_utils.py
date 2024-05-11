@@ -46,10 +46,7 @@ class FileUtil:
                 - bool: False if the folder does not exist.
         """
         if not os.path.exists(folder_path):
-            logger.folder_error("No such directory!")
-            time.sleep(0.5)
-            logger.info(input("Press enter to continue..."))
-            return False
+            raise Exception("No such directory!")
         return folder_path
     
     @staticmethod
@@ -65,8 +62,7 @@ class FileUtil:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            logger.folder_error("Error Creating directory!")
-            return directory
+            raise Exception("Error Creating directory!")
     
     @classmethod
     def create_folder(cls, folder_type: str) -> str:
