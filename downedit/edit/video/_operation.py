@@ -7,6 +7,9 @@ from ._editor import VideoEditor
 
 
 class VideoOperation(Operation, ABC):
+    """
+    Abstract class for video operations.
+    """
     @abstractmethod
     def _run(self, editor: VideoEditor):
         pass
