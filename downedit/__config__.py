@@ -29,7 +29,7 @@ class Media:
 
 class Extensions:
     """
-    A class that provides constants for different types of media.
+    A class that provides constants for different types of extensions.
     """
     VIDEO = (".mp4", ".avi", ".mov", ".flv", ".wmv")
     IMAGE = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
