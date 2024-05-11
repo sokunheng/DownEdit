@@ -1,14 +1,15 @@
 import os
 import multiprocessing
 
-from enum import Enum
-from colorama import *
-from pystyle import *
+from colorama import Fore
 
-from ._editor import VideoEditor
-from ._process import *
-from ...utils.common import *
+from ...utils.common import tool_selector
 from ...utils.file_utils import FileUtil
+from ._process import VideoProcess
+from ...__config__ import (
+    DE_VERSION,
+    Extensions
+)
 
 
 def get_speed_factor(tool):
@@ -27,9 +28,27 @@ def start_process(
     music_path: str,
     video_preset: str,
     cpu_threads: int,
-    process_folder: str
+    input_folder: str
 ):
-    pass
+    input_folder = FileUtil.get_file_list(
+        directory=input_folder,
+        extensions=Extensions.VIDEO
+    )
+    output_folder = FileUtil.create_folder(
+        folder_type="EDITED_VIDEO"
+    )
+    FileUtil.folder_path(output_folder, tool)
+
+    video_process = VideoProcess(
+        tool,
+        video_speed,
+        music_path,
+        video_preset,
+        cpu_threads,
+        input_folder,
+        output_folder
+    )
+    video_process.process()
 
     
 def display_banner():
@@ -58,6 +77,7 @@ def main():
         " Add Music": lambda: None,
         " Speed + Music": lambda: None,
         " Flip + Speed + Music": lambda: None,
+        " Adjust Color": lambda: None,
     }
     video_presets = {
         " Ultrafast": "ultrafast",
@@ -75,7 +95,7 @@ def main():
         )
     ]
     user_folder = FileUtil.validate_folder(
-        input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
+        folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
     )
     selected_tool = tool_selector.select_menu(
         message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
@@ -103,7 +123,7 @@ def main():
         selected_threads,
         user_folder
     )
-    
+
 
 if __name__ == "__main__":
     main()
