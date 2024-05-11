@@ -1,9 +1,11 @@
 import os
 import multiprocessing
+import time
 
 from colorama import Fore
 
 from ...utils.common import tool_selector
+from ...utils.logger import Logger
 from ...utils.file_utils import FileUtil
 from ._process import VideoProcess
 from ...__config__ import (
@@ -11,6 +13,8 @@ from ...__config__ import (
     Extensions
 )
 
+
+logger = Logger("Programs")
 
 def get_speed_factor(tool):
     if tool in ["Custom Speed", "Flip + Speed", "Speed + Music", "Flip + Speed + Music"]:
@@ -83,65 +87,69 @@ def display_banner():
 
 
 def main():
-    max_cpu_cores = multiprocessing.cpu_count()
-    banner_display, banner_msg = display_banner()
-    tool_selector.display_banner(banner_display, banner_msg)
-    available_tools = { 
-        " Flip Horizontal": lambda: None,
-        " Custom Speed": lambda: None,
-        " Loop Video": lambda: None,
-        " Flip + Speed": lambda: None,
-        " Add Music": lambda: None,
-        " Speed + Music": lambda: None,
-        " Flip + Speed + Music": lambda: None,
-        " Adjust Color": lambda: None,
-    }
-    video_presets = {
-        " Ultrafast": "ultrafast",
-        " Superfast": "superfast",
-        " Veryfast": "veryfast",
-        " Faster": "faster",
-        " Fast": "fast",
-        " Medium": "medium",
-        " Slow": "slow",
-    }
-    cpu_cores_choices = [
-        str(i) for i in range(
-            1,
-            max_cpu_cores + 1
+    try:
+        max_cpu_cores = multiprocessing.cpu_count()
+        banner_display, banner_msg = display_banner()
+        tool_selector.display_banner(banner_display, banner_msg)
+        available_tools = { 
+            " Flip Horizontal": lambda: None,
+            " Custom Speed": lambda: None,
+            " Loop Video": lambda: None,
+            " Flip + Speed": lambda: None,
+            " Add Music": lambda: None,
+            " Speed + Music": lambda: None,
+            " Flip + Speed + Music": lambda: None,
+            " Adjust Color": lambda: None,
+        }
+        video_presets = {
+            " Ultrafast": "ultrafast",
+            " Superfast": "superfast",
+            " Veryfast": "veryfast",
+            " Faster": "faster",
+            " Fast": "fast",
+            " Medium": "medium",
+            " Slow": "slow",
+        }
+        cpu_cores_choices = [
+            str(i) for i in range(
+                1,
+                max_cpu_cores + 1
+            )
+        ]
+        user_folder = FileUtil.validate_folder(
+            folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
         )
-    ]
-    user_folder = FileUtil.validate_folder(
-        folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
-    )
-    if not user_folder: return
-    selected_tool = tool_selector.select_menu(
-        message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
-        choices=available_tools
-    )
-    video_speed = get_speed_factor(
-        selected_tool
-    )
-    music_path = get_music_path(
-        selected_tool
-    )
-    selected_presets = tool_selector.select_menu(
-        message=f"{Fore.YELLOW}Video Preset{Fore.WHITE}",
-        choices=video_presets
-    )
-    selected_threads = tool_selector.select_menu(
-        message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
-        choices=cpu_cores_choices
-    )
-    start_process(
-        selected_tool,
-        video_speed,
-        music_path,
-        selected_presets,
-        selected_threads,
-        user_folder
-    )
-
+        selected_tool = tool_selector.select_menu(
+            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
+            choices=available_tools
+        )
+        video_speed = get_speed_factor(
+            selected_tool
+        )
+        music_path = get_music_path(
+            selected_tool
+        )
+        selected_presets = tool_selector.select_menu(
+            message=f"{Fore.YELLOW}Video Preset{Fore.WHITE}",
+            choices=video_presets
+        )
+        selected_threads = tool_selector.select_menu(
+            message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
+            choices=cpu_cores_choices
+        )
+        start_process(
+            selected_tool,
+            video_speed,
+            music_path,
+            selected_presets,
+            selected_threads,
+            user_folder
+        )
+    except Exception as e:
+        logger.folder_error(e)
+        time.sleep(0.5)
+        logger.info(input(f"{Fore.GREEN}Press enter to continue..."))
+        return
 
 if __name__ == "__main__":
     main()
