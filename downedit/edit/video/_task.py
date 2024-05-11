@@ -6,6 +6,9 @@ from ._operation import VideoOperation
 
 
 class VideoTask(Task):
+    """
+    Task to be performed on video editor based on the selected operation.
+    """
     def __init__(self, editor: VideoEditor):
         self.editor = editor
         
