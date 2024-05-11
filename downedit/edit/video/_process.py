@@ -3,6 +3,7 @@
 import time
 
 from ..handler import Handler
+from ...utils.logger import Logger
 from ._editor import VideoEditor
 from ._task import VideoTask
 from ._operation import (
@@ -32,6 +33,7 @@ class VideoProcess:
         self._cpu_threads = cpu_threads
         self._input_folder = process_folder
         self._output_folder = output_folder
+        self.logger = Logger("Programs")
 
     def process(self):
         flip  = Flip()
@@ -51,15 +53,24 @@ class VideoProcess:
             " Adjust Color": adjust_color,
         })
         video_operation = operations._get(self._tool)
-
+        
+        proceed_count = 0
         for clip in self._input_folder:
-            video_editor = VideoEditor(
-                clip,
-                self._output_folder
-            )
-            task_video = VideoTask(video_editor)
-            task_video.execute(
-                video_operation,
-                self._cpu_threads,
-                self._video_preset
-            )
+            try:          
+                video_editor = VideoEditor(
+                    clip,
+                    self._output_folder
+                )
+                task_video = VideoTask(video_editor)
+                task_video.execute(
+                    video_operation,
+                    self._cpu_threads,
+                    self._video_preset
+                )
+                proceed_count += 1
+            except Exception as e:
+                self.logger.file_error(f"Error: {e}")
+                continue
+            
+        self.logger.file_info(f"Processed [green]{proceed_count}[/green] videos successfully.")
+        self.logger.info(input("Press enter to continue..."))  
