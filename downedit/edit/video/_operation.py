@@ -1,0 +1,73 @@
+
+from abc import ABC, abstractmethod
+
+from ..operation import Operation
+from ..task import Task
+from ._editor import VideoEditor
+
+
+class VideoOperation(Operation, ABC):
+    @abstractmethod
+    def _run(self, editor: VideoEditor):
+        pass
+    
+class Flip(VideoOperation):
+    def __init__(self):
+        super().__init__(
+            name="Flip Horizontal",
+            function=self._run,
+            suffix="_flipped"
+        )
+    
+    def _run(self, editor: VideoEditor):
+        editor.flip()
+
+class Speed(VideoOperation):
+    def __init__(self, factor=1.0):
+        super().__init__(
+            name=f"Speed Up",
+            function=self._run,
+            suffix=f"_spedup_{int(factor)}x"
+        )
+        self.factor = factor
+
+    def _run(self, editor: VideoEditor):
+        editor.speed(self.factor)
+
+class AddMusic(VideoOperation):
+    def __init__(self, music_path):
+        super().__init__(
+            name="Add Music",
+            function=self._run,
+            suffix="_with_music"
+        )
+        self.music_path = music_path
+
+    def _run(self, editor: VideoEditor):
+        editor.add_music(self.music_path)
+
+class Loop(VideoOperation):
+    def __init__(self, amount=1):
+        super().__init__(
+            name=f"Loop",
+            function=self._run,
+            suffix=f"_looped_{amount}x"
+        )
+        self.amount = amount
+
+    def _run(self, editor: VideoEditor):
+        editor.loop(self.amount)
+
+class AdjustColor(VideoOperation):
+    def __init__(self, brightness=1, contrast=1, saturation=1):
+        super().__init__(
+            name="Adjust Color",
+            function=self._run,
+            suffix="_color_adjusted"
+        )
+        self.brightness = brightness
+        self.contrast = contrast
+        self.saturation = saturation
+
+    def _run(self, editor: VideoEditor):
+        editor.adjust_color(self.brightness, self.contrast, self.saturation)
