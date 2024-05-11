@@ -49,7 +49,7 @@ class Logger:
         
     def file_info(self, message):
         console.log(
-            "[red][FILE][/red]",
+            "[cyan][FILE][/cyan]",
             message
         )
         
