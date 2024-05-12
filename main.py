@@ -13,9 +13,9 @@ try:
     from colorama import *
 
     from downedit.site import __main__ as vid_dl
-    from downedit.edit.image.ai_gen import __main__ as gen_img_ai
-    from downedit.edit.image.ai_editor import __main__ as ai_img_editor
-    from downedit.edit.image.editor import __main__ as img_editor
+    from downedit.edit.ai_image_gen import __main__ as gen_img_ai
+    from downedit.edit.ai_image_editor import __main__ as ai_img_editor
+    from downedit.edit.image import __main__ as img_editor
     from downedit.edit.video import __main__ as video_edit
     from downedit.__config__ import DE_VERSION
     from downedit.utils.common import tool_selector
