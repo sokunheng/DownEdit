@@ -37,8 +37,12 @@ def process_images(image_folder, output_folder, operation: str):
             input_path = os.path.join(image_folder, file)
 
             try:
-                start_actions['function'](input_imag_path=input_path, img_name=image_filename,
-                                    img_extension=img_extension , output_folder=output_folder)
+                start_actions['function'](
+                    input_imag_path=input_path,
+                    img_name=image_filename,
+                    img_extension=img_extension,
+                    output_folder=output_folder
+                )
                 print(f"{Fore.CYAN}[{datetime.now().strftime("%H:%M:%S")}] {Fore.GREEN}[File] {Fore.WHITE}{file}")
                 print(f"{Fore.YELLOW}[{datetime.now().strftime("%H:%M:%S")}] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been edited.\n")
             
