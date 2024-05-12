@@ -1,9 +1,10 @@
 from pystyle import *
 from colorama import *
-from ...utils.common import *
-from ...edit.image.image_process import *
 from pathlib import Path
 from typing import Dict, Any 
+
+from ...utils.common import *
+from ...edit.image.image_process import *
 
 def process_images(image_folder, output_folder, operation: str):
     file_folder = os.listdir(image_folder)
