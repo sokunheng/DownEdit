@@ -16,20 +16,36 @@ from ...__config__ import (
 
 logger = Logger("Programs")
 
-def get_speed_factor(tool):
-    if tool in ["Custom Speed", "Flip + Speed", "Speed + Music", "Flip + Speed + Music"]:
-        return eval(input(f"{Fore.WHITE}[{Fore.MAGENTA}?{Fore.WHITE}] {Fore.YELLOW}Select Speed:{Fore.WHITE} "))
-    return 1.0
+def get_function_input(available_tools, tool_name):
+    """
+    Get the function input based on the selected tool.
+    
+    Args:
+        available_tools (dict): The available tools.
+        tool_name (str): The selected tool.
+    
+    Returns:
+        dict: The function input for the selected tool.
+    """
+    
+    if tool_name not in available_tools:
+        raise Exception(f"Tool '{tool_name}' not found in available tools.")
 
-def get_music_path(tool):
-    if tool in ["Add Music", "Speed + Music", "Flip + Speed + Music"]:
-        return input(f"{Fore.YELLOW}Enter Music:{Fore.WHITE} ")
-    return tool
+    function_input = {}
+    for message, function_type in available_tools[tool_name].items():
+        if not isinstance(function_type, type):
+            raise Exception(f"Invalid '{function_type}' for input '{message}'.")
+
+        prompt = f"{Fore.YELLOW}Enter {message}:{Fore.WHITE} "
+        function_input[message] = function_type(input(prompt))
+    
+    return function_input
 
 def start_process(
     tool: str,
     video_speed: float,
     music_path: str,
+    loop_amount: int,
     video_preset: str,
     cpu_threads: int,
     input_folder: str
@@ -67,6 +83,7 @@ def start_process(
         tool,
         video_speed,
         music_path,
+        loop_amount,
         video_preset,
         cpu_threads,
         input_folder,
@@ -95,23 +112,23 @@ def main():
         banner_display, banner_msg = display_banner()
         tool_selector.display_banner(banner_display, banner_msg)
         available_tools = { 
-            " Flip Horizontal": lambda: None,
-            " Custom Speed": lambda: None,
-            " Loop Video": lambda: None,
-            " Flip + Speed": lambda: None,
-            " Add Music": lambda: None,
-            " Speed + Music": lambda: None,
-            " Flip + Speed + Music": lambda: None,
-            " Adjust Color": lambda: None,
+            " Flip Horizontal"      : {},
+            " Custom Speed"         : {"Speed": float},
+            " Loop Video"           : {"Loop Amount": int},
+            " Flip + Speed"         : {"Speed": float},
+            " Add Music"            : {"Music": str},
+            " Speed + Music"        : {"Speed": float, "Music": str},
+            " Flip + Speed + Music" : {"Speed": float, "Music": str},
+            " Adjust Color"         : {}
         }
         video_presets = {
             " Ultrafast": "ultrafast",
             " Superfast": "superfast",
-            " Veryfast": "veryfast",
-            " Faster": "faster",
-            " Fast": "fast",
-            " Medium": "medium",
-            " Slow": "slow",
+            " Veryfast" : "veryfast",
+            " Faster"   : "faster",
+            " Fast"     : "fast",
+            " Medium"   : "medium",
+            " Slow"     : "slow",
         }
         cpu_cores_choices = [
             str(i) for i in range(
@@ -126,11 +143,21 @@ def main():
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
         )
-        video_speed = get_speed_factor(
+        tool_options = get_function_input(
+            available_tools,
             selected_tool
         )
-        music_path = get_music_path(
-            selected_tool
+        video_speed = tool_options.get(
+            "Speed",
+            1.0
+        )
+        music_path = tool_options.get(
+            "Music",
+            None
+        )
+        loop_amount = tool_options.get(
+            "Loop Amount",
+            1
         )
         selected_presets = tool_selector.select_menu(
             message=f"{Fore.YELLOW}Video Preset{Fore.WHITE}",
@@ -144,6 +171,7 @@ def main():
             selected_tool,
             video_speed,
             music_path,
+            loop_amount,
             selected_presets,
             selected_threads,
             user_folder
