@@ -41,6 +41,12 @@ def get_function_input(available_tools, tool_name):
     
     return function_input
 
+# TODO: Implement batch thread editing for video processing.
+# Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
+# Loop through the input folder in batches based on the specified size.
+# Create separate video_process objects for each video in the batch.
+# Use threading or multiprocessing to process videos concurrently within a batch.
+# Ensure proper thread synchronization to avoid race conditions during output folder creation.
 def start_process(
     tool: str,
     video_speed: float,
