@@ -1,7 +1,7 @@
 from pystyle import *
 from colorama import *
-from downedit.utils.common import *
-from downedit.edit.image.editor.image_process import *
+from ...utils.common import *
+from ...edit.image.image_process import *
 from pathlib import Path
 from typing import Dict, Any 
 

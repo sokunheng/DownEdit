@@ -8,8 +8,8 @@ from rich.console import Console
 from datetime import datetime
 from PIL import Image
 
-from downedit.utils.common import *
-from downedit.edit.image.ai_image_editor.ai_remove_bg import remove_background
+from ...utils.common import *
+from ...edit.ai_image_editor.ai_remove_bg import remove_background
 
 class RenderImage:
     def __init__(self) -> None:
