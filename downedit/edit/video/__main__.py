@@ -149,18 +149,18 @@ def main():
             available_tools,
             selected_tool
         )
-        video_speed = float(tool_options.get(
+        video_speed = tool_options.get(
             "Speed",
             1.0
-        ))
+        )
         music_path = tool_options.get(
             "Music",
             None
         )
-        loop_amount = int(tool_options.get(
+        loop_amount = tool_options.get(
             "Loop Amount",
             1
-        ))
+        )
         adjust_color = tool_options.get(
             "Brightness",
             1.0
@@ -181,9 +181,9 @@ def main():
         )
         start_process(
             tool=selected_tool,
-            video_speed=video_speed,
+            video_speed=float(video_speed),
             music_path=music_path,
-            loop_amount=loop_amount,
+            loop_amount=int(loop_amount),
             adjust_color=adjust_color,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
