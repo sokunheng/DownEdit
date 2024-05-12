@@ -26,6 +26,7 @@ class VideoProcess:
         video_speed: float,
         music_path: str,
         loop_amount: int,
+        adjust_color: dict,
         video_preset: str,
         cpu_threads: int,
         process_folder: str,
@@ -46,7 +47,7 @@ class VideoProcess:
         self._speed_edit = Speed(self._video_speed)
         self._add_music_edit = AddMusic(self._music_path)
         self._loop_edit = Loop(self._loop_amount)
-        self._adjust_color_edit = AdjustColor()
+        self._adjust_color_edit = AdjustColor(**adjust_color)
         
         # Initialize operations handler
         self.operations = Handler({
