@@ -13,8 +13,8 @@ try:
     from colorama import *
 
     from .menu.media import media as vid_dl
-    from ..edit.ai_image_gen import __main__ as gen_img_ai
-    from ..edit.ai_image_editor import __main__ as ai_img_editor
+    from .menu.images import ai_generator as gen_img_ai
+    from .menu.images import ai_editor as ai_img_editor
     from .menu.images import editor as img_editor
     from .menu.videos import editor as video_edit
     from ..__config__ import DE_VERSION
