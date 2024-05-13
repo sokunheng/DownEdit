@@ -11,7 +11,7 @@ from abc import ABC, abstractmethod
 from ..utils.common import *
 from ..utils.logger import Logger
 from ..utils.file_utils import FileUtil, _current_time
-from ..utils.constants import CHUNK_SIZE
+from ..__config__ import CHUNK_SIZE
 
 logger = Logger("Programs")
 
