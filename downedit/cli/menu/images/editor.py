@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, Any 
 
 from ....utils.common import *
-from ....edit.image.image_process import *
+from ....edit.image._process import *
 
 def process_images(image_folder, output_folder, operation: str):
     file_folder = os.listdir(image_folder)
