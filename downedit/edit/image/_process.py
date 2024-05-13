@@ -9,7 +9,7 @@ from datetime import datetime
 from PIL import Image
 
 from ...utils.common import *
-from ..ai_image_editor.ai_remove_bg import remove_background
+from ..ai.image.editor.ai_remove_bg import remove_background
 
 class RenderImage:
     def __init__(self) -> None:
