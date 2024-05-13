@@ -12,11 +12,11 @@ try:
     from pystyle import *
     from colorama import *
 
-    from ..site import __main__ as vid_dl
+    from .menu.media import media as vid_dl
     from ..edit.ai_image_gen import __main__ as gen_img_ai
     from ..edit.ai_image_editor import __main__ as ai_img_editor
-    from ..edit.image import __main__ as img_editor
-    from ..edit.video import __main__ as video_edit
+    from .menu.images import editor as img_editor
+    from .menu.videos import editor as video_edit
     from ..__config__ import DE_VERSION
     from ..utils.common import tool_selector
     

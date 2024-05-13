@@ -1,7 +1,7 @@
 from colorama import Fore
 from pystyle import *
 
-from ..__config__ import DE_VERSION
+from ...__config__ import DE_VERSION
 
 _BANNERS: dict[
     str,
