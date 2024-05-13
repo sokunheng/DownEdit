@@ -39,7 +39,7 @@ def display_banner():
     return banner_display, banner_msg
 
 
-def main():
+def run():
     while True:
         tool_selector.running = True
         try:
@@ -75,4 +75,4 @@ def main():
         
 
 if __name__ == "__main__":
-    main()
+    run()
