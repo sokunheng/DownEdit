@@ -1,5 +1,4 @@
 from colorama import Fore
-from pystyle import *
 
 from ...__config__ import DE_VERSION
 
