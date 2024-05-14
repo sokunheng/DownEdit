@@ -104,7 +104,7 @@ def main():
                 continue
 
             output_folder = Common.ensure_or_create_directory(
-                directory_name=os.path.join(".", AI_EDITOR))
+                directory_name=os.path.join(".", EditFolder.AI_Photo_Editor))
             rm_background(images_folder, output_folder)
             
         elif selected_tool == " Back":
