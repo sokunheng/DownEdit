@@ -65,7 +65,7 @@ def display_banner():
 
 
 def main():
-    output_folder = Common.ensure_or_create_directory(EDITED_IMG)
+    output_folder = Common.ensure_or_create_directory(EditFolder.EDITED_IMG)
     while tool_selector.running:
         banner_display, banner_msg = display_banner()
         tool_selector.display_banner(banner_display, banner_msg, "- photo editor")
