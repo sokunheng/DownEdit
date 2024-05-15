@@ -4,14 +4,12 @@ import time
 
 from colorama import Fore
 
+from .._banners import get_banner
 from ....utils.common import tool_selector
 from ....utils.logger import Logger
 from ....utils.file_utils import FileUtil
 from ....edit.video._process import VideoProcess
-from ....__config__ import (
-    DE_VERSION,
-    Extensions
-)
+from ....__config__ import Extensions
 
 
 logger = Logger("Programs")
@@ -99,25 +97,10 @@ def start_process(
     )
     video_process.process()
 
-    
-def display_banner():
-    banner_display = f"""{Fore.MAGENTA}
-███████╗██████╗░██╗████████╗  ██╗░░░██╗██╗██████╗░███████╗░█████╗░
-██╔════╝██╔══██╗██║╚══██╔══╝  ██║░░░██║██║██╔══██╗██╔════╝██╔══██╗
-█████╗░░██║░░██║██║░░░██║░░░  ╚██╗░██╔╝██║██║░░██║█████╗░░██║░░██║
-██╔══╝░░██║░░██║██║░░░██║░░░  ░╚████╔╝░██║██║░░██║██╔══╝░░██║░░██║
-███████╗██████╔╝██║░░░██║░░░  ░░╚██╔╝░░██║██████╔╝███████╗╚█████╔╝
-╚══════╝╚═════╝░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝╚═════╝░╚══════╝░╚════╝░
-                Created by HengSok - v{DE_VERSION}
-    """
-    banner_msg = r"Example: C:\Users\Name\Desktop\Folder\Video"
-    return banner_display, banner_msg
-
-
 def main():
     try:
         max_cpu_cores = multiprocessing.cpu_count()
-        banner_display, banner_msg = display_banner()
+        banner_display, banner_msg = get_banner("VIDEO_EDITOR")
         tool_selector.display_banner(banner_display, banner_msg)
         available_tools = { 
             " Flip Horizontal"      : {},
