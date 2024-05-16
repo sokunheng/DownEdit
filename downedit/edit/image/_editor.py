@@ -9,7 +9,7 @@ from PIL import (
 from ...edit.editor import Editor
 
 
-class PhotoEditor(Editor):
+class ImageEditor(Editor):
     def __init__(self, input_path = None, output_path = None):
         super().__init__(input_path, output_path)
         self._img = None
