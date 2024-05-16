@@ -1,83 +1,58 @@
-from pystyle import *
-from colorama import *
-from pathlib import Path
-from typing import Dict, Any 
+import os
+import multiprocessing
+import time
 
-from ....utils.common import *
-from ....edit.image._process import *
+from colorama import Fore
 
-def process_images(image_folder, output_folder, operation: str):
-    file_folder = os.listdir(image_folder)
-    file_list = ai_img_editor.get_img_list(file_folder)
-    render_image = RenderImage()
+from .._banners import get_banner
+from ....utils.common import tool_selector
+from ....utils.logger import Logger
+from ....utils.file_utils import FileUtil
+from ....__config__ import Extensions
 
-    file_list_check = Common.check_file_folder_exist(image_folder)
-    if not file_list_check:
-        return
-    
-    start_actions: Dict[str, Dict[str, Any]] = {
-        " Flip Image": {
-            'name': 'Flipping',
-            'function': render_image._flip_img,
-            'suffix': '_flip'
-        },
-        " Crop Image": {
-            'name': 'Cropping',
-            'function': render_image._crop_img,
-            'suffix': '_crop'
-        }
-    }
-    start_actions = start_actions.get(operation)
-    if not start_actions:
-        return None
-    
-    with console.status(f'[cyan]{start_actions["name"]} images... please wait!', spinner='line'):
-        for file in file_list:
-            image_filename = Path(file).stem
-            img_extension = f"{start_actions['suffix']}.{Path(file).suffix}" 
-            input_path = os.path.join(image_folder, file)
 
-            try:
-                start_actions['function'](
-                    input_imag_path=input_path,
-                    img_name=image_filename,
-                    img_extension=img_extension,
-                    output_folder=output_folder
-                )
-                print(f"{Fore.CYAN}[{datetime.now().strftime("%H:%M:%S")}] {Fore.GREEN}[File] {Fore.WHITE}{file}")
-                print(f"{Fore.YELLOW}[{datetime.now().strftime("%H:%M:%S")}] {Fore.MAGENTA}[Status] {Fore.WHITE}Has been edited.\n")
-            
-            except Exception as e:
-                console.log(f"[red][Folder][/red] Error processing {file}: {e}")
+logger = Logger("Programs")
 
-def display_banner():
-    banner_display = f"""{Fore.MAGENTA} 
-██╗███╗░░░███╗░█████╗░░██████╗░███████╗  ███████╗██████╗░██╗████████╗░█████╗░██████╗░
-██║████╗░████║██╔══██╗██╔════╝░██╔════╝  ██╔════╝██╔══██╗██║╚══██╔══╝██╔══██╗██╔══██╗
-██║██╔████╔██║███████║██║░░██╗░█████╗░░  █████╗░░██║░░██║██║░░░██║░░░██║░░██║██████╔╝
-██║██║╚██╔╝██║██╔══██║██║░░╚██╗██╔══╝░░  ██╔══╝░░██║░░██║██║░░░██║░░░██║░░██║██╔══██╗
-██║██║░╚═╝░██║██║░░██║╚██████╔╝███████╗  ███████╗██████╔╝██║░░░██║░░░╚█████╔╝██║░░██║
-╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝░╚═════╝░╚══════╝  ╚══════╝╚═════╝░╚═╝░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝
-                            Created by HengSok - v{DE_VERSION}
+def start_process(
+) -> None:
     """
-    banner_msg = "Select Models to generate images"
-    return banner_display, banner_msg
-
+    """
+    input_folder = FileUtil.get_file_list(
+        directory=input_folder,
+        extensions=Extensions.IMAGE
+    )
+    # Create the output folder.
+    image_folder = FileUtil.create_folder(
+        folder_type="EDITED_IMG"
+    )
+    # Get the output folder path based on the tool.
+    output_folder = FileUtil.folder_path(
+        folder_root=image_folder,
+        directory_name=""
+    )
 
 def main():
-    output_folder = Common.ensure_or_create_directory(EditFolder.EDITED_IMG)
-    while tool_selector.running:
-        banner_display, banner_msg = display_banner()
-        tool_selector.display_banner(banner_display, banner_msg, "- photo editor")
+    try:
+        banner_display, banner_msg = get_banner("IMAGE_EDITOR")
+        tool_selector.display_banner(banner_display, banner_msg)
+        available_tools = { 
+            " Flip Horizontal"      : {},
+        }
+        user_folder = FileUtil.validate_folder(
+            folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
+        )
+        selected_tool = tool_selector.select_menu(
+            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
+            choices=available_tools
+        )
+        pass
+        # start_process()
         
-        choices = [" Crop Image", " Flip Image", " Back"]
-        selected_tool = tool_selector.select_menu(message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}", choices=choices)  
-        if selected_tool == " Back":
-            break          
-        input_folder = input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
-        print()
-        process_images(input_folder, output_folder, selected_tool)
-        print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
+    except Exception as e:
+        logger.folder_error(e)
+        time.sleep(0.5)
+        logger.info(input(f"{Fore.GREEN}Press enter to continue..."))
+        return
 
 if __name__ == "__main__":
     main()
