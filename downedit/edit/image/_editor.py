@@ -14,6 +14,18 @@ class PhotoEditor(Editor):
         super().__init__(input_path, output_path)
         self._img = None
         
+    def _get_properties(self):
+        """Gets the properties of the image."""
+        width, height = self._img.size
+        min_side_length = min(width, height)
+
+        left = (width - min_side_length) / 2
+        upper = (height - min_side_length) / 2
+        right = (width + min_side_length) / 2
+        lower = (height + min_side_length) / 2
+
+        return left, upper, right, lower
+        
     def _load_image(self):
         """Loads the image from the input path."""
         if self.input_path is None:
@@ -27,18 +39,6 @@ class PhotoEditor(Editor):
             raise ValueError("Output path cannot be None")
         self._img.save(self.output_path)
         return self
-
-    def _get_properties(self):
-        """Gets the properties of the image."""
-        width, height = self._img.size
-        min_side_length = min(width, height)
-
-        left = (width - min_side_length) / 2
-        upper = (height - min_side_length) / 2
-        right = (width + min_side_length) / 2
-        lower = (height + min_side_length) / 2
-
-        return left, upper, right, lower
 
     def transpose(self):
         """Transposes the image (flips horizontally)."""
