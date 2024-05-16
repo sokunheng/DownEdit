@@ -45,7 +45,7 @@ def main():
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
         )
-        pass
+        return
         # start_process()
         
     except Exception as e:
