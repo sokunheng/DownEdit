@@ -15,18 +15,18 @@ class VideoOperation(Operation, ABC):
         pass
     
     def handle(self, editor: VideoEditor, output_suffix: str) -> str:
-            """
-            Handles the operation and updates the output suffix.
+        """
+        Handles the operation and updates the output suffix.
 
-            Args:
-                editor (VideoEditor): The video editor instance.
-                output_suffix (str): The current output suffix.
+        Args:
+            editor (VideoEditor): The video editor instance.
+            output_suffix (str): The current output suffix.
 
-            Returns:
-                str: The updated output suffix.
-            """
-            self._run(editor)
-            return output_suffix + self.suffix
+        Returns:
+            str: The updated output suffix.
+        """
+        self._run(editor)
+        return output_suffix + self.suffix
     
 class Flip(VideoOperation):
     """
