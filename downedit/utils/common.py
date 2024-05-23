@@ -20,7 +20,7 @@ from ..download.downloader import VideoDL
 
 install()
 
-ai_img_editor = ImageEditor()
+ai_img_editor = "ImageEditor()"
 console = Console()
 tool_selector = ToolSelector()
 logger = Logger("Programs")
