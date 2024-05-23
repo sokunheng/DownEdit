@@ -212,10 +212,10 @@ class FileUtil:
         """
         filtered_files = []
         for root, _, files in os.walk(directory):
-                for file in files:
-                    if file.lower().endswith(extensions):
-                        full_file_path = os.path.join(root, file)
-                        filtered_files.append(full_file_path)
+            for file in files:
+                if file.lower().endswith(extensions):
+                    full_file_path = os.path.join(root, file)
+                    filtered_files.append(full_file_path)
         return filtered_files
     
     def get_output_file(
