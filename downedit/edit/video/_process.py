@@ -5,6 +5,7 @@ from colorama import Fore
 
 from ..handler import Handler
 from ...utils.logger import Logger
+from ...utils.file_utils import FileUtil
 from ._editor import VideoEditor
 from ._operation import (
     VideoOperation,
@@ -62,40 +63,15 @@ class VideoProcess:
         })
 
     def process(self):
-        start = time.time()
+        """
+        Process the video clips in the input folder.
+        """
         proceed_count = 0
+        start = time.time()
         for clip in self._input_folder:
-            # Get the input filename without the extension
-            file_name = os.path.splitext(os.path.basename(clip))[0]
-            limit_file_name = str(f'{file_name:60.60}')
-            file_extension = os.path.splitext(os.path.basename(clip))[1]
-            output_suffix = "" 
-                        
-            try:
-                # Execute the operations and build the suffix
-                video_editor = VideoEditor(clip, None)  # No output path yet
-                self._build_and_apply_operations(video_editor, output_suffix)
-                        
-                # Construct the output file path with filename, suffix, and extension
-                output_file_path = os.path.join(
-                    self._output_folder,
-                    f"{file_name}{output_suffix}{file_extension}"
-                )
-                if not os.path.exists(output_file_path):
-                    self.logger.file_info(
-                        f"Processing: [green]{limit_file_name}[/green]"
-                    )
-                    # Set the final output path
-                    video_editor.output_path = output_file_path 
-                    # Render the video using the final output path
-                    video_editor.render(
-                        threads=self._cpu_threads, 
-                        preset=self._video_preset
-                    )
-                    proceed_count += 1
-                
-            except Exception as e:
-                self.logger.file_error(f"Error: {e}")
+            if self._process_clip(clip):
+                proceed_count += 1
+            else:
                 continue
         end = time.time()
         
@@ -104,6 +80,49 @@ class VideoProcess:
         self.logger.file_info(f"Processed [green]{proceed_count}[/green] videos successfully.")
         self.logger.info(input("Press enter to continue..."))
     
+            
+    def _process_clip(self, clip) -> bool:
+        """
+        Process the video clip.
+        
+        Args:
+            clip (str): The video clip path.
+            
+        Returns:
+            bool: True if the video clip was processed successfully.
+        """
+        # Get the input filename without the extension
+        file_name, file_extension = FileUtil.get_file_info(clip)
+        limit_file_name = str(f'{file_name:60.60}')
+        output_suffix = "" 
+                    
+        try:
+            # Execute the operations and build the suffix
+            video_editor = VideoEditor(clip, None)  # No output path yet
+            self._build_and_apply_operations(video_editor, output_suffix)
+                    
+            # Construct the output file path with filename, suffix, and extension
+            output_file_path = os.path.join(
+                self._output_folder,
+                f"{file_name}{output_suffix}{file_extension}"
+            )
+            if not os.path.exists(output_file_path):
+                self.logger.file_info(
+                    f"Processing: [green]{limit_file_name}[/green]"
+                )
+                # Set the final output path
+                video_editor.output_path = output_file_path 
+                # Render the video using the final output path
+                video_editor.render(
+                    threads=self._cpu_threads, 
+                    preset=self._video_preset
+                )
+                return True
+            
+        except Exception as e:
+            self.logger.file_error(f"Error: {e}")
+            return False
+        
     def _build_and_apply_operations(self, video_editor: VideoEditor, output_suffix: str):
         """
         Builds and applies the operations to the video editor.
