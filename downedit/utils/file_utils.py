@@ -179,6 +179,21 @@ class FileUtil:
                 if not os.path.exists(dir_path):
                     return dir_path
                 counter += 1
+                
+    @staticmethod
+    def get_file_info(self, file_path: str) -> tuple:
+        """
+        Returns the name and extension of a file.
+        
+        Args:
+            file_path (str): The path to the file.
+        
+        Returns:
+            tuple: A tuple containing the file name and extension.
+        """
+        name = os.path.splitext(os.path.basename(file_path))[0]
+        extension = os.path.splitext(os.path.basename(file_path))[1]
+        return name, extension
     
     @staticmethod
     def get_file_list(
