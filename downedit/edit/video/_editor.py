@@ -102,13 +102,15 @@ class VideoEditor(Editor):
                 Defaults to 'medium' for a balance of speed and quality.
                 - Consider your target audience and desired video file size when choosing a preset.
         """
-        self.clip.write_videofile(
-            self.output_path,
-            verbose=False,
-            logger=None,
-            codec='libx264',
-            audio_codec="aac",
-            threads=threads,
-            preset=preset
-        )
-        self.clip.close()
+        try:
+            self.clip.write_videofile(
+                self.output_path,
+                verbose=False,
+                logger=None,
+                codec='libx264',
+                audio_codec="aac",
+                threads=threads,
+                preset=preset
+            )
+        finally:
+            self.clip.close()
