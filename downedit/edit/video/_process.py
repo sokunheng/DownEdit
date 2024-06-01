@@ -104,22 +104,29 @@ class VideoProcess:
             output_suffix = self._build_and_apply_operations(video_editor, output_suffix)
                     
             # Construct the output file path with filename, suffix, and extension
-            output_file_path = os.path.join(
+            output_file_path = FileUtil.get_output_file(
                 self._output_folder,
-                f"{file_name}{output_suffix}{file_extension}"
+                f"{file_name}{output_suffix}",
+                file_extension
             )
-            if not os.path.exists(output_file_path):
-                self.logger.file_info(
-                    f"Processing: [green]{limit_file_name}[/green]"
+            
+            if os.path.exists(output_file_path):
+                self.logger.file_error(
+                    f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
                 )
-                # Set the final output path
-                video_editor.output_path = output_file_path 
-                # Render the video using the final output path
-                video_editor.render(
-                    threads=self._cpu_threads, 
-                    preset=self._video_preset
-                )
-                return True
+                return False
+            
+            self.logger.file_info(
+                f"Processing: [green]{limit_file_name}[/green]"
+            )
+            # Set the final output path
+            video_editor.output_path = output_file_path 
+            # Render the video using the final output path
+            video_editor.render(
+                threads=self._cpu_threads, 
+                preset=self._video_preset
+            )
+            return True
             
         except Exception as e:
             self.logger.file_error(f"Error: {e}")

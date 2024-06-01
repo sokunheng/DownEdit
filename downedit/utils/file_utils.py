@@ -78,7 +78,7 @@ class FileUtil:
         folder_root = cls().folder_root
         folder_name = getattr(EditFolder, folder_type)
         return cls.folder_path(folder_root, folder_name)
-        
+    
     def check_file(
         self,
         folder_path: str, 
@@ -218,6 +218,7 @@ class FileUtil:
                     filtered_files.append(full_file_path)
         return filtered_files
     
+    @staticmethod
     def get_output_file(
         self,
         folder_path: str,
