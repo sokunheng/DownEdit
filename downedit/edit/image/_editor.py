@@ -91,3 +91,8 @@ class ImageEditor(Editor):
         """Saves the modified image to the specified output path."""
         self._save_image()
         return self
+    
+    def close(self):
+        """Closes the image."""
+        self._img.close()
+        return self
