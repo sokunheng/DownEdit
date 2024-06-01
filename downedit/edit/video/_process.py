@@ -79,7 +79,7 @@ class VideoProcess:
         self.logger.info(f"Processed:{Fore.YELLOW} "+ f"%.2fs" % (end - start))
         self.logger.file_info(f"Saved at [green]{self._output_folder}[/green]")
         self.logger.file_info(f"Processed [green]{proceed_count}[/green] videos successfully.")
-        self.logger.info(input("Press enter to continue..."))
+        self.logger.keybind("Press enter to continue..")
     
             
     def _process_clip(self, clip) -> bool:
@@ -95,11 +95,12 @@ class VideoProcess:
         # Get the input filename without the extension
         file_name, file_extension = FileUtil.get_file_info(clip)
         limit_file_name = str(f'{file_name:60.60}')
+        output_file_path = ""
         output_suffix = "" 
                     
         try:
             # Execute the operations and build the suffix
-            video_editor = VideoEditor(clip, None)  # No output path yet
+            video_editor = VideoEditor(clip, output_file_path)  # No output path yet
             output_suffix = self._build_and_apply_operations(video_editor, output_suffix)
                     
             # Construct the output file path with filename, suffix, and extension
