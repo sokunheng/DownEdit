@@ -77,7 +77,7 @@ class ImageEditor(Editor):
         self._img = ImageEnhance.Sharpness(self._img).enhance(1.5)
         return self
 
-    def blur(self, radius):
+    def blur(self, radius = 2):
         """Blurs the image with the specified radius."""
         self._img = self._img.filter(ImageFilter.BLUR)
         return self
