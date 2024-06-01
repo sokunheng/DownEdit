@@ -181,7 +181,7 @@ class FileUtil:
                 counter += 1
                 
     @staticmethod
-    def get_file_info(self, file_path: str) -> tuple:
+    def get_file_info(file_path: str) -> tuple:
         """
         Returns the name and extension of a file.
         
