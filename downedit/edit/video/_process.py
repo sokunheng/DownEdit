@@ -37,6 +37,7 @@ class VideoProcess:
         self._video_speed = video_speed
         self._music_path = music_path
         self._loop_amount = loop_amount
+        self._adjust_color  = adjust_color
         self._video_preset = video_preset
         self._cpu_threads = cpu_threads
         self._input_folder = process_folder
@@ -48,7 +49,7 @@ class VideoProcess:
         self._speed_edit = Speed(self._video_speed)
         self._add_music_edit = AddMusic(self._music_path)
         self._loop_edit = Loop(self._loop_amount)
-        self._adjust_color_edit = AdjustColor(*adjust_color)
+        self._adjust_color_edit = AdjustColor(*self._adjust_color)
         
         # Initialize operations handler
         self.operations = Handler({
@@ -99,7 +100,7 @@ class VideoProcess:
         try:
             # Execute the operations and build the suffix
             video_editor = VideoEditor(clip, None)  # No output path yet
-            self._build_and_apply_operations(video_editor, output_suffix)
+            output_suffix = self._build_and_apply_operations(video_editor, output_suffix)
                     
             # Construct the output file path with filename, suffix, and extension
             output_file_path = os.path.join(
@@ -138,3 +139,4 @@ class VideoProcess:
         elif isinstance(video_operation, list):
             for operation in video_operation:
                 output_suffix = operation.handle(video_editor, output_suffix)
+        return output_suffix
