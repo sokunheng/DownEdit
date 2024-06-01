@@ -116,7 +116,7 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.5)
+        time.sleep(1.0)
         console.log(
             "[cyan][FILE][/cyan]",
             message
