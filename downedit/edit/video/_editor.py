@@ -4,7 +4,7 @@ from ...edit.editor import Editor
 
 
 class VideoEditor(Editor):
-    def __init__(self, input_path = None, output_path = None):
+    def __init__(self, input_path = "", output_path = ""):
         super().__init__(input_path, output_path)
         self.clip = VideoFileClip(self.input_path)
 
