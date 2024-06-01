@@ -220,7 +220,6 @@ class FileUtil:
     
     @staticmethod
     def get_output_file(
-        self,
         folder_path: str,
         file_name: str,
         file_extension: str
