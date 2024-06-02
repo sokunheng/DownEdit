@@ -9,62 +9,10 @@ from ....utils.common import tool_selector
 from ....utils.logger import Logger
 from ....utils.file_utils import FileUtil
 from ....edit.video._process import VideoProcess
-from ....__config__ import Extensions
 
 
 logger = Logger("Programs")
 
-# TODO: Implement batch thread editing for video processing.
-# Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
-# Loop through the input folder in batches based on the specified size.
-# Create separate video_process objects for each video in the batch.
-# Use threading or multiprocessing to process videos concurrently within a batch.
-# Ensure proper thread synchronization to avoid race conditions during output folder creation.
-def start_process(
-    tool: str,
-    video_preset: str,
-    cpu_threads: int,
-    input_folder: str,
-    **video_params
-) -> None:
-    """
-    Start the video processing based on the selected tool.
-    
-    Args:
-        tool (str): The selected tool.
-        video_speed (float): The speed factor of the video.
-        music_path (str): The path to the music file.
-        video_preset (str): The video preset.
-        cpu_threads (int): The number of CPU threads.
-        input_folder (str): The folder containing the video files.
-    
-    Returns:
-        None
-    """
-    file_list = FileUtil.get_file_list(
-        directory=input_folder,
-        extensions=Extensions.VIDEO
-    )
-    # Create the output folder.
-    video_folder = FileUtil.create_folder(
-        folder_type="EDITED_VIDEO"
-    )
-    # Get the output folder path based on the tool.
-    output_folder = FileUtil.folder_path(
-        folder_root=video_folder,
-        directory_name=tool
-    )
-    
-    # Process the video.
-    video_process = VideoProcess(
-        tool=tool,
-        video_preset=video_preset,
-        cpu_threads=cpu_threads,
-        process_folder=file_list,
-        output_folder=output_folder,
-        **video_params,
-    )
-    video_process.process()
 
 def main():
     try:
@@ -115,13 +63,14 @@ def main():
             message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
             choices=cpu_cores_choices
         )
-        start_process(
+        video_process = VideoProcess(
             tool=selected_tool,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
             input_folder=user_folder,
             **video_params
         )
+        video_process.start()
         
     except Exception as e:
         logger.folder_error(e)
