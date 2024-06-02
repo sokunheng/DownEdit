@@ -17,7 +17,7 @@ def main():
     try:
         max_cpu_cores = multiprocessing.cpu_count()
         banner_display, banner_msg = get_banner("VIDEO_EDITOR")
-        tool_selector.display_banner(banner_display, banner_msg)
+        tool_selector.display_banner(banner_display, banner_msg, "- Video editor")
         available_tools = VideoProcess.get_tools()
         video_presets = {
             " Ultrafast": "ultrafast",
