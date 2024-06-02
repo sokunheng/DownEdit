@@ -66,7 +66,7 @@ class ToolSelector:
             raise ValueError("User input strategy not set")
         return self._user_input.get_user_input(message)
     
-    def get_tool_input(available_tools, tool_name):
+    def get_tool_input(self, available_tools, tool_name):
         """
         Get the function input based on the selected tool.
         
