@@ -7,6 +7,7 @@ from rich.console import Console
 
 install()
 console = Console()
+console._log_render.omit_repeated_times = False
 
 class Logger:
     def __init__(self, name=None):
@@ -84,7 +85,6 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.75)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -100,7 +100,6 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.75)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -116,7 +115,6 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.75)
         console.log(
             "[cyan][FILE][/cyan]",
             message
@@ -132,7 +130,6 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.75)
         console.log(
             "[red][FILE][/red]",
             message
