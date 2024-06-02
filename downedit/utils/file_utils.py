@@ -191,9 +191,18 @@ class FileUtil:
         Returns:
             tuple: A tuple containing the file name and extension.
         """
+        if not os.path.exists(file_path):
+            return None
+
         name = os.path.splitext(os.path.basename(file_path))[0]
-        extension = os.path.splitext(os.path.basename(file_path))[1]
-        return name, extension
+        extension = os.path.splitext(os.path.basename(file_path))[1].lower()
+        
+        try:
+            size = os.path.getsize(file_path)
+        except (FileNotFoundError, PermissionError):
+            size = None
+
+        return name, extension, size
     
     @staticmethod
     def get_file_list(
