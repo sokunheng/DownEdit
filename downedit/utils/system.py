@@ -3,14 +3,13 @@ import wmi
 import platform
 import psutil
 
-class SystemInfo:
-    __instance = None
+from .singleton import Singleton
 
-    def __new__(cls):
-        if not SystemInfo.__instance:
-            SystemInfo.__instance = object.__new__(cls)
-        return SystemInfo.__instance
-
+class SystemInfo(metaclass=Singleton):
+    """
+    This class provides methods to retrieve system information like CPU, OS, RAM, GPU, and username.
+    """
+    
     def get_cpu_info(self):
         cpu_info = wmi.WMI().Win32_Processor()[0]
         cpu_name = cpu_info.Name
