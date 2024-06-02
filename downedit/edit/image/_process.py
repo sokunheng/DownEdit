@@ -41,7 +41,7 @@ class ImageProcess:
         self.logger.file_info(f"Processed [green]{proceed_count}[/green] images successfully.")
         self.logger.keybind("Press enter to continue..")
     
-    def _process_image(self, clip) -> bool:
+    def _process_image(self, image) -> bool:
         """
         Process the video clip.
         
@@ -52,7 +52,7 @@ class ImageProcess:
             bool: True if the video clip was processed successfully.
         """
         # Get the input filename without the extension
-        file_name, file_extension = FileUtil.get_file_info(clip)
+        file_name, file_extension, file_size = FileUtil.get_file_info(image)
         limit_file_name = str(f'{file_name:60.60}')
         output_file_path = ""
         output_suffix = "" 
