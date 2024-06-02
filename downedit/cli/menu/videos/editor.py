@@ -50,7 +50,7 @@ def start_process(
     video_speed: float,
     music_path: str,
     loop_amount: int,
-    adjust_color,
+    adjust_color: tuple,
     video_preset: str,
     cpu_threads: int,
     input_folder: str
