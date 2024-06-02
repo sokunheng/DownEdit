@@ -15,7 +15,7 @@ logger = Logger("Programs")
 def main():
     try:
         banner_display, banner_msg = get_banner("IMAGE_EDITOR")
-        tool_selector.display_banner(banner_display, banner_msg, "- photo editor")
+        tool_selector.display_banner(banner_display, banner_msg, "- Photo editor")
         available_tools = ImageProcess.get_tools()
         user_folder = FileUtil.validate_folder(
             folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
