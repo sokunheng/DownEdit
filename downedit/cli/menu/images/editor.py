@@ -1,5 +1,3 @@
-import os
-import multiprocessing
 import time
 
 from colorama import Fore
