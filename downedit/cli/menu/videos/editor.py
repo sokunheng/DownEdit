@@ -126,7 +126,7 @@ def main():
     except Exception as e:
         logger.folder_error(e)
         time.sleep(0.5)
-        logger.info(input(f"{Fore.GREEN}Press enter to continue..."))
+        logger.keybind(f"{Fore.GREEN}Press enter to continue...")
         return
 
 if __name__ == "__main__":
