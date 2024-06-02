@@ -93,7 +93,7 @@ class VideoProcess:
             bool: True if the video clip was processed successfully.
         """
         # Get the input filename without the extension
-        file_name, file_extension = FileUtil.get_file_info(clip)
+        file_name, file_extension, file_size = FileUtil.get_file_info(clip)
         limit_file_name = str(f'{file_name:60.60}')
         output_file_path = ""
         output_suffix = "" 
