@@ -33,7 +33,7 @@ def start_process(
     # Get the output folder path based on the tool.
     output_folder = FileUtil.folder_path(
         folder_root=image_folder,
-        directory_name=""
+        directory_name=tool
     )
     # Process the image.
     image_process = ImageProcess(
