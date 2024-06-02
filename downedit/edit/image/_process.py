@@ -66,7 +66,26 @@ class ImageProcess:
             " Grayscale Image": self._grayscale_edit,
             " Sharpen Image": self._sharpen_edit,
             " Blur Image": self._blur_edit
-        })   
+        })
+    
+    @staticmethod
+    def get_tools() -> dict:
+        """
+        Get the available image editing tools.
+        
+        Returns:
+            dict: The available image editing tools.
+        """
+        return { 
+            " Flip Horizontal"   : {},
+            " Crop Image"        : {},
+            " Enhance Color"     : {},
+            " Rotate Image"      : {"Degrees": int},
+            " Resize Image"      : {"Width": int, "Height": int},
+            " Grayscale Image"   : {},
+            " Sharpen Image"     : {},
+            " Blur Image"        : {"Radius": int},
+        }
     
     def start(self):
         """
