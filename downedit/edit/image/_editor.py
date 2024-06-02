@@ -96,3 +96,8 @@ class ImageEditor(Editor):
         """Closes the image."""
         self._img.close()
         return self
+    
+    def render(self):
+        """Renders the image."""
+        self.save().close()
+        return self
