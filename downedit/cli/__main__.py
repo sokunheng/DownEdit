@@ -35,7 +35,7 @@ def display_banner():
     {Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.CYAN}RAM: {Fore.YELLOW}{pc_info["RAM"]:.3f} GB{Fore.RESET}
     {Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.CYAN}GPU: {Fore.YELLOW}{pc_info["GPU"]}{Fore.RESET}
     """
-    banner_msg = """Use arrow key to select the options"""
+    banner_msg = """Use arrow key and enter to select the options"""
     return banner_display, banner_msg
 
 
