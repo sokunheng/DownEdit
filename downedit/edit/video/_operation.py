@@ -102,4 +102,8 @@ class AdjustColor(VideoOperation):
         self.saturation = saturation
 
     def _run(self, editor: VideoEditor):
-        editor.adjust_color(self.brightness, self.contrast, self.saturation)
+        editor.adjust_color(
+            self.brightness,
+            self.contrast,
+            self.saturation
+        )
