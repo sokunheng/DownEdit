@@ -84,7 +84,7 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.5)
+        time.sleep(0.75)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -100,7 +100,7 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.5)
+        time.sleep(0.75)
         console.log(
             "[red][FOLDER][/red]",
             message
@@ -116,7 +116,7 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(1.0)
+        time.sleep(0.75)
         console.log(
             "[cyan][FILE][/cyan]",
             message
@@ -132,7 +132,7 @@ class Logger:
         Returns:
             None
         """
-        time.sleep(0.5)
+        time.sleep(0.75)
         console.log(
             "[red][FILE][/red]",
             message
