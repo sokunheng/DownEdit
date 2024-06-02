@@ -4,6 +4,7 @@ import time
 from colorama import Fore
 
 from ..handler import Handler
+from ...__config__ import Extensions
 from ...utils.logger import Logger
 from ...utils.file_utils import FileUtil
 from ._editor import VideoEditor
@@ -27,7 +28,6 @@ class VideoProcess:
         video_preset: str,
         cpu_threads: int,
         process_folder: str,
-        output_folder: str,
         **kwargs
     ):
         self._tool = tool
@@ -37,8 +37,19 @@ class VideoProcess:
         self._adjust_color  = {k.lower(): v for k, v in kwargs.items()}
         self._video_preset = video_preset
         self._cpu_threads = cpu_threads
-        self._input_folder = process_folder
-        self._output_folder = output_folder
+        self._input_folder = FileUtil.get_file_list(
+            directory=process_folder,
+            extensions=Extensions.VIDEO
+        )
+        # Create the output folder.
+        self._video_folder = FileUtil.create_folder(
+            folder_type="EDITED_VIDEO"
+        )
+        # Get the output folder path based on the tool.
+        self._output_folder = FileUtil.folder_path(
+            folder_root=self._video_folder,
+            directory_name=tool
+        )
         self.logger = Logger("Programs")
         
         # Initialize the video operations
@@ -59,8 +70,14 @@ class VideoProcess:
             " Flip + Speed + Music": [self._flip_edit, self._speed_edit, self._add_music_edit],
             " Adjust Color": self._adjust_color_edit
         })
-
-    def process(self):
+        
+    # TODO: Implement batch thread editing for video processing.
+    # Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
+    # Loop through the input folder in batches based on the specified size.
+    # Create separate video_process objects for each video in the batch.
+    # Use threading or multiprocessing to process videos concurrently within a batch.
+    # Ensure proper thread synchronization to avoid race conditions during output folder creation.
+    def start(self):
         """
         Process the video clips in the input folder.
         """
