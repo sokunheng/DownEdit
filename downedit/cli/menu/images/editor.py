@@ -9,41 +9,10 @@ from ....utils.common import tool_selector
 from ....utils.logger import Logger
 from ....utils.file_utils import FileUtil
 from ....edit.image._process import ImageProcess
-from ....__config__ import Extensions
 
 
 logger = Logger("Programs")
 
-def start_process(
-    tool: str,
-    input_folder: str,
-    **image_params
-) -> None:
-    """
-    Start the image processing based on the selected tool.
-    """
-    input_folder = FileUtil.get_file_list(
-        directory=input_folder,
-        extensions=Extensions.IMAGE
-    )
-    # Create the output folder.
-    image_folder = FileUtil.create_folder(
-        folder_type="EDITED_IMG"
-    )
-    # Get the output folder path based on the tool.
-    output_folder = FileUtil.folder_path(
-        folder_root=image_folder,
-        directory_name=tool
-    )
-    # Process the image.
-    image_process = ImageProcess(
-        tool=tool,
-        process_folder=input_folder,
-        output_folder=output_folder,
-        **image_params
-    )
-    image_process.process()
-    
 
 def main():
     try:
@@ -70,11 +39,12 @@ def main():
             available_tools,
             selected_tool
         )
-        start_process(
+        image_process = ImageProcess(
             tool=selected_tool,
-            input_folder=user_folder,
+            process_folder=user_folder,
             **image_params
         )
+        image_process.start()
         
     except Exception as e:
         logger.folder_error(e)
