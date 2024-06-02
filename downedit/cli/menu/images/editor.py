@@ -8,12 +8,18 @@ from .._banners import get_banner
 from ....utils.common import tool_selector
 from ....utils.logger import Logger
 from ....utils.file_utils import FileUtil
+from ....edit.image._process import ImageProcess
 from ....__config__ import Extensions
 
 
 logger = Logger("Programs")
 
 def start_process(
+    tool: str,
+    adjust_degrees: int,
+    img_width: int,
+    img_height: int,
+    input_folder: str
 ) -> None:
     """
     """
@@ -30,13 +36,31 @@ def start_process(
         folder_root=image_folder,
         directory_name=""
     )
+    # Process the image.
+    image_process = ImageProcess(
+        tool=tool,
+        adjust_degrees=adjust_degrees,
+        img_width=img_width,
+        img_height=img_height,
+        process_folder=input_folder,
+        output_folder=output_folder
+    )
+    image_process.process()
+    
 
 def main():
     try:
         banner_display, banner_msg = get_banner("IMAGE_EDITOR")
         tool_selector.display_banner(banner_display, banner_msg)
         available_tools = { 
-            " Flip Horizontal"      : {},
+            " Flip Horizontal"   : {},
+            " Crop Image"        : {},
+            " Enhance Color"     : {},
+            " Rotate Image"      : {"Degrees": int},
+            " Resize Image"      : {"Width": int, "Height": int},
+            " Grayscale Image"   : {},
+            " Sharpen Image"     : {},
+            " Blur Image"        : {"Radius": int},
         }
         user_folder = FileUtil.validate_folder(
             folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
@@ -44,6 +68,10 @@ def main():
         selected_tool = tool_selector.select_menu(
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
+        )
+        tool_options = tool_selector.get_tool_input(
+            available_tools,
+            selected_tool
         )
         return
         # start_process()
