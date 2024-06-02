@@ -4,6 +4,7 @@ import time
 from colorama import Fore
 
 from ..handler import Handler
+from ...__config__ import Extensions
 from ...utils.logger import Logger
 from ...utils.file_utils import FileUtil
 from ._editor import ImageEditor
@@ -25,7 +26,6 @@ class ImageProcess:
         self,
         tool: str,
         process_folder: str,
-        output_folder: str,
         **kwargs
     ) -> None:
         self._tool = tool
@@ -33,8 +33,17 @@ class ImageProcess:
         self._img_width = kwargs.get("Width", 0)
         self._img_height = kwargs.get("Height", 0)
         self._blur_radius = kwargs.get("Radius", 1)
-        self._input_folder = process_folder
-        self._output_folder = output_folder
+        self._input_folder = FileUtil.get_file_list(
+            directory=process_folder,
+            extensions=Extensions.IMAGE
+        )
+        self._image_folder = FileUtil.create_folder(
+            folder_type="EDITED_IMG"
+        )
+        self._output_folder = FileUtil.folder_path(
+            folder_root=self._image_folder,
+            directory_name=tool
+        )
         self.logger = Logger("Programs")
         
         # Initialize the image operations
@@ -57,9 +66,9 @@ class ImageProcess:
             " Grayscale Image": self._grayscale_edit,
             " Sharpen Image": self._sharpen_edit,
             " Blur Image": self._blur_edit
-        })        
+        })   
     
-    def process(self):
+    def start(self):
         """
         Process the video clips in the input folder.
         """
