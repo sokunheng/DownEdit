@@ -14,31 +14,6 @@ from ....__config__ import Extensions
 
 logger = Logger("Programs")
 
-def get_function_input(available_tools, tool_name):
-    """
-    Get the function input based on the selected tool.
-    
-    Args:
-        available_tools (dict): The available tools.
-        tool_name (str): The selected tool.
-    
-    Returns:
-        dict: The function input for the selected tool.
-    """
-    
-    if tool_name not in available_tools:
-        raise Exception(f"Tool '{tool_name}' not found in available tools.")
-
-    function_input = {}
-    for message, function_type in available_tools[tool_name].items():
-        if not isinstance(function_type, type):
-            raise Exception(f"Invalid '{function_type}' for input '{message}'.")
-
-        prompt = f"{Fore.YELLOW}Enter {message}:{Fore.WHITE} "
-        function_input[message] = function_type(input(prompt))
-    
-    return function_input
-
 # TODO: Implement batch thread editing for video processing.
 # Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
 # Loop through the input folder in batches based on the specified size.
@@ -134,7 +109,7 @@ def main():
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
         )
-        tool_options = get_function_input(
+        tool_options = tool_selector.get_tool_input(
             available_tools,
             selected_tool
         )
