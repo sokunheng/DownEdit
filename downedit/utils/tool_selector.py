@@ -66,6 +66,31 @@ class ToolSelector:
             raise ValueError("User input strategy not set")
         return self._user_input.get_user_input(message)
     
+    def get_tool_input(available_tools, tool_name):
+        """
+        Get the function input based on the selected tool.
+        
+        Args:
+            available_tools (dict): The available tools.
+            tool_name (str): The selected tool.
+        
+        Returns:
+            dict: The function input for the selected tool.
+        """
+        
+        if tool_name not in available_tools:
+            raise Exception(f"Tool '{tool_name}' not found in available tools.")
+
+        function_input = {}
+        for message, function_type in available_tools[tool_name].items():
+            if not isinstance(function_type, type):
+                raise Exception(f"Invalid '{function_type}' for input '{message}'.")
+
+            prompt = f"{Fore.YELLOW}Enter {message}:{Fore.WHITE} "
+            function_input[message] = function_type(input(prompt))
+        
+        return function_input
+    
     def show_box(self, message):
         """
         Display the message in a box.
