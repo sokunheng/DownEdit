@@ -3,6 +3,7 @@ import time
 
 from colorama import Fore
 
+from ..handler import Handler
 from ...utils.logger import Logger
 from ...utils.file_utils import FileUtil
 from ._editor import ImageEditor
@@ -35,6 +36,28 @@ class ImageProcess:
         self._input_folder = process_folder
         self._output_folder = output_folder
         self.logger = Logger("Programs")
+        
+        # Initialize the image operations
+        self._flip_edit = Flip()
+        self._crop_edit = Crop()
+        self._enhance_edit = Enhance()
+        self._rotate_edit = Rotate(self._adjust_degrees)
+        self._resize_edit = Resize(self._img_width, self._img_height)
+        self._grayscale_edit = GrayScale()
+        self._sharpen_edit = Sharpen()
+        self._blur_edit = Blur(self._blur_radius)
+        
+        # Initialize operations handler
+        self.operations = Handler({
+            " Flip Horizontal": self._flip_edit,
+            " Crop Image": self._crop_edit,
+            " Enhance Color": self._enhance_edit,
+            " Rotate Image": self._rotate_edit,
+            " Resize Image": self._resize_edit,
+            " Grayscale Image": self._grayscale_edit,
+            " Sharpen Image": self._sharpen_edit,
+            " Blur Image": self._blur_edit
+        })        
     
     def process(self):
         """
@@ -70,31 +93,37 @@ class ImageProcess:
         output_file_path = ""
         output_suffix = "" 
         
-        # Execute the operations and build the suffix
-        image_editor = ImageEditor(image, output_file_path)
-        output_suffix = self._build_and_apply_operations(image_editor, output_suffix)
-        
-        # Construct the output file path with filename, suffix, and extension
-        output_file_path = FileUtil.get_output_file(
-            self._output_folder,
-            f"{file_name}{output_suffix}",
-            file_extension
-        )
-        
-        if os.path.exists(output_file_path):
-            self.logger.file_error(
-                f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
+        try:
+            # Execute the operations and build the suffix
+            image_editor = ImageEditor(image, output_file_path)
+            output_suffix = self._build_and_apply_operations(image_editor, output_suffix)
+            
+            # Construct the output file path with filename, suffix, and extension
+            output_file_path = FileUtil.get_output_file(
+                self._output_folder,
+                f"{file_name}{output_suffix}",
+                file_extension
             )
+            
+            if os.path.exists(output_file_path):
+                self.logger.file_error(
+                    f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
+                )
+                return False
+            
+            self.logger.file_info(
+                f"Processing: [green]{limit_file_name}[/green]"
+            )
+            # Set the final output path
+            image_editor.output_path = output_file_path
+            # Save the image
+            image_editor.load().render()
+            return True
+                
+        except Exception as e:
+            self.logger.file_error(e)
             return False
-        
-        self.logger.file_info(
-            f"Processing: [green]{limit_file_name}[/green]"
-        )
-        # Set the final output path
-        image_editor.output_path = output_file_path
-        # Save the image
-        image_editor.render()
-        return True
+
     
     def _build_and_apply_operations(self, editor: ImageEditor, suffix: str) -> str:
         """
@@ -107,8 +136,9 @@ class ImageProcess:
         Returns:
             str: The updated suffix.
         """
-        operations = self._get_operations()
-        for operation in operations:
-            suffix += operation.suffix
-            operation.function(editor)
+        # Get the selected operation.
+        image_operation = self.operations._get(self._tool)
+        if isinstance(image_operation, ImageOperation):
+            # Apply the operation to the editor
+            suffix = image_operation.handle(editor, suffix)
         return suffix
