@@ -31,10 +31,11 @@ class VideoProcess:
         **kwargs
     ):
         self._tool = tool
-        self._video_speed = kwargs.get("Speed", 1.0)
-        self._music_path = kwargs.get("Music", None)
-        self._loop_amount = kwargs.get("Loop Amount", 1)
-        self._adjust_color  = {k.lower(): v for k, v in kwargs.items()}
+        self._adjust_color = (
+            kwargs.get("Brightness", 1.0),
+            kwargs.get("Contrast", 1.0),
+            kwargs.get("Saturation", 1.0)
+        )
         self._video_preset = video_preset
         self._cpu_threads = cpu_threads
         self._input_folder = FileUtil.get_file_list(
@@ -54,10 +55,10 @@ class VideoProcess:
         
         # Initialize the video operations
         self._flip_edit = Flip()
-        self._speed_edit = Speed(self._video_speed)
-        self._add_music_edit = AddMusic(self._music_path)
-        self._loop_edit = Loop(self._loop_amount)
-        self._adjust_color_edit = AdjustColor(**self._adjust_color)
+        self._speed_edit = Speed(kwargs.get("Speed", 1.0))
+        self._add_music_edit = AddMusic(kwargs.get("Music", None))
+        self._loop_edit = Loop(kwargs.get("Loop Amount", 1))
+        self._adjust_color_edit = AdjustColor(*self._adjust_color)
         
         # Initialize operations handler
         self.operations = Handler({
