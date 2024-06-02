@@ -48,7 +48,7 @@ def start_process(
 def main():
     try:
         banner_display, banner_msg = get_banner("IMAGE_EDITOR")
-        tool_selector.display_banner(banner_display, banner_msg)
+        tool_selector.display_banner(banner_display, banner_msg, "- photo editor")
         available_tools = { 
             " Flip Horizontal"   : {},
             " Crop Image"        : {},
@@ -79,7 +79,7 @@ def main():
     except Exception as e:
         logger.folder_error(e)
         time.sleep(0.5)
-        logger.info(input(f"{Fore.GREEN}Press enter to continue..."))
+        logger.keybind(f"{Fore.GREEN}Press enter to continue...")
         return
 
 if __name__ == "__main__":
