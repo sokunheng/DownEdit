@@ -30,16 +30,18 @@ class ImageProcess:
     ) -> None:
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)
-        self._img_width = kwargs.get("Width", 0)
-        self._img_height = kwargs.get("Height", 0)
-        self._blur_radius = kwargs.get("Radius", 1)
+        self._img_width = kwargs.get("Width", 540)
+        self._img_height = kwargs.get("Height", 360)
+        self._blur_radius = kwargs.get("Radius", 0.8)
         self._input_folder = FileUtil.get_file_list(
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
+        # Create the output folder.
         self._image_folder = FileUtil.create_folder(
             folder_type="EDITED_IMG"
         )
+        # Get the output folder path based on the tool.
         self._output_folder = FileUtil.folder_path(
             folder_root=self._image_folder,
             directory_name=tool
@@ -123,7 +125,7 @@ class ImageProcess:
         
         try:
             # Execute the operations and build the suffix
-            image_editor = ImageEditor(image, output_file_path)
+            image_editor = ImageEditor(image, output_file_path).load()
             output_suffix = self._build_and_apply_operations(image_editor, output_suffix)
             
             # Construct the output file path with filename, suffix, and extension
@@ -145,7 +147,7 @@ class ImageProcess:
             # Set the final output path
             image_editor.output_path = output_file_path
             # Save the image
-            image_editor.load().render()
+            image_editor.render()
             return True
                 
         except Exception as e:
