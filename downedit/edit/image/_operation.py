@@ -5,7 +5,7 @@ from ._editor import ImageEditor
 
 class ImageOperation(Operation, ABC):
     """
-    Abstract class for video operations.
+    Abstract class for image operations.
     """
     @abstractmethod
     def _run(self, editor: ImageEditor):
@@ -16,7 +16,7 @@ class ImageOperation(Operation, ABC):
         Handles the operation and updates the output suffix.
 
         Args:
-            editor (VideoEditor): The video editor instance.
+            editor (ImageEditor): The image editor instance.
             output_suffix (str): The current output suffix.
 
         Returns:
