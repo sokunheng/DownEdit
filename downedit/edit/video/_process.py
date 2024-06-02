@@ -126,7 +126,7 @@ class VideoProcess:
             return True
             
         except Exception as e:
-            self.logger.file_error(f"Error: {e}")
+            self.logger.file_error(e)
             return False
         
     def _build_and_apply_operations(self, video_editor: VideoEditor, output_suffix: str):
