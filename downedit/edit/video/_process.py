@@ -67,9 +67,9 @@ class VideoProcess:
         proceed_count = 0
         start = time.time()
         for clip in self._input_folder:
-            # if self._process_clip(clip):
-            #     proceed_count += 1
-            # else:
+            if self._process_clip(clip):
+                proceed_count += 1
+            else:
                 continue
         end = time.time()
         
