@@ -16,12 +16,11 @@ logger = Logger("Programs")
 
 def start_process(
     tool: str,
-    adjust_degrees: int,
-    img_width: int,
-    img_height: int,
-    input_folder: str
+    input_folder: str,
+    **image_params
 ) -> None:
     """
+    Start the image processing based on the selected tool.
     """
     input_folder = FileUtil.get_file_list(
         directory=input_folder,
@@ -39,11 +38,9 @@ def start_process(
     # Process the image.
     image_process = ImageProcess(
         tool=tool,
-        adjust_degrees=adjust_degrees,
-        img_width=img_width,
-        img_height=img_height,
         process_folder=input_folder,
-        output_folder=output_folder
+        output_folder=output_folder,
+        **image_params
     )
     image_process.process()
     
@@ -69,12 +66,15 @@ def main():
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
         )
-        tool_options = tool_selector.get_tool_input(
+        image_params = tool_selector.get_tool_input(
             available_tools,
             selected_tool
         )
-        return
-        # start_process()
+        start_process(
+            tool=selected_tool,
+            input_folder=user_folder,
+            **image_params
+        )
         
     except Exception as e:
         logger.folder_error(e)
