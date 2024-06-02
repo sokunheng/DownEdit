@@ -19,16 +19,7 @@ def main():
         max_cpu_cores = multiprocessing.cpu_count()
         banner_display, banner_msg = get_banner("VIDEO_EDITOR")
         tool_selector.display_banner(banner_display, banner_msg)
-        available_tools = { 
-            " Flip Horizontal"      : {},
-            " Custom Speed"         : {"Speed": float},
-            " Loop Video"           : {"Loop Amount": int},
-            " Flip + Speed"         : {"Speed": float},
-            " Add Music"            : {"Music": str},
-            " Speed + Music"        : {"Speed": float, "Music": str},
-            " Flip + Speed + Music" : {"Speed": float, "Music": str},
-            " Adjust Color"         : {"Brightness": float, "Contrast": float, "Saturation": float},
-        }
+        available_tools = VideoProcess.get_tools()
         video_presets = {
             " Ultrafast": "ultrafast",
             " Superfast": "superfast",
