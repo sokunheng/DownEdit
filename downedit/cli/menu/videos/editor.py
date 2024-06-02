@@ -22,13 +22,10 @@ logger = Logger("Programs")
 # Ensure proper thread synchronization to avoid race conditions during output folder creation.
 def start_process(
     tool: str,
-    video_speed: float,
-    music_path: str,
-    loop_amount: int,
-    adjust_color: tuple,
     video_preset: str,
     cpu_threads: int,
-    input_folder: str
+    input_folder: str,
+    **video_params
 ) -> None:
     """
     Start the video processing based on the selected tool.
@@ -44,7 +41,7 @@ def start_process(
     Returns:
         None
     """
-    input_folder = FileUtil.get_file_list(
+    file_list = FileUtil.get_file_list(
         directory=input_folder,
         extensions=Extensions.VIDEO
     )
@@ -61,14 +58,11 @@ def start_process(
     # Process the video.
     video_process = VideoProcess(
         tool=tool,
-        video_speed=video_speed,
-        music_path=music_path,
-        loop_amount=loop_amount,
-        adjust_color=adjust_color,
         video_preset=video_preset,
         cpu_threads=cpu_threads,
-        process_folder=input_folder,
-        output_folder=output_folder
+        process_folder=file_list,
+        output_folder=output_folder,
+        **video_params,
     )
     video_process.process()
 
@@ -109,31 +103,9 @@ def main():
             message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
             choices=available_tools
         )
-        tool_options = tool_selector.get_tool_input(
+        video_params = tool_selector.get_tool_input(
             available_tools,
             selected_tool
-        )
-        video_speed = tool_options.get(
-            "Speed",
-            1.0
-        )
-        music_path = tool_options.get(
-            "Music",
-            None
-        )
-        loop_amount = tool_options.get(
-            "Loop Amount",
-            1
-        )
-        adjust_color = tool_options.get(
-            "Brightness",
-            1.0
-        ), tool_options.get(
-            "Contrast",
-            1.0
-        ), tool_options.get(
-            "Saturation",
-            1.0
         )
         selected_presets = tool_selector.select_menu(
             message=f"{Fore.YELLOW}Video Preset{Fore.WHITE}",
@@ -145,13 +117,10 @@ def main():
         )
         start_process(
             tool=selected_tool,
-            video_speed=float(video_speed),
-            music_path=music_path,
-            loop_amount=int(loop_amount),
-            adjust_color=adjust_color,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
-            input_folder=user_folder
+            input_folder=user_folder,
+            **video_params
         )
         
     except Exception as e:
