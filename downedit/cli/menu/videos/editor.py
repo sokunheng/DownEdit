@@ -57,7 +57,7 @@ def main():
             tool=selected_tool,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
-            input_folder=user_folder,
+            process_folder=user_folder,
             **video_params
         )
         video_process.start()
