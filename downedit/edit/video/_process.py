@@ -24,20 +24,17 @@ class VideoProcess:
     def __init__(
         self,
         tool: str,
-        video_speed: float,
-        music_path: str,
-        loop_amount: int,
-        adjust_color: tuple,
         video_preset: str,
         cpu_threads: int,
         process_folder: str,
-        output_folder: str
+        output_folder: str,
+        **kwargs
     ):
         self._tool = tool
-        self._video_speed = video_speed
-        self._music_path = music_path
-        self._loop_amount = loop_amount
-        self._adjust_color  = adjust_color
+        self._video_speed = kwargs.get("Speed", 1.0)
+        self._music_path = kwargs.get("Music", None)
+        self._loop_amount = kwargs.get("Loop Amount", 1)
+        self._adjust_color  = {k.lower(): v for k, v in kwargs.items()}
         self._video_preset = video_preset
         self._cpu_threads = cpu_threads
         self._input_folder = process_folder
@@ -49,7 +46,7 @@ class VideoProcess:
         self._speed_edit = Speed(self._video_speed)
         self._add_music_edit = AddMusic(self._music_path)
         self._loop_edit = Loop(self._loop_amount)
-        self._adjust_color_edit = AdjustColor(*self._adjust_color)
+        self._adjust_color_edit = AdjustColor(**self._adjust_color)
         
         # Initialize operations handler
         self.operations = Handler({
@@ -70,9 +67,9 @@ class VideoProcess:
         proceed_count = 0
         start = time.time()
         for clip in self._input_folder:
-            if self._process_clip(clip):
-                proceed_count += 1
-            else:
+            # if self._process_clip(clip):
+            #     proceed_count += 1
+            # else:
                 continue
         end = time.time()
         
