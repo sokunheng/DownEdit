@@ -1,7 +1,7 @@
 import threading
 from typing import Any, Dict, Tuple
 
-class SingletonMeta(type):
+class Singleton(type):
     """
     A metaclass that implements the Singleton pattern.
     Allows multiple instances if they are created with different constructor arguments.
