@@ -70,6 +70,25 @@ class VideoProcess:
             " Flip + Speed + Music": [self._flip_edit, self._speed_edit, self._add_music_edit],
             " Adjust Color": self._adjust_color_edit
         })
+    
+    @staticmethod
+    def get_tools() -> dict:
+        """
+        Get the available video editing tools.
+        
+        Returns:
+            dict: The available video editing tools.
+        """
+        return { 
+            " Flip Horizontal"      : {},
+            " Custom Speed"         : {"Speed": float},
+            " Loop Video"           : {"Loop Amount": int},
+            " Flip + Speed"         : {"Speed": float},
+            " Add Music"            : {"Music": str},
+            " Speed + Music"        : {"Speed": float, "Music": str},
+            " Flip + Speed + Music" : {"Speed": float, "Music": str},
+            " Adjust Color"         : {"Brightness": float, "Contrast": float, "Saturation": float},
+        }
         
     # TODO: Implement batch thread editing for video processing.
     # Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
