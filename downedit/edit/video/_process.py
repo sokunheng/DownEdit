@@ -3,7 +3,7 @@ import time
 
 from colorama import Fore
 
-from ..handler import Handler
+from ..base import Handler
 from ...__config__ import Extensions
 from ...utils.logger import Logger
 from ...utils.file_utils import FileUtil

@@ -1,6 +1,6 @@
 from moviepy.editor import *
 
-from ...edit.editor import Editor
+from ...edit.base import Editor
 
 
 class VideoEditor(Editor):

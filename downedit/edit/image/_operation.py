@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from ..operation import Operation
+from ..base import Operation
 from ._editor import ImageEditor
 
 class ImageOperation(Operation, ABC):

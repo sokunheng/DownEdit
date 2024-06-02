@@ -1,4 +1,4 @@
-from ..task import Task
+from ..base import Task
 
 
 class ImageTask(Task):

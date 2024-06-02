@@ -6,7 +6,7 @@ from PIL import (
     ImageEnhance
 )
 
-from ...edit.editor import Editor
+from ...edit.base import Editor
 
 
 class ImageEditor(Editor):
