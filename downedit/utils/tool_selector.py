@@ -2,11 +2,11 @@ import os
 import inquirer
 
 from colorama import Fore
-from pystyle import *
-from colorama import *
+from pystyle import Box, Center
 from abc import ABC, abstractmethod
 
 from .logger import Logger 
+from .singleton import Singleton
 
 logger = Logger("Programs")
 
@@ -53,7 +53,7 @@ class BatchInput(UserInput):
             logger.error("File not found or could not be opened.")
             return []
 
-class ToolSelector:
+class ToolSelector(metaclass=Singleton):
     def __init__(self) -> None:
         self.running = True
         self._user_input = None
