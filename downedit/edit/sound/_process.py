@@ -120,7 +120,7 @@ class SoundProcess:
         
         try:
             # Execute the operations and build the suffix
-            sound_editor = SoundEditor(sound, output_file_path).load()
+            sound_editor = SoundEditor(sound, output_file_path)
             output_suffix = self._build_and_apply_operations(sound_editor, output_suffix)
             
             # Construct the output file path with filename, suffix, and extension
