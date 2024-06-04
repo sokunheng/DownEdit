@@ -48,7 +48,7 @@ class SoundProcess:
         self.operations = Handler({
             " Volume": self._volume,
             " Fade In": self._fade_in,
-            " Fade Out": self._fade_out,p
+            " Fade Out": self._fade_out
         })
     
     @staticmethod
