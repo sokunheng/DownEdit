@@ -54,7 +54,7 @@ def run():
                 f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
                 " Edit Photo": image_editor.main,
                 " AI Edit Photo": ai_img_editor.main,
-                f" Edit Sound": sound_editor.main,
+                f" Edit Sound": lambda: None,
                 f" AI Edit Sound {Fore.RED}(Soon)": lambda: None,
                 " AI-Generative Image": gen_img_ai.main,
                 f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
