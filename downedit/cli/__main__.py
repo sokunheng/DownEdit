@@ -9,8 +9,7 @@ system_info = SystemInfo()
 pc_info = system_info.get_pc_info()
 
 try:
-    from pystyle import *
-    from colorama import *
+    from colorama import Fore, Back
 
     from .menu.media import media as vid_dl
     from .menu.images import ai_generator as gen_img_ai
