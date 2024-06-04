@@ -15,6 +15,7 @@ class EditFolder:
     """
     EDITED_VIDEO = "Edited_Video"
     EDITED_IMG = "Edited_Photo"
+    EDITED_SOUND = "Edited_Sound"
     AI_Photo_Gen = "AI_Art"
     AI_Photo_Editor = "AI_Editor"
 
