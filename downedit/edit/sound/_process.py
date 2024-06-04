@@ -57,7 +57,7 @@ class SoundProcess:
         self.operations = Handler({
             " Speed": self._speed,
             " Reverb": self._reverb,
-            " Speed + Reverb": [self._speed + self._reverb],
+            " Slowed + Reverb": [self._speed + self._reverb],
             " Bass Boost": self._bass_boost,
             " Volume": self._volume,
             " Fade In": self._fade_in,
@@ -76,7 +76,7 @@ class SoundProcess:
         return { 
             " Speed": {"Speed": float},
             " Reverb": {"Reverb Time": float},
-            " Speed + Reverb": {"Speed": float, "Reverb Time": float},
+            " Slowed + Reverb": {"Speed": float, "Reverb Time": float},
             " Bass Boost": {"Factor": float, "Frequencies": int},
             " Volume": {"Level": float},
             " Fade In": {"Fade In Duration": float},
