@@ -33,3 +33,4 @@ class Extensions:
     """
     VIDEO = (".mp4", ".avi", ".mov", ".flv", ".wmv")
     IMAGE = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
+    SOUND = (".mp3", ".m4a", ".wav", ".ogg", ".wma", ".aac") 
