@@ -5,11 +5,13 @@ from colorama import Fore
 from rich.traceback import install
 from rich.console import Console
 
+from .singleton import Singleton
+
 install()
 console = Console()
 console._log_render.omit_repeated_times = False
 
-class Logger:
+class Logger(metaclass=Singleton):
     def __init__(self, name=None):
         self.name = name
     
