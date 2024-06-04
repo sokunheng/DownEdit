@@ -10,14 +10,9 @@ from ...utils.file_utils import FileUtil
 from ._editor import SoundEditor
 from ._operation import (
     SoundOperation,
-    Speed,
-    Reverb,
-    BassBoost,
     Volume,
     FadeIn,
-    FadeOut,
-    Loop,
-    Pharser
+    FadeOut
 )
 
 
@@ -45,24 +40,15 @@ class SoundProcess:
         self.logger = Logger("Programs")
         
         # Initialize the sound operations
-        self._speed = Speed(kwargs.get("Speed", 0.8))
-        self._reverb = Reverb(kwargs.get("Reverb Time", 0.5))
-        self._bass_boost = BassBoost(kwargs.get("Factor", 2), kwargs.get("Frequencies", 30))
         self._volume = Volume(kwargs.get("Level", 0.5))
         self._fade_in = FadeIn(kwargs.get("Fade In Duration", 2))
         self._fade_out = FadeOut(kwargs.get("Fade Out Duration", 2))
-        self._loop = Loop(kwargs.get("Loop Amount", 2))
         
         # Initialize operations handler
         self.operations = Handler({
-            " Speed": self._speed,
-            " Reverb": self._reverb,
-            " Slowed + Reverb": [self._speed, self._reverb],
-            " Bass Boost": self._bass_boost,
             " Volume": self._volume,
             " Fade In": self._fade_in,
-            " Fade Out": self._fade_out,
-            " Loop": self._loop
+            " Fade Out": self._fade_out,p
         })
     
     @staticmethod
@@ -74,14 +60,9 @@ class SoundProcess:
             dict: The available sound editing tools.
         """
         return { 
-            " Speed": {"Speed": float},
-            " Reverb": {"Reverb Time": float},
-            " Slowed + Reverb": {"Speed": float, "Reverb Time": float},
-            " Bass Boost": {"Factor": float, "Frequencies": int},
             " Volume": {"Level": float},
             " Fade In": {"Fade In Duration": float},
             " Fade Out": {"Fade Out Duration": float},
-            " Loop": {"Loop Amount": int}
         }
     
     def start(self):
