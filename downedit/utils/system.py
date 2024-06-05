@@ -9,12 +9,18 @@ class SystemInfo(metaclass=Singleton):
     """
     This class provides methods to retrieve system information like CPU, OS, RAM, GPU, and username.
     """
-    
+    def __init__(self):
+        self.wmi_obj = wmi.WMI()
+        self._cpu_info = None
+        self._gpu_info = None
+
     def get_cpu_info(self):
-        cpu_info = wmi.WMI().Win32_Processor()[0]
-        cpu_name = cpu_info.Name
-        cpu_cores = os.cpu_count()
-        return f"{cpu_name} ({cpu_cores} cores)"
+        if not self._cpu_info:
+            cpu_info = self.wmi_obj.Win32_Processor()[0]
+            cpu_name = cpu_info.Name
+            cpu_cores = os.cpu_count()
+            self._cpu_info = f"{cpu_name} ({cpu_cores} cores)"
+        return self._cpu_info
 
     def get_os_info(self):
         pc_os = platform.system() + " " + platform.release() + f" ({platform.architecture()[0]})"
@@ -28,9 +34,11 @@ class SystemInfo(metaclass=Singleton):
         return pc_ram
 
     def get_gpu_info(self):
-        gpu_info = wmi.WMI().Win32_VideoController()[0]
-        pc_gpu = gpu_info.Description if gpu_info.Description else "No GPU found"
-        return pc_gpu
+        if not self._gpu_info:
+            gpu_info = self.wmi_obj.Win32_VideoController()[0]
+            pc_gpu = gpu_info.Description if gpu_info.Description else "No GPU found"
+            self._gpu_info = pc_gpu
+        return self._gpu_info
 
     def get_pc_info(self):
         return {
