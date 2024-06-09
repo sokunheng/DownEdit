@@ -34,7 +34,6 @@ class Formatter(logging.Formatter):
         record.msg = message
         return super().format(record)
     
-    
 
 class Logger(logging.Logger, metaclass=Singleton):
     _console_instance = None
@@ -78,6 +77,7 @@ class Logger(logging.Logger, metaclass=Singleton):
         self.handlers.clear()
         # Ensure all logs are processed before exit
         time.sleep(0.5)
+        
 
 # Set the custom logger class as the default
 logging.setLoggerClass(Logger)
