@@ -3,6 +3,7 @@ import time
 
 from rich.logging import RichHandler
 from rich.traceback import install
+from rich.console import Console
 
 from .singleton import Singleton
 
@@ -33,23 +34,22 @@ class Formatter(logging.Formatter):
         return super().format(record)
     
 
-class Logger(metaclass=Singleton):
-    def __init__(self):
+class Logger(logging.Logger, metaclass=Singleton):
+    def __init__(self, name, level=logging.DEBUG):
         # Prevent re-initialization of the logger
         if hasattr(self, '_ready'):
             return
-
-        self.prime_logger = logging.getLogger("DownEdit")
-        self.prime_logger.setLevel(logging.DEBUG)
+        
+        super().__init__(name, level)
+        self.console = Console()
         self._ready = True
 
     def config_log(self, log_level=logging.DEBUG):
         """
         Set new log level and configure 
         """
-        self.prime_logger.handlers.clear()
-        self.prime_logger.setLevel(log_level)
-        
+        self.setLevel(log_level)
+
         console_handler = RichHandler(
             show_time=True,
             show_path=False,
@@ -58,17 +58,19 @@ class Logger(metaclass=Singleton):
             omit_repeated_times=False
         )
         console_handler.setFormatter(Formatter())
-        self.prime_logger.addHandler(console_handler)
-
+        self.addHandler(console_handler)
+        
     def close(self):
         # Properly close and remove all handlers
-        for handler in self.prime_logger.handlers:
+        for handler in self.handlers:
             handler.close()
-            self.prime_logger.removeHandler(handler)
-        self.prime_logger.handlers.clear()
+            self.removeHandler(handler)
+        self.handlers.clear()
         # Ensure all logs are processed before exit
-        time.sleep(1)
+        time.sleep(0.5)
 
+# Set the custom logger class as the default
+logging.setLoggerClass(Logger)
 
 # Adding custom log level method
 FILE_LEVEL_NUM = 25
@@ -80,14 +82,11 @@ def file(self, message, *args, **kwargs):
 
 logging.Logger.file = file
 
-
 def init_logging():
     logger = logging.getLogger("DownEdit")
     if not logger.handlers:
-        log_control = Logger()
-        log_control.config_log(log_level=logging.DEBUG)
+        logger.config_log()
     return logger
-
 
 # Initialize the logger
 logger = init_logging()
