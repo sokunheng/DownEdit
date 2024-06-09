@@ -90,7 +90,7 @@ logging.Logger.file = file
 def init_logging():
     logger = logging.getLogger("DownEdit")
     if not logger.handlers:
-        logger.config_log()
+        logger.config_log(log_level=logging.INFO)
     return logger
 
 # Initialize the logger
