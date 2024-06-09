@@ -34,15 +34,20 @@ class Formatter(logging.Formatter):
         record.msg = message
         return super().format(record)
     
+    
 
 class Logger(logging.Logger, metaclass=Singleton):
+    _console_instance = None
+    
     def __init__(self, name, level=logging.DEBUG):
-        # Prevent re-initialization of the logger
         if hasattr(self, '_ready'):
             return
         
+        if Logger._console_instance is None:
+            Logger._console_instance = Console()
+        
         super().__init__(name, level)
-        self.console = Console()
+        self.console = Logger._console_instance
         self._ready = True
 
     def config_log(self, log_level=logging.DEBUG):
