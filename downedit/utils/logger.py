@@ -1,3 +1,4 @@
+import datetime
 import logging
 import time
 
@@ -59,7 +60,11 @@ class Logger(logging.Logger, metaclass=Singleton):
         )
         console_handler.setFormatter(Formatter())
         self.addHandler(console_handler)
-        
+    
+    def pause(self):
+        current_time = datetime.datetime.now().strftime("%H:%M:%S")
+        self.console.input(f"[cyan][{current_time}][/] [green]Press any key to continue ...[/]")
+
     def close(self):
         # Properly close and remove all handlers
         for handler in self.handlers:
