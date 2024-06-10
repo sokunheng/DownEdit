@@ -1,11 +1,9 @@
 import os
 import time
 
-from colorama import Fore
-
 from ..base import Handler
 from ...__config__ import Extensions
-from ...utils.logger import Logger
+from ...utils.logger import logger
 from ...utils.file_utils import FileUtil
 from ._editor import ImageEditor
 from ._operation import (
@@ -46,7 +44,6 @@ class ImageProcess:
             folder_root=self._image_folder,
             directory_name=tool
         )
-        self.logger = Logger("Programs")
         
         # Initialize the image operations
         self._flip_edit = Flip()
@@ -102,11 +99,11 @@ class ImageProcess:
                 continue
         end = time.time()
         
-        self.logger.info(f"Processed:{Fore.YELLOW} "+ f"%.2fs" % (end - start))
-        self.logger.file_info(f"Saved at [green]{self._output_folder}[/green]")
-        self.logger.file_info(f"Processed [green]{proceed_count}[/green] images successfully.")
-        self.logger.keybind("Press enter to continue..")
-    
+        logger.info(f"Processed: "+ f"%.2fs" % (end - start))
+        logger.file(f"Saved at [green]{self._output_folder}[/green]")
+        logger.file(f"Processed [green]{proceed_count}[/green] images successfully.")
+        logger.pause()
+
     def _process_image(self, image) -> bool:
         """
         Process the video clip.
@@ -136,12 +133,12 @@ class ImageProcess:
             )
             
             if os.path.exists(output_file_path):
-                self.logger.file_error(
+                logger.error(
                     f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
                 )
                 return False
             
-            self.logger.file_info(
+            logger.file(
                 f"Processing: [green]{limit_file_name}[/green]"
             )
             # Set the final output path
@@ -151,7 +148,7 @@ class ImageProcess:
             return True
                 
         except Exception as e:
-            self.logger.file_error(e)
+            logger.error(e)
             return False
 
     
