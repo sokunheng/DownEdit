@@ -49,7 +49,7 @@ class Logger(logging.Logger, metaclass=Singleton):
         self.console = Logger._console_instance
         self._ready = True
 
-    def config_log(self, log_level=logging.DEBUG):
+    def config_log(self, log_level=logging.INFO):
         """
         Set new log level and configure 
         """
@@ -95,7 +95,7 @@ logging.Logger.file = file
 def init_logging():
     logger = logging.getLogger("DownEdit")
     if not logger.handlers:
-        logger.config_log(log_level=logging.INFO)
+        logger.config_log(log_level=logging.DEBUG)
     return logger
 
 # Initialize the logger
