@@ -12,8 +12,8 @@ install()
 
 class Formatter(logging.Formatter):
     msg_color = {
-        "DEBUG"     : "cyan",
-        "INFO"      : "green",
+        "DEBUG"     : "green",
+        "INFO"      : "cyan",
         "WARNING"   : "yellow",
         "ERROR"     : "red",
         "CRITICAL"  : "bold red",
@@ -29,8 +29,8 @@ class Formatter(logging.Formatter):
         """
         # Retrieve the original message
         message = record.getMessage()
-        # color = self.msg_color.get(record.levelname, 'white')
-        # message = f"[{color}]{message}[/]"
+        color = self.msg_color.get(record.levelname, 'white')
+        message = f"[{color}]| {message}[/]"
         record.msg = message
         return super().format(record)
     
