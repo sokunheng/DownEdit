@@ -10,7 +10,7 @@ from abc import ABC, abstractmethod
 
 from ..utils.common import *
 from ..utils.logger import logger
-from ..utils.file_utils import FileUtil, _current_time
+from ..utils.file_utils import FileUtil
 from ..__config__ import CHUNK_SIZE
 
 class Downloader:
