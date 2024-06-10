@@ -1,8 +1,6 @@
 import os
 import time
 
-from colorama import Fore
-
 from ..base import Handler
 from ...__config__ import Extensions
 from ...utils.logger import logger
