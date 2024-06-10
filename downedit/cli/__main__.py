@@ -1,10 +1,9 @@
 import os
 import sys
 
-from ..utils.logger import Logger
+from ..utils.logger import logger
 from ..utils.system import SystemInfo
 
-logger = Logger("Programs")
 system_info = SystemInfo()
 pc_info = system_info.get_pc_info()
 
@@ -23,7 +22,7 @@ try:
 except ImportError as e:
     logger.error(str(e))
     os.system("pip install -r requirements.txt")
-    logger.info(input("Press enter to continue..."))
+    logger.pause()
 
 
 def display_banner():
@@ -68,10 +67,10 @@ def run():
             
         except Exception as e:
             logger.error(str(e[:80]))
-            logger.keybind(f"{Fore.GREEN}Press enter to continue...")
+            logger.pause()
 
         except KeyboardInterrupt as e:
-            logger.info("Skipping the process..")
+            logger.debug("Skipping the process..")
         
 
 if __name__ == "__main__":
