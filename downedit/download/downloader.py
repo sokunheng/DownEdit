@@ -9,11 +9,9 @@ from typing import Optional, Union
 from abc import ABC, abstractmethod
 
 from ..utils.common import *
-from ..utils.logger import Logger
+from ..utils.logger import logger
 from ..utils.file_utils import FileUtil, _current_time
 from ..__config__ import CHUNK_SIZE
-
-logger = Logger("Programs")
 
 class Downloader:
     
@@ -88,14 +86,8 @@ class VideoDL(Download):
         self._start()
         end_time = time.time()
         
-        logger.info(
-            f"Timelapse:{Fore.YELLOW}" + " %.2fs" % (end_time - start_time)
-        )
-        logger.time(
-            time=_current_time(),
-            info="File",
-            message=f"{Fore.GREEN}{file_name}{file_extension}{Fore.YELLOW} Downloaded"
-        )
+        logger.info(f"Timelapse: " + " %.2fs" % (end_time - start_time))
+        logger.file(f"{file_name}{file_extension} Downloaded")
         
         time.sleep(0.2)
         return 
@@ -137,11 +129,7 @@ class ImageDL(Download):
             return
         
         self._start()
-        logger.time(
-            time=_current_time(),
-            info="File",
-            message=f"{Fore.GREEN}{file_name}{file_extension}{Fore.YELLOW} Downloaded"
-        )
+        logger.file(f"{file_name}{file_extension} Downloaded")
 
         time.sleep(0.2)
         return
