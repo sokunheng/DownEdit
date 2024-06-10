@@ -4,12 +4,9 @@ from colorama import Fore
 
 from .._banners import get_banner
 from ....utils.common import tool_selector
-from ....utils.logger import Logger
+from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
 from ....edit.image._process import ImageProcess
-
-
-logger = Logger("Programs")
 
 
 def main():
@@ -36,9 +33,9 @@ def main():
         image_process.start()
         
     except Exception as e:
-        logger.folder_error(e)
+        logger.error(e)
         time.sleep(0.5)
-        logger.keybind(f"{Fore.GREEN}Press enter to continue...")
+        logger.pause()
         return
 
 if __name__ == "__main__":
