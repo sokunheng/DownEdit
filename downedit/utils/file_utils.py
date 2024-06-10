@@ -6,14 +6,11 @@ from datetime import datetime
 from typing import Optional, Union
 from colorama import Fore
 
-from .logger import Logger
+from .logger import logger
 from ..__config__ import (
     CHUNK_SIZE,
     EditFolder
 )
-
-
-logger = Logger("Programs")
 
 
 def _current_time():
@@ -100,11 +97,7 @@ class FileUtil:
         """
         limit_title = file_name[:80]
         
-        logger.time(
-            time=_current_time(),
-            info="Title",
-            message=f"{Fore.GREEN}{limit_title}\r"
-        )
+        logger.info(f"{limit_title}\r")
         
         file_path = self.normalize_filename(
             folder_path,
@@ -115,11 +108,11 @@ class FileUtil:
         if not os.path.exists(file_path):
             return file_path
         elif os.path.exists(file_path):
-            logger.file_error(f"{Fore.GREEN}{file_name}{file_extension}{Fore.WHITE} already exists! Skipping...")
+            logger.critical(f"{file_name}{file_extension} already exists! Skipping...")
             time.sleep(0.3)
             return False
         else:
-            logger.file_error("Invalid file! Skipping...")
+            logger.error("Invalid file! Skipping...")
             time.sleep(0.3)
             return False
 
