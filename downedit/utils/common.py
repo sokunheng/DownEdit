@@ -13,7 +13,7 @@ from ..edit.video._editor import *
 from ..edit.image._editor import *
 from ..edit.image._process import *
 from ..__config__ import *
-from ..utils.logger import Logger
+from ..utils.logger import logger
 from ..download.downloader import Download
 from ..download.downloader import ImageDL
 from ..download.downloader import VideoDL
@@ -23,7 +23,6 @@ install()
 ai_img_editor = "ImageEditor()"
 console = Console()
 tool_selector = ToolSelector()
-logger = Logger("Programs")
 
 class Common:
 
@@ -37,7 +36,7 @@ class Common:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            logger.folder_error("Error Creating directory!")
+            logger.error("Error Creating directory!")
             return directory_name
 
     def get_next_video_folder(output_folder):
@@ -51,7 +50,7 @@ class Common:
             
     def check_folder_exist(folder):
         if not os.path.exists(folder):
-            logger.folder_error("No such directory!")
+            logger.error("No such directory!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
@@ -59,7 +58,7 @@ class Common:
     
     def check_file_folder_exist(file_folder):
         if not file_folder:
-            logger.file_error(" No such file!")
+            logger.error(" No such file!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
