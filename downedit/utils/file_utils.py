@@ -13,9 +13,6 @@ from ..__config__ import (
 )
 
 
-def _current_time():
-    return datetime.now().strftime("%H:%M:%S")
-
 class FileUtil:
     """
     A class that provides utility functions for managing files.
