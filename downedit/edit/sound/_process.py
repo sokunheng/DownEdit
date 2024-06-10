@@ -5,7 +5,7 @@ from colorama import Fore
 
 from ..base import Handler
 from ...__config__ import Extensions
-from ...utils.logger import Logger
+from ...utils.logger import logger
 from ...utils.file_utils import FileUtil
 from ._editor import SoundEditor
 from ._operation import (
@@ -37,7 +37,6 @@ class SoundProcess:
             folder_root=self._sound_folder,
             directory_name=tool
         )
-        self.logger = Logger("Programs")
         
         # Initialize the sound operations
         self._volume = Volume(kwargs.get("Level", 0.5))
@@ -78,10 +77,10 @@ class SoundProcess:
                 continue
         end = time.time()
         
-        self.logger.info(f"Processed:{Fore.YELLOW} "+ f"%.2fs" % (end - start))
-        self.logger.file_info(f"Saved at [green]{self._output_folder}[/green]")
-        self.logger.file_info(f"Processed [green]{proceed_count}[/green] sound successfully.")
-        self.logger.keybind("Press enter to continue..")
+        logger.info(f"Processed: "+ f"%.2fs" % (end - start))
+        logger.file(f"Saved at [green]{self._output_folder}[/green]")
+        logger.file(f"Processed [green]{proceed_count}[/green] sound successfully.")
+        logger.pause()
     
     def _process_sound(self, sound) -> bool:
         """
@@ -112,12 +111,12 @@ class SoundProcess:
             )
             
             if os.path.exists(output_file_path):
-                self.logger.file_error(
+                logger.error(
                     f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
                 )
                 return False
             
-            self.logger.file_info(
+            logger.info(
                 f"Processing: [green]{limit_file_name}[/green]"
             )
             # Set the final output path
@@ -127,7 +126,7 @@ class SoundProcess:
             return True
                 
         except Exception as e:
-            self.logger.file_error(e)
+            logger.error(e)
             return False
 
     
