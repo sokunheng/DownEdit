@@ -5,10 +5,9 @@ from colorama import Fore
 from pystyle import Box, Center
 from abc import ABC, abstractmethod
 
-from .logger import Logger 
+from .logger import logger 
 from .singleton import Singleton
 
-logger = Logger("Programs")
 
 class UserInput(ABC):
     def __init__(self) -> None:
@@ -30,7 +29,7 @@ class SingleInput(UserInput):
         tool_selector.display_banner(banner, message)
         user_input = self.get_user_input(f"{Fore.YELLOW}Enter User:{Fore.WHITE} ")
         if not user_input:
-            logger.error("Please Enter Username!")
+            logger.critical("Please Enter Username!")
             return
         return user_input
 
@@ -42,7 +41,7 @@ class BatchInput(UserInput):
         tool_selector.display_banner(banner, message)
         file_path = self.get_user_input(f"{Fore.YELLOW}Enter File Path:{Fore.WHITE} ")
         if not file_path:
-            logger.error("Please Enter File Path!")
+            logger.critical("Please Enter File Path!")
             return
         try:
             with open(file_path, 'r') as file:
