@@ -240,7 +240,7 @@ class Progress:
         return self.progress_display.tasks
 
 
-class SuperConsole(metaclass=Singleton):
+class Console(metaclass=Singleton):
     """
     Main console management class
     """
@@ -254,4 +254,4 @@ class SuperConsole(metaclass=Singleton):
         return self._progress
     
 # Create a global instance of the console
-# console = SuperConsole()
+# console = Console()
