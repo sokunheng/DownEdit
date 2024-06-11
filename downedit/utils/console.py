@@ -189,16 +189,13 @@ class Progress:
         new_state: Optional[str] = None,
     ) -> None:
         async with self.progress_lock:
-            update_args = {
-                param: arg
-                for param, arg in [
-                    ("advance", progress_increment),
-                    ("description", new_description),
-                    ("state", new_state),
-                    ("filename", file_name),
-                ]
-                if arg
-            }
+            update_params = [
+                ("advance", progress_increment),
+                ("description", new_description),
+                ("state", new_state),
+                ("filename", file_name),
+            ]
+            filtered_params = {key: value for key, value in update_params if value is not None}
 
             self.progress_display.update(
                 task_id,
@@ -206,7 +203,7 @@ class Progress:
                 completed=new_completed,
                 visible=still_visible,
                 refresh=force_refresh,
-                **update_args,
+                **filtered_params,
             )
             # Check if the specified task is finished and still tracked as running
             is_task_finished = self.progress_display.tasks[task_id].finished
