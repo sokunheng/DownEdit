@@ -54,16 +54,16 @@ class Logger(logging.Logger, metaclass=Singleton):
         Set new log level and configure 
         """
         self.setLevel(log_level)
-
-        console_handler = RichHandler(
-            show_time=True,
-            show_path=False,
-            markup=True,
-            rich_tracebacks=True,
-            omit_repeated_times=False
-        )
-        console_handler.setFormatter(Formatter())
-        self.addHandler(console_handler)
+        if not self.hasHandlers():
+            console_handler = RichHandler(
+                show_time=True,
+                show_path=False,
+                markup=True,
+                rich_tracebacks=True,
+                omit_repeated_times=False
+            )
+            console_handler.setFormatter(Formatter())
+            self.addHandler(console_handler)
     
     def pause(self):
         current_time = datetime.datetime.now().strftime("%H:%M:%S")
