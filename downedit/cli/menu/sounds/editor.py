@@ -25,12 +25,12 @@ def main():
             available_tools,
             selected_tool
         )
-        sound_process = SoundProcess(
+        with SoundProcess(
             tool=selected_tool,
             process_folder=user_folder,
             **sound_params
-        )
-        sound_process.start()
+        ) as sound_process:
+            sound_process.start()
         
     except Exception as e:
         logger.error(e)
