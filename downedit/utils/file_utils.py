@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import re
 import time
 
@@ -112,6 +113,25 @@ class FileUtil:
             logger.error("Invalid file! Skipping...")
             time.sleep(0.3)
             return False
+    
+    @staticmethod
+    def trim_filename(filename: Union[str, Path], max_length: int = 50) -> str:
+        """
+        Trim the filename to fit within the specified maximum length.
+
+        Args:
+            filename (str or Path): The full filename.
+            max_length (int): The maximum number of characters to display.
+
+        Returns:
+            str: The trimmed filename.
+        """
+        filename = str(filename)
+        if len(filename) <= max_length: return filename
+        
+        # Length for each part before/after ellipsis
+        trim_length = (max_length - 3) // 2
+        return f"{filename[:trim_length]}...{filename[-trim_length:]}"
 
     def write_file(
         self,
