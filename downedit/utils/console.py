@@ -114,14 +114,27 @@ class Column:
             "description"       : DescriptionColumn(),
             "progress_bar"      : BarColumn(),
             "percentage"        : PercentageColumn(),
-            "divider"           : "|",
-            "file_size"         : DownloadColumn(),
-            "transfer_speed"    : TransferSpeedColumn(),
-            "estimated_time"    : "•",
-            "time_remaining"    : TimeRemainingColumn(),
+            "divider"           : "|"
         }
         
     def default(self):
+        return self.columns.copy()
+    
+    def download(self):
+        """
+        Columns configured for download display.
+        """
+        self.columns["file_size"] = DownloadColumn()
+        self.columns["transfer_speed"] = TransferSpeedColumn()
+        self.columns["estimated_time"] = "•"
+        self.columns["time_remaining"] = TimeRemainingColumn()
+        return self.columns.copy()
+    
+    def edit(self):
+        """
+        Columns configured for edit display.
+        """
+        self.columns["time_remaining"] = TimeRemainingColumn()
         return self.columns.copy()
         
 
@@ -243,11 +256,16 @@ class Console(metaclass=Singleton):
     """
 
     def __init__(self):
-        self._progress = Progress()
+        pass
 
     def progress_bar(
         self,
+        column_config: Optional[Dict[str, ProgressColumn]] = None,
     ) -> Progress:
+        """
+        Create a progress bar
+        """
+        self._progress = Progress(specific_columns=column_config)
         return self._progress
     
 # Create a global instance of the console
