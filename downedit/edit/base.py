@@ -76,11 +76,15 @@ class Operation(ABC):
 
 class Task(ABC):
     """
-    Abstract class for tasks to be performed on editor.
+    Abstract class for tasks to be performed.
     """
     def __init__(self) -> None:
         pass
 
     @abstractmethod
-    def execute(self, **kwargs):
+    async def execute(self):
+        pass
+    
+    @abstractmethod
+    async def close(self) -> None:
         pass
