@@ -1,7 +1,9 @@
+import time
 from colorama import Fore
 
 from .._banners import get_banner
-from ....utils.common import logger, tool_selector
+from ....utils.common import tool_selector
+from ....utils.logger import logger
 from ....site.douyin import __main__ as douyin
 from ....site.kuaishou import __main__ as kuaishou
 from ....site.tiktok import __main__ as tiktok
@@ -29,8 +31,9 @@ def main():
             )
 
         except Exception as e:
-            logger.error(f"{Fore.RED}{str(e[:80])}")
-            logger.keybind(f"{Fore.GREEN}Press enter to continue...")
+            logger.error(str(e[:80]))
+            time.sleep(0.5)
+            logger.pause()
 
 
 if __name__ == "__main__":
