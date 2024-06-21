@@ -50,14 +50,14 @@ def main():
             message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
             choices=cpu_cores_choices
         )
-        video_process = VideoProcess(
+        with VideoProcess(
             tool=selected_tool,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
             process_folder=user_folder,
             **video_params
-        )
-        video_process.start()
+        ) as video_process:
+            video_process.start()
         
     except Exception as e:
         logger.error(e)
