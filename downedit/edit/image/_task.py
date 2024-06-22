@@ -21,8 +21,6 @@ class ImageTask(Task):
         self,
         operation_function,
         operation_image,
-        output_suffix,
-        output_folder
     ) -> None:
         """
         Adds a task to the queue and updates the progress bar.
@@ -33,24 +31,17 @@ class ImageTask(Task):
             output_suffix: The suffix to add to the edited image.
             output_folder: The folder to save the edited image.
         """
-        file_info = FileUtil.get_file_info(operation_image)
-        file_name, file_extension, file_size = file_info
-        full_file = f"{file_name}{file_extension}"
-        output_file_path = FileUtil.get_output_file(
-            output_folder,
-            full_file,
-            output_suffix
-        )
+        file_output, file_name, file_size = operation_image
         units_done = (
             file_size
-            if os.path.exists(output_file_path)
-            else (os.path.getsize(output_file_path) if os.path.isfile(output_file_path) else 0)
+            if os.path.exists(file_output)
+            else (os.path.getsize(file_output) if os.path.isfile(file_output) else 0)
         )
         task_id = await self.task_progress.add_task(
             description="Edit",
             total_units=file_size,
             units_done=units_done,
-            file_name=FileUtil.trim_filename(full_file, 40),
+            file_name=FileUtil.trim_filename(file_name, 40),
             current_state="idle"
         )
         if units_done == file_size:
@@ -60,7 +51,16 @@ class ImageTask(Task):
                 state="completed"
             )
         else:
-            edit_task = asyncio.create_task(operation_function)
+            async def task_wrapper():
+                await asyncio.to_thread(operation_function)
+                await self.task_progress.update_task(
+                    task_id=task_id,
+                    new_completed=file_size,
+                    new_description="Done",
+                    state="completed"
+                )
+
+            edit_task = asyncio.create_task(task_wrapper())
             self.img_tasks.append(edit_task)
 
     async def execute(self):
@@ -68,7 +68,7 @@ class ImageTask(Task):
         Executes all queued image editing tasks concurrently.
         """
         await asyncio.gather(*self.img_tasks)
-    
+
     async def close(self):
         """
         Clears the list of queued tasks.
