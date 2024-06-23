@@ -60,14 +60,14 @@ class ImageTask(Task):
             )
             self.img_tasks.append(edit_task)
             
-    async def task_wrapper(self, task_id, operation_function, file_size):
+    async def task_wrapper(self, task_id, operation_function, completed):
         """
         Wrapper function for the task to be performed on the image editor.
         """
         await asyncio.to_thread(operation_function)
         await self.task_progress.update_task(
             task_id=task_id,
-            new_completed=file_size,
+            new_completed=completed,
             new_description="Done",
             state="completed"
         )
