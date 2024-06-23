@@ -25,12 +25,12 @@ def main():
             available_tools,
             selected_tool
         )
-        with ImageProcess(
+        image_process= ImageProcess(
             tool=selected_tool,
             process_folder=user_folder,
             **image_params
-        ) as image_process:
-            image_process.start()
+        )
+        image_process.start()
         
     except Exception as e:
         logger.error(e)
