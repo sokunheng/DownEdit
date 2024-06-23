@@ -69,7 +69,7 @@ class ImageTask(Task):
             task_id=task_id,
             new_completed=completed,
             new_description="Done",
-            state="completed"
+            new_state="completed"
         )
 
     async def execute(self):
