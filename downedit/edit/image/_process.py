@@ -1,3 +1,4 @@
+import asyncio
 import os
 import time
 
@@ -6,6 +7,7 @@ from ...__config__ import Extensions
 from ...utils.logger import logger
 from ...utils.file_utils import FileUtil
 from ._editor import ImageEditor
+from ._task import ImageTask
 from ._operation import (
     ImageOperation,
     Flip,
@@ -26,6 +28,7 @@ class ImageProcess:
         process_folder: str,
         **kwargs
     ) -> None:
+        self.image_task = ImageTask()
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)
         self._img_width = kwargs.get("Width", 540)
@@ -86,17 +89,21 @@ class ImageProcess:
             " Blur Image"        : {"Radius": int},
         }
     
-    def start(self):
+    async def start_async(self):
         """
-        Process the video clips in the input folder.
+        Process the images in the input folder asynchronously.
         """
         proceed_count = 0
         start = time.time()
         for image in self._input_folder:
-            if self._process_image(image):
+            if await self._process_image(image):
                 proceed_count += 1
             else:
                 continue
+            
+        await self.image_task.execute()
+        await self.image_task.close()
+        
         end = time.time()
         
         logger.info(f"Processed: "+ f"%.2fs" % (end - start))
@@ -104,7 +111,7 @@ class ImageProcess:
         logger.file(f"Processed [green]{proceed_count}[/green] images successfully.")
         logger.pause()
 
-    def _process_image(self, image) -> bool:
+    async def _process_image(self, image) -> bool:
         """
         Process the video clip.
         
@@ -114,37 +121,30 @@ class ImageProcess:
         Returns:
             bool: True if the video clip was processed successfully.
         """
-        # Get the input filename without the extension
-        file_name, file_extension, file_size = FileUtil.get_file_info(image)
-        limit_file_name = str(f'{file_name:60.60}')
-        output_file_path = ""
-        output_suffix = "" 
-        
         try:
+            
             # Execute the operations and build the suffix
-            image_editor = ImageEditor(image, output_file_path).load()
-            output_suffix = self._build_and_apply_operations(image_editor, output_suffix)
+            image_editor = ImageEditor(image).load()
+            output_suffix = self._build_and_apply_operations(image_editor, "")
             
             # Construct the output file path with filename, suffix, and extension
+            file_info = FileUtil.get_file_info(image)
+            file_name, file_extension, file_size = file_info
+            full_file = f"{file_name}{output_suffix}"
             output_file_path = FileUtil.get_output_file(
                 self._output_folder,
-                f"{file_name}{output_suffix}",
+                full_file,
                 file_extension
-            )
-            
-            if os.path.exists(output_file_path):
-                logger.error(
-                    f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
-                )
-                return False
-            
-            logger.file(
-                f"Processing: [green]{limit_file_name}[/green]"
-            )
+            ) 
+
             # Set the final output path
             image_editor.output_path = output_file_path
+
             # Save the image
-            image_editor.render()
+            await self.image_task.add_task(
+                operation_function=image_editor.render(),
+                operation_image=(output_file_path, file_name, file_size)
+            )
             return True
                 
         except Exception as e:
@@ -169,3 +169,21 @@ class ImageProcess:
             # Apply the operation to the editor
             suffix = image_operation.handle(editor, suffix)
         return suffix
+    
+    def start(self):
+        """
+        Process the images in the input folder synchronously.
+        """
+        asyncio.run(self.start_async())
+    
+    def __enter__(self):
+        """
+        Set up the context for image processing.
+        """
+        return self
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        """
+        Clean up the context after image processing.
+        """
+        pass
