@@ -48,7 +48,7 @@ class ImageTask(Task):
             await self.task_progress.update_task(
                 task_id=task_id,
                 new_description="Done",
-                state="completed"
+                new_state="completed"
             )
         else:
             edit_task = asyncio.create_task(
