@@ -102,8 +102,7 @@ class ImageProcess:
                 continue
             
         await self.image_task.execute()
-        await self.image_task.close()
-        
+        await self.image_task.close()  
         end = time.time()
         
         logger.info(f"Processed: "+ f"%.2fs" % (end - start))
