@@ -6,6 +6,7 @@ from ..base import Task
 from ...utils.file_utils import FileUtil
 from ...utils.console import Console as console
 from ...utils.console import Column as column
+from ...utils.logger import logger
 
 class ImageTask(Task):
     """
@@ -64,6 +65,10 @@ class ImageTask(Task):
         """
         Wrapper function for the task to be performed on the image editor.
         """
+        await self.task_progress.update_task(
+            task_id,
+            new_state="starting"
+        )
         await asyncio.to_thread(operation_function)
         await self.task_progress.update_task(
             task_id=task_id,
@@ -71,7 +76,7 @@ class ImageTask(Task):
             new_description="Done",
             new_state="completed"
         )
-
+        
     async def execute(self):
         """
         Executes all queued image editing tasks concurrently.
