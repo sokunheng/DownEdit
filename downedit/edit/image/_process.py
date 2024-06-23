@@ -31,6 +31,7 @@ class ImageProcess:
         **kwargs
     ) -> None:
         self.image_task = ImageTask()
+        self.observer = Observer()
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)
         self._img_width = kwargs.get("Width", 540)
@@ -51,25 +52,25 @@ class ImageProcess:
         )
         
         # Initialize the image operations
-        self._flip_edit = Flip()
-        self._crop_edit = Crop()
-        self._enhance_edit = Enhance()
-        self._rotate_edit = Rotate(self._adjust_degrees)
-        self._resize_edit = Resize(self._img_width, self._img_height)
-        self._grayscale_edit = GrayScale()
-        self._sharpen_edit = Sharpen()
-        self._blur_edit = Blur(self._blur_radius)
+        self._flip_edit         = Flip()
+        self._crop_edit         = Crop()
+        self._enhance_edit      = Enhance()
+        self._rotate_edit       = Rotate(self._adjust_degrees)
+        self._resize_edit       = Resize(self._img_width, self._img_height)
+        self._grayscale_edit    = GrayScale()
+        self._sharpen_edit      = Sharpen()
+        self._blur_edit         = Blur(self._blur_radius)
         
         # Initialize operations handler
         self.operations = Handler({
-            " Flip Horizontal": self._flip_edit,
-            " Crop Image": self._crop_edit,
-            " Enhance Color": self._enhance_edit,
-            " Rotate Image": self._rotate_edit,
-            " Resize Image": self._resize_edit,
-            " Grayscale Image": self._grayscale_edit,
-            " Sharpen Image": self._sharpen_edit,
-            " Blur Image": self._blur_edit
+            " Flip Horizontal"  : self._flip_edit,
+            " Crop Image"       : self._crop_edit,
+            " Enhance Color"    : self._enhance_edit,
+            " Rotate Image"     : self._rotate_edit,
+            " Resize Image"     : self._resize_edit,
+            " Grayscale Image"  : self._grayscale_edit,
+            " Sharpen Image"    : self._sharpen_edit,
+            " Blur Image"       : self._blur_edit
         })
     
     @staticmethod
@@ -81,14 +82,14 @@ class ImageProcess:
             dict: The available image editing tools.
         """
         return { 
-            " Flip Horizontal"   : {},
-            " Crop Image"        : {},
-            " Enhance Color"     : {},
-            " Rotate Image"      : {"Degrees": int},
-            " Resize Image"      : {"Width": int, "Height": int},
-            " Grayscale Image"   : {},
-            " Sharpen Image"     : {},
-            " Blur Image"        : {"Radius": int},
+            " Flip Horizontal"  : {},
+            " Crop Image"       : {},
+            " Enhance Color"    : {},
+            " Rotate Image"     : {"Degrees": int},
+            " Resize Image"     : {"Width": int, "Height": int},
+            " Grayscale Image"  : {},
+            " Sharpen Image"    : {},
+            " Blur Image"       : {"Radius": int},
         }
     
     async def start_async(self):
@@ -98,7 +99,7 @@ class ImageProcess:
         proceed_count = 0
         start = time.time()
         for image in self._input_folder:
-            if Observer().is_termination_signaled():
+            if self.observer.is_termination_signaled():
                 break
             if await self._process_image(image):
                 proceed_count += 1
@@ -181,7 +182,7 @@ class ImageProcess:
         """
         Process the images in the input folder synchronously.
         """
-        Observer().register_termination_handlers()
+        self.observer.register_termination_handlers()
         try:
             asyncio.run(self.start_async())
         except Exception as e:
