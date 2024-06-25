@@ -42,7 +42,7 @@ class ImageTask(Task):
             description="Edit",
             total_units=file_size,
             units_done=units_done,
-            file_name=FileUtil.trim_filename(file_name, 40),
+            file_name=FileUtil.trim_filename(file_name, 40).ljust(40),
             current_state="idle"
         )
         if units_done == file_size:
