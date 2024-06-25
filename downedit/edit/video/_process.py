@@ -146,7 +146,7 @@ class VideoProcess:
         """    
         try:
             # Execute the operations and build the suffix
-            video_editor = VideoEditor(clip, output_file_path)  # No output path yet
+            video_editor = VideoEditor(clip)  # No output path yet
             output_suffix = self._build_and_apply_operations(video_editor, "")
                     
             # Construct the output file path with filename, suffix, and extension
