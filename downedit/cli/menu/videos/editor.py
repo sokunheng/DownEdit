@@ -50,11 +50,15 @@ def main():
             message=f"{Fore.YELLOW}CPU Threads (Max: {max_cpu_cores}){Fore.WHITE}", 
             choices=cpu_cores_choices
         )
+        selected_batch = input(
+            f"{Fore.YELLOW}Batch Size (Max: 10):{Fore.WHITE} "
+        )
         with VideoProcess(
             tool=selected_tool,
             video_preset=selected_presets,
             cpu_threads=int(selected_threads),
             process_folder=user_folder,
+            batch_size= min(int(selected_batch) if selected_batch.isdigit() else 1, 10),
             **video_params
         ) as video_process:
             video_process.start()
