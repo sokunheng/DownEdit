@@ -118,9 +118,11 @@ class ImageProcess:
                     break
                 if await self._process_image(image):
                     proceed_count += 1
+                else:
+                    continue
+            await self.image_task.execute()
+            await self.image_task.close()  
             
-        await self.image_task.execute()
-        await self.image_task.close()  
         elapsed_time = time.time() - start_time
 
         logger.info(f"Processed: {elapsed_time:.2f} seconds.")
