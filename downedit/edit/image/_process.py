@@ -149,7 +149,7 @@ class ImageProcess:
                 operation_function=image_editor.render,
                 operation_image=(
                     output_file_path,
-                    file_name,
+                    f"{file_name}{file_extension}",
                     file_size
                 )
             )
