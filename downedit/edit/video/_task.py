@@ -47,7 +47,7 @@ class VideoTask(Task):
             await self.task_progress.update_task(
                 task_id=task_id,
                 new_description="Done",
-                new_state="completed"
+                new_state="success"
             )
         else:
             edit_task = asyncio.create_task(
