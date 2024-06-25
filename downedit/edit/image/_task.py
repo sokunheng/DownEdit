@@ -81,10 +81,24 @@ class ImageTask(Task):
         """
         Executes all queued image editing tasks concurrently.
         """
-        await asyncio.gather(*self.img_tasks)
+        async with self.task_progress:
+            await asyncio.gather(*self.img_tasks)
 
     async def close(self):
         """
         Clears the list of queued tasks.
         """
         self.img_tasks.clear()
+
+    async def __aenter__(self):
+        """
+        Enter the context manager
+        """
+        self.task_progress.__enter__()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+        """
+        Exit the context manager
+        """
+        self.task_progress.__exit__(exc_type, exc_val, exc_tb)
