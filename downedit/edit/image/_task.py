@@ -81,7 +81,7 @@ class ImageTask(Task):
         """
         Executes all queued image editing tasks concurrently.
         """
-        async with self.task_progress:
+        with self.task_progress:
             await asyncio.gather(*self.img_tasks)
 
     async def close(self):
