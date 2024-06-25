@@ -28,10 +28,12 @@ class ImageProcess:
         self,
         tool: str,
         process_folder: str,
+        batch_size: int = 5,
         **kwargs
     ) -> None:
         self.image_task = ImageTask()
         self.observer = Observer()
+        self.batch_size = batch_size
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)
         self._img_width = kwargs.get("Width", 540)
@@ -96,21 +98,32 @@ class ImageProcess:
         """
         Process the images in the input folder asynchronously.
         """
+        # Initialize an empty list to hold the batches
         proceed_count = 0
-        start = time.time()
-        for image in self._input_folder:
+        start_time = time.time()
+        
+        # Create batches
+        num_images = len(self._input_folder)
+        for start_idx in range(0, num_images, self.batch_size):
             if self.observer.is_termination_signaled():
                 break
-            if await self._process_image(image):
-                proceed_count += 1
-            else:
-                continue
+            
+            # Create a batch processing list
+            end_idx = min(start_idx + self.batch_size, num_images)
+            batch = self._input_folder[start_idx:end_idx]
+
+            # Process each image in the batch
+            for image in batch:
+                if self.observer.is_termination_signaled():
+                    break
+                if await self._process_image(image):
+                    proceed_count += 1
             
         await self.image_task.execute()
         await self.image_task.close()  
-        end = time.time()
-        
-        logger.info(f"Processed: "+ f"%.2fs" % (end - start))
+        elapsed_time = time.time() - start_time
+
+        logger.info(f"Processed: {elapsed_time:.2f} seconds.")
         logger.file(f"Saved at [green]{self._output_folder}[/green]")
         logger.file(f"Processed [green]{proceed_count}[/green] images successfully.")
         logger.pause()
