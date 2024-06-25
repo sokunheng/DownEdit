@@ -83,12 +83,14 @@ class ImageTask(Task):
         """
         with self.task_progress:
             await asyncio.gather(*self.img_tasks)
+            await asyncio.sleep(0.1)
 
     async def close(self):
         """
         Clears the list of queued tasks.
         """
         self.img_tasks.clear()
+        await asyncio.sleep(0.1)
 
     async def __aenter__(self):
         """
