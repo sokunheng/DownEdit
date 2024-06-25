@@ -28,6 +28,7 @@ def main():
         with ImageProcess(
             tool=selected_tool,
             process_folder=user_folder,
+            batch_size=5,
             **image_params
         ) as image_process:
             image_process.start()
