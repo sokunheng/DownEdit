@@ -152,12 +152,12 @@ class SoundProcess:
     
     def __enter__(self):
         """
-        Set up the context for image processing.
+        Set up the context for sound processing.
         """
         return self
     
     def __exit__(self, exc_type, exc_value, traceback):
         """
-        Clean up the context after image processing.
+        Clean up the context after sound processing.
         """
         pass
