@@ -149,3 +149,15 @@ class SoundProcess:
             for operation in sound_operation:
                 suffix = operation.handle(editor, suffix)
         return suffix
+    
+    def __enter__(self):
+        """
+        Set up the context for image processing.
+        """
+        return self
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        """
+        Clean up the context after image processing.
+        """
+        pass

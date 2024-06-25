@@ -181,3 +181,15 @@ class VideoProcess:
             for operation in video_operation:
                 output_suffix = operation.handle(video_editor, output_suffix)
         return output_suffix
+    
+    def __enter__(self):
+        """
+        Set up the context for image processing.
+        """
+        return self
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        """
+        Clean up the context after image processing.
+        """
+        pass
