@@ -25,10 +25,13 @@ def main():
             available_tools,
             selected_tool
         )
+        selected_batch = input(
+            f"{Fore.YELLOW}Batch Size (Max: 10):{Fore.WHITE} "
+        )
         with ImageProcess(
             tool=selected_tool,
             process_folder=user_folder,
-            batch_size=5,
+            batch_size= min(int(selected_batch) if selected_batch.isdigit() else 1, 10),
             **image_params
         ) as image_process:
             image_process.start()
