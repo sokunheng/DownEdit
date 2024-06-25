@@ -99,20 +99,20 @@ class VideoProcess:
         
     async def start_async(self):
         """
-        Process the vidoes in the input folder asynchronously.
+        Process the videos in the input folder asynchronously.
         """
         # Initialize an empty list to hold the batches
         proceed_count = 0
         start_time = time.time()
         
         # Create batches
-        num_vidoes = len(self._input_folder)
-        for start_idx in range(0, num_vidoes, self.batch_size):
+        num_videos = len(self._input_folder)
+        for start_idx in range(0, num_videos, self.batch_size):
             if self.observer.is_termination_signaled():
                 break
             
             # Create a batch processing list
-            end_idx = min(start_idx + self.batch_size, num_vidoes)
+            end_idx = min(start_idx + self.batch_size, num_videos)
             batch = self._input_folder[start_idx:end_idx]
 
             # Process each video in the batch
@@ -209,12 +209,12 @@ class VideoProcess:
             
     def __enter__(self):
         """
-        Set up the context for vidoe processing.
+        Set up the context for video processing.
         """
         return self
     
     def __exit__(self, exc_type, exc_value, traceback):
         """
-        Clean up the context after vidoe processing.
+        Clean up the context after video processing.
         """
         pass
