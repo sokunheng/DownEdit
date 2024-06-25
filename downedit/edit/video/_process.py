@@ -1,3 +1,4 @@
+import asyncio
 import os
 import time
 
@@ -6,8 +7,10 @@ from colorama import Fore
 from ..base import Handler
 from ...__config__ import Extensions
 from ...utils.logger import logger
+from ...utils.observer import Observer
 from ...utils.file_utils import FileUtil
 from ._editor import VideoEditor
+from ._task import VideoTask
 from ._operation import (
     VideoOperation,
     Flip,
@@ -28,8 +31,12 @@ class VideoProcess:
         video_preset: str,
         cpu_threads: int,
         process_folder: str,
+        batch_size: int = 5,
         **kwargs
     ):
+        self.video_task = VideoTask()
+        self.observer = Observer()
+        self.batch_size = batch_size
         self._tool = tool
         self._adjust_color = (
             kwargs.get("Brightness", 1.0),
@@ -61,14 +68,14 @@ class VideoProcess:
         
         # Initialize operations handler
         self.operations = Handler({
-            " Flip Horizontal": self._flip_edit,
-            " Custom Speed": self._speed_edit,
-            " Loop Video": self._loop_edit,
-            " Flip + Speed": [self._flip_edit, self._speed_edit],
-            " Add Music": self._add_music_edit,
-            " Speed + Music": [self._speed_edit, self._add_music_edit],
-            " Flip + Speed + Music": [self._flip_edit, self._speed_edit, self._add_music_edit],
-            " Adjust Color": self._adjust_color_edit
+            " Flip Horizontal"      : self._flip_edit,
+            " Custom Speed"         : self._speed_edit,
+            " Loop Video"           : self._loop_edit,
+            " Flip + Speed"         : [self._flip_edit, self._speed_edit],
+            " Add Music"            : self._add_music_edit,
+            " Speed + Music"        : [self._speed_edit, self._add_music_edit],
+            " Flip + Speed + Music" : [self._flip_edit, self._speed_edit, self._add_music_edit],
+            " Adjust Color"         : self._adjust_color_edit
         })
     
     @staticmethod
@@ -90,32 +97,44 @@ class VideoProcess:
             " Adjust Color"         : {"Brightness": float, "Contrast": float, "Saturation": float},
         }
         
-    # TODO: Implement batch thread editing for video processing.
-    # Allow specifying batch size (number of videos to process at once) - 1, 2, or 3.
-    # Loop through the input folder in batches based on the specified size.
-    # Create separate video_process objects for each video in the batch.
-    # Use threading or multiprocessing to process videos concurrently within a batch.
-    # Ensure proper thread synchronization to avoid race conditions during output folder creation.
-    def start(self):
+    async def start_async(self):
         """
-        Process the video clips in the input folder.
+        Process the vidoes in the input folder asynchronously.
         """
+        # Initialize an empty list to hold the batches
         proceed_count = 0
-        start = time.time()
-        for clip in self._input_folder:
-            if self._process_clip(clip):
-                proceed_count += 1
-            else:
-                continue
-        end = time.time()
+        start_time = time.time()
         
-        logger.info(f"Processed: "+ f"%.2fs" % (end - start))
+        # Create batches
+        num_vidoes = len(self._input_folder)
+        for start_idx in range(0, num_vidoes, self.batch_size):
+            if self.observer.is_termination_signaled():
+                break
+            
+            # Create a batch processing list
+            end_idx = min(start_idx + self.batch_size, num_vidoes)
+            batch = self._input_folder[start_idx:end_idx]
+
+            # Process each video in the batch
+            for video in batch:
+                if self.observer.is_termination_signaled():
+                    break
+                if await self._process_clip(video):
+                    proceed_count += 1
+                else:
+                    continue
+            await self.video_task.execute()
+            await self.video_task.close()  
+            
+        elapsed_time = time.time() - start_time
+        
+        logger.info(f"Processed: {elapsed_time:.2f} seconds.")
         logger.file(f"Saved at [green]{self._output_folder}[/green]")
         logger.file(f"Processed [green]{proceed_count}[/green] videos successfully.")
         logger.pause()
     
             
-    def _process_clip(self, clip) -> bool:
+    async def _process_clip(self, clip) -> bool:
         """
         Process the video clip.
         
@@ -124,40 +143,36 @@ class VideoProcess:
             
         Returns:
             bool: True if the video clip was processed successfully.
-        """
-        # Get the input filename without the extension
-        file_name, file_extension, file_size = FileUtil.get_file_info(clip)
-        limit_file_name = str(f'{file_name:60.60}')
-        output_file_path = ""
-        output_suffix = "" 
-                    
+        """    
         try:
             # Execute the operations and build the suffix
             video_editor = VideoEditor(clip, output_file_path)  # No output path yet
-            output_suffix = self._build_and_apply_operations(video_editor, output_suffix)
+            output_suffix = self._build_and_apply_operations(video_editor, "")
                     
             # Construct the output file path with filename, suffix, and extension
+            file_info = FileUtil.get_file_info(clip)
+            file_name, file_extension, file_size = file_info
+            full_file = f"{file_name}{output_suffix}"
             output_file_path = FileUtil.get_output_file(
                 self._output_folder,
-                f"{file_name}{output_suffix}",
+                full_file,
                 file_extension
-            )
+            ) 
             
-            if os.path.exists(output_file_path):
-                logger.error(
-                    f"Output file already exists - {limit_file_name}{output_suffix}{file_extension}"
-                )
-                return False
-            
-            logger.info(
-                f"Processing: [green]{limit_file_name}[/green]"
-            )
             # Set the final output path
             video_editor.output_path = output_file_path 
+            
             # Render the video using the final output path
-            video_editor.render(
-                threads=self._cpu_threads, 
-                preset=self._video_preset
+            await self.video_task.add_task(
+                operation_function=video_editor.render(
+                    threads=self._cpu_threads, 
+                    preset=self._video_preset
+                ),
+                operation_video=(
+                    output_file_path,
+                    f"{file_name}{file_extension}",
+                    file_size
+                )
             )
             return True
             
@@ -182,14 +197,24 @@ class VideoProcess:
                 output_suffix = operation.handle(video_editor, output_suffix)
         return output_suffix
     
+    def start(self):
+        """
+        Process the videos in the input folder synchronously.
+        """
+        self.observer.register_termination_handlers()
+        try:
+            asyncio.run(self.start_async())
+        except Exception as e:
+            logger.error(e) 
+            
     def __enter__(self):
         """
-        Set up the context for image processing.
+        Set up the context for vidoe processing.
         """
         return self
     
     def __exit__(self, exc_type, exc_value, traceback):
         """
-        Clean up the context after image processing.
+        Clean up the context after vidoe processing.
         """
         pass
