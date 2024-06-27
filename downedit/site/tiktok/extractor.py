@@ -15,7 +15,7 @@ class TikTokExtractor:
         pass
 
     def extract_url_from_user(username, folder_path):
-         
+
         with console.status('[cyan]Starting... please wait!', spinner='line') as status:
             
             options = webdriver.ChromeOptions()

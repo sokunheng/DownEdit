@@ -7,7 +7,7 @@ from colorama import *
 from pathlib import Path
 
 from ....utils.common import *
-from ....edit.image._process import *
+from ....edit.image._process_old import *
 
 def check_model():
             
