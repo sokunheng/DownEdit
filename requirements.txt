@@ -20,3 +20,4 @@ opencv-python
 gdown
 wmi
 psutil
+httpx
