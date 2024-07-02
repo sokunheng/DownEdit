@@ -147,7 +147,7 @@ https://www.python.org/downloads/
 ```
 Step 2. Click <u>install.bat<u> for automatic python libraries installation
 ```html
- install.bat
+ run.bat
 ```
 Step 3. Run the script
 ```ht
