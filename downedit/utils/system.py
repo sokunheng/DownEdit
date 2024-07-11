@@ -48,3 +48,6 @@ class SystemInfo(metaclass=Singleton):
             "RAM": self.get_ram_info(),
             "GPU": self.get_gpu_info(),
         }
+
+system_info = SystemInfo()
+pc_info = system_info.get_pc_info()

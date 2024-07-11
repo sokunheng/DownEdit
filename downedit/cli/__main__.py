@@ -1,24 +1,21 @@
+import asyncio
 import os
 import sys
 
 from ..utils.logger import logger
-from ..utils.system import SystemInfo
-
-system_info = SystemInfo()
-pc_info = system_info.get_pc_info()
+from ..utils.system import pc_info
+from ..utils.common import tool_selector
 
 try:
-    from colorama import Fore, Back
+    from colorama       import Fore, Back
+    from .menu.media    import media        as vid_dl
+    from .menu.images   import ai_generator as gen_img_ai
+    from .menu.images   import ai_editor    as ai_img_editor
+    from .menu.images   import editor       as image_editor
+    from .menu.videos   import editor       as video_editor
+    from .menu.sounds   import editor       as sound_editor
+    from ..__config__   import DE_VERSION
 
-    from .menu.media import media as vid_dl
-    from .menu.images import ai_generator as gen_img_ai
-    from .menu.images import ai_editor as ai_img_editor
-    from .menu.images import editor as image_editor
-    from .menu.videos import editor as video_editor
-    from .menu.sounds import editor as sound_editor
-    from ..__config__ import DE_VERSION
-    from ..utils.common import tool_selector
-    
 except ImportError as e:
     logger.error(str(e))
     os.system("pip install -r requirements.txt")
@@ -37,41 +34,43 @@ def display_banner():
     banner_msg = """Use arrow key and enter to select the options"""
     return banner_display, banner_msg
 
+async def display_menu():
+    banner_display, banner_msg = display_banner()
+    tool_selector.display_banner(
+        banner_display,
+        banner_msg, title=" - Main Menu"
+    )
+    available_tools = {
+        " Download Video"                       : vid_dl.main,
+        " Edit Video"                           : video_editor.main,
+        f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
+        " Edit Photo"                           : image_editor.main,
+        " AI Edit Photo"                        : ai_img_editor.main,
+        f" Edit Sound"                          : sound_editor.main,
+        f" AI Edit Sound {Fore.RED}(Soon)"      : lambda: None,
+        " AI-Generative Image"                  : gen_img_ai.main,
+        f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
+        f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
+        " Exit"                                 : lambda: sys.exit(0)
+    }
+    return tool_selector.start(
+        menu_options=available_tools,
+        input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
+    )
 
-def run():
+async def main():
     while True:
         tool_selector.running = True
         try:
-            banner_display, banner_msg = display_banner()
-            tool_selector.display_banner(
-                banner_display,
-                banner_msg, title=" - Main Menu"
-            )
-            available_tools = {
-                " Download Video": vid_dl.main,
-                " Edit Video": video_editor.main,
-                f" AI Edit Video {Fore.RED}(Soon)": lambda: None,
-                " Edit Photo": image_editor.main,
-                " AI Edit Photo": ai_img_editor.main,
-                f" Edit Sound": sound_editor.main,
-                f" AI Edit Sound {Fore.RED}(Soon)": lambda: None,
-                " AI-Generative Image": gen_img_ai.main,
-                f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
-                f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
-                " Exit": lambda: sys.exit(0)
-            }
-            tool_selector.start(
-                menu_options=available_tools,
-                input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
-            )
-            
+            await display_menu()
         except Exception as e:
-            logger.error(str(e[:80]))
-            logger.pause()
-
-        except KeyboardInterrupt as e:
+            logger.error(str(e)[:80])
+            await logger.pause()
+        except KeyboardInterrupt:
             logger.debug("Skipping the process..")
-        
+
+def run():
+    asyncio.run(main())
 
 if __name__ == "__main__":
     run()
