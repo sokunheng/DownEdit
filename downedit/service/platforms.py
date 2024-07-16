@@ -15,42 +15,42 @@ class Android():
         return {
             '8.0': {
                 'minor_range': (0, 5),
-                'build_number': ('OPR1.{d}.{v}', 'OPR2.{d}.{v}', 'OPR3.{d}.{v}', 'OPR4.{d}.{v}', 'OPR5.{d}.{v}',
-                                'OPR6.{d}.{v}', 'OPD1.{d}.{v}', 'OPD2.{d}.{v}', 'OPD3.{d}.{v}')
+                'build_number': ('OPR1.{device}.{version}', 'OPR2.{device}.{version}', 'OPR3.{device}.{version}', 'OPR4.{device}.{version}', 'OPR5.{device}.{version}',
+                                'OPR6.{device}.{version}', 'OPD1.{device}.{version}', 'OPD2.{device}.{version}', 'OPD3.{device}.{version}')
             },
             '8.1': {
                 'minor_range': (0, 7),
-                'build_number': ('OPM1.{d}.{v}', 'OPM2.{d}.{v}', 'OPM3.{d}.{v}', 'OPM4.{d}.{v}', 'OPM5.{d}.{v}')
+                'build_number': ('OPM1.{device}.{version}', 'OPM2.{device}.{version}', 'OPM3.{device}.{version}', 'OPM4.{device}.{version}', 'OPM5.{device}.{version}')
             },
             '9.0': {
                 'minor_range': (0, 0),
-                'build_number': ('PPR1.{d}.{v}', 'PPR2.{d}.{v}', 'PD1A.{d}.{v}', 'PQ1A.{d}.{v}', 'PQ2A.{d}.{v}',
-                                'PQ3A.{d}.{v}', 'PQ3B.{d}.{v}', 'QQ2A.{d}.{v}')
+                'build_number': ('PPR1.{device}.{version}', 'PPR2.{device}.{version}', 'PD1A.{device}.{version}', 'PQ1A.{device}.{version}', 'PQ2A.{device}.{version}',
+                                'PQ3A.{device}.{version}', 'PQ3B.{device}.{version}', 'QQ2A.{device}.{version}')
             },
             '10.0': {
                 'minor_range': (0, 0),
-                'build_number': ('QD1A.{d}.{v}', 'QQ1B.{d}.{v}', 'QQ1C.{d}.{v}', 'QQ1D.{d}.{v}', 'QQ2A.{d}.{v}')
+                'build_number': ('QD1A.{device}.{version}', 'QQ1B.{device}.{version}', 'QQ1C.{device}.{version}', 'QQ1D.{device}.{version}', 'QQ2A.{device}.{version}')
             },
             '11.0': {
                 'minor_range': (0, 0),
-                'build_number': ('RP1A.{d}.{v}', 'RP1B.{d}.{v}', 'RP1C.{d}.{v}', 'RP1D.{d}.{v}', 'RD1A.{d}.{v}',
-                                'RD1B.{d}.{v}', 'RQAA.{d}.{v}', 'RQ3A.{d}.{v}', 'RQ1D.{d}.{v}')
+                'build_number': ('RP1A.{device}.{version}', 'RP1B.{device}.{version}', 'RP1C.{device}.{version}', 'RP1D.{device}.{version}', 'RD1A.{device}.{version}',
+                                'RD1B.{device}.{version}', 'RQAA.{device}.{version}', 'RQ3A.{device}.{version}', 'RQ1D.{device}.{version}')
             },
             '12.0': {
                 'minor_range': (0, 0),
-                'build_number': ('SP1A.{d}.{v}', 'SD1A.{d}.{v}', 'SQ1D.{d}.{v}', 'SQ1A.{d}.{v}', 'SQ1D.{d}.{v}')
+                'build_number': ('SP1A.{device}.{version}', 'SD1A.{device}.{version}', 'SQ1D.{device}.{version}', 'SQ1A.{device}.{version}', 'SQ1D.{device}.{version}')
             },
             '12.1': {
                 'minor_range': (0, 0),
-                'build_number': ('SP2A.{d}.{v}', 'SD2A.{d}.{v}', 'SQ3A.{d}.{v}')
+                'build_number': ('SP2A.{device}.{version}', 'SD2A.{device}.{version}', 'SQ3A.{device}.{version}')
             },
             '13.0': {
                 'minor_range': (0, 0),
-                'build_number': ('TQ3A.{d}.{v}', 'TQ2A.{d}.{v}', 'TP1A.{d}.{v}', 'TQ1A.{d}.{v}', 'TD1A.{d}.{v}')
+                'build_number': ('TQ3A.{device}.{version}', 'TQ2A.{device}.{version}', 'TP1A.{device}.{version}', 'TQ1A.{device}.{version}', 'TD1A.{device}.{version}')
             },
             '14.0': {
                 'minor_range': (0, 0),
-                'build_number': ('UP1A.{d}.{v}', 'UD1A.{d}.{v}', 'UQ1A.{d}.{v}')
+                'build_number': ('UP1A.{device}.{version}', 'UD1A.{device}.{version}', 'UQ1A.{device}.{version}')
             },
         }
     
