@@ -17,7 +17,6 @@ class Downloader:
     
     @staticmethod
     def create_dl(
-        self,
         file_type: str, 
         url: str,
         file_path: str
