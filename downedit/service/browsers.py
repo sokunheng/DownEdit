@@ -167,7 +167,7 @@ class Safari():
         }
     
 class Browser():
-    def __init__(self, browser=None):
+    def __init__(self, browser="chrome"):
         self.browser = self.get_browser(browser)
     
     def get_browser(self, browser_name):
