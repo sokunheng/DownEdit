@@ -1,3 +1,6 @@
+import random
+
+
 class Chrome():
     """
     Google Chrome
@@ -11,10 +14,14 @@ class Chrome():
     def __init__(self):
         pass
     
+    def user_agent(self):
+        return (
+            'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
+            'Mozilla/5.0 (Windows NT {windows}; WOW64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
+        )
+    
     def get_versions(self): 
-        return {
-            '98.0.4758': {'minor_range': (0, 255), 'webkit': '537.36'},
-            '99.0.4844': {'minor_range': (0, 255), 'webkit': '537.36'},
+        return  {
             '100.0.4896': {'minor_range': (0, 255), 'webkit': '537.36'},
             '101.0.4951': {'minor_range': (0, 255), 'webkit': '537.36'},
             '102.0.5005': {'minor_range': (0, 255), 'webkit': '537.36'},
@@ -40,7 +47,8 @@ class Chrome():
             '123.0.6312': {'minor_range': (0, 255), 'webkit': '537.36'},
             '124.0.6367': {'minor_range': (0, 255), 'webkit': '537.36'},
             '125.0.6422': {'minor_range': (0, 255), 'webkit': '537.36'},
-            '126.0.6478': {'minor_range': (0, 0), 'webkit': '537.36'},
+            '126.0.6478': {'minor_range': (0, 255), 'webkit': '537.36'},
+            '127.0.6533': {'minor_range': (0, 255), 'webkit': '537.36'},
         }
 
 class Firefox():
@@ -90,8 +98,8 @@ class Firefox():
             '124.0': {'minor_range': (0, 2)},
             '125.0': {'minor_range': (1, 3)},
             '126.0': {'minor_range': (0, 0)},
-            '127.0': {'minor_range': (1, 2)},
-            '128.0': {'minor_range': (0, 0)},
+            '127.0': {'minor_range': (0, 2)},
+            '128.0': {'minor_range': (0, 2)},
         }
 
 class Edge():
@@ -109,9 +117,6 @@ class Edge():
     
     def get_versions(self): 
         return {
-            '98.0.1108': {'minor_range': (0, 99), 'webkit': '537.36'},
-            '99.0.1141': {'minor_range': (0, 99), 'webkit': '537.36'},
-            '99.0.1146': {'minor_range': (0, 99), 'webkit': '537.36'},
             '100.0.1185': {'minor_range': (0, 99), 'webkit': '537.36'},
             '101.0.1210': {'minor_range': (0, 99), 'webkit': '537.36'},
             '102.0.1245': {'minor_range': (0, 99), 'webkit': '537.36'},
@@ -157,8 +162,6 @@ class Safari():
     
     def get_versions(self): 
         return {
-            '8': {'minor_range': (0, 0), 'webkit': '600.5.17'},
-            '9': {'minor_range': (0, 0), 'webkit': '601.1.46'},
             '10': {'minor_range': (0, 0), 'webkit': '602.4.8'},
             '11': {'minor_range': (0, 0), 'webkit': '604.1.38'},
             '12': {'minor_range': (0, 1), 'webkit': '605.1.15'},
@@ -166,11 +169,11 @@ class Safari():
             '14': {'minor_range': (0, 1), 'webkit': '605.1.15'},
             '15': {'minor_range': (0, 6), 'webkit': '605.1.15'},
             '16': {'minor_range': (0, 6), 'webkit': '605.1.15'},
-            '17': {'minor_range': (0, 5), 'webkit': '605.1.15'}
+            '17': {'minor_range': (0, 6), 'webkit': '605.1.15'},
         }
     
 class Browser():
-    def __init__(self, browser):
+    def __init__(self, browser=None):
         self.browser = self.get_browser(browser)
     
     def get_browser(self, browser_name):
@@ -185,5 +188,16 @@ class Browser():
         else:
             return Chrome()
     
-    def get_browser_versions(self):
-        return self.browser.get_versions()
+    def get_version(self):
+        versions = self.browser.get_versions()
+        major_version = random.choice(list(versions.keys()))
+        properties = versions[major_version]
+        
+        __version = {}
+        if major_version:
+            __version["major"] = major_version
+        if "minor_range" in properties:
+            __version["minor"] = random.randint(*map(int, properties['minor_range']))
+        if "webkit" in properties:
+            __version["webkit"] = properties['webkit']
+        return __version
