@@ -14,12 +14,6 @@ class Chrome():
     def __init__(self):
         pass
     
-    def user_agent(self):
-        return (
-            'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
-            'Mozilla/5.0 (Windows NT {windows}; WOW64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
-        )
-    
     def get_versions(self): 
         return  {
             '100.0.4896': {'minor_range': (0, 255), 'webkit': '537.36'},
@@ -192,7 +186,7 @@ class Browser():
         versions = self.browser.get_versions()
         major_version = random.choice(list(versions.keys()))
         properties = versions[major_version]
-        
+            
         __version = {}
         if major_version:
             __version["major"] = major_version
