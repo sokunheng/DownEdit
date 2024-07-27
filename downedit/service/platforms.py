@@ -1,3 +1,7 @@
+import random
+import string
+
+
 class Android():
     """
     Android mobile operating system
@@ -7,6 +11,7 @@ class Android():
     
     Reference:
         https://source.android.com/setup/start/build-numbers
+        https://en.wikipedia.org/wiki/Android_version_history
     """
     def __init__(self):
         pass
@@ -30,7 +35,7 @@ class Android():
             '10.0': {
                 'minor_range': (0, 0),
                 'build_number': ('QD1A.{device}.{version}', 'QQ1B.{device}.{version}', 'QQ1C.{device}.{version}', 'QQ1D.{device}.{version}', 'QQ2A.{device}.{version}')
-            },
+            },  
             '11.0': {
                 'minor_range': (0, 0),
                 'build_number': ('RP1A.{device}.{version}', 'RP1B.{device}.{version}', 'RP1C.{device}.{version}', 'RP1D.{device}.{version}', 'RD1A.{device}.{version}',
@@ -318,25 +323,103 @@ class Windows():
         }
         
         
-class Mobile():
+class Mobile:
+    """
+    Handles mobile platforms (e.g., Android, iOS).
+    """
     def get_types(self):
-        return ['Android', 'iOS']
+        return {
+            'android': Android(),
+            'ios': IOS()
+        }
 
-class Desktop():
+class Desktop:
+    """
+    Handles desktop platforms (e.g., Windows, macOS, Linux).
+    """
     def get_types(self):
-        return ['Windows', 'macOS', 'Linux']
+        return {
+            'windows': Windows(),
+            'macos': macOS(),
+            'linux': Linux()
+        }
 
-class Platform():
-    def __init__(self, platform_type):
-        self.platform = self.get_platform(platform_type)
+class Platform:
+    def __init__(self, device="desktop", platform="windows"):
+        self.device = device.lower()
+        self.platform = platform.lower()
+        self.os = self._initialize_os()
+
+    def _initialize_os(self):
+        """
+        Initializes the OS instance based on the device type.
+
+        Returns:
+            object: An instance of Mobile or Desktop based on the device type.
+        """
+        os_classes = {
+            'mobile': Mobile(),
+            'desktop': Desktop()
+        }
+        return os_classes.get(self.device, Desktop())
+
+    def _get_platform_type(self):
+        """
+        Retrieves the platform type and models if applicable.
+
+        Returns:
+            tuple: A tuple containing:
+                - An instance of the platform type (e.g., Android, Windows).
+                - A list of platform models (empty list if not applicable).
+        """
+        types = self.os.get_types()
+        return types.get(self.platform)
+
+    def get_platform_type(self):
+        """
+        Gets the platform type and models if applicable.
+        """
+        selected_platform = self._get_platform_type()
+        if self.platform == 'android':
+            return selected_platform, selected_platform.get_models() if selected_platform else []
+        return selected_platform, []
     
-    def get_platform(self, platform_type):
-        if platform_type.lower() == 'mobile':
-            return Mobile()
-        elif platform_type.lower() == 'desktop':
-            return Desktop()
-        else:
-            return
+    def _generate_build_number(self, build_number_templates):
+        """
+        Generates a build number based on the provided templates.
+
+        Args:
+            build_number_templates (list): A list of build number templates.
+
+        Returns:
+            str: A formatted build number.
+        """
+        template = random.choice(build_number_templates)
+        return template.format(
+            sub=random.choice(string.ascii_uppercase),
+            device=f'{random.randint(17, 22):02d}{random.randint(0, 12):02d}{random.randint(0, 29):02d}',
+            version=random.randint(1, 255)
+        )
     
-    def get_platform_versions(self):
-        return  self.platform.get_versions()
+    def get_platform_version(self):
+        """
+        Generates version information for the platform.
+        """
+        platform_type, platform_models = self.get_platform_type()
+        if not platform_type: return {}
+        
+        versions = platform_type.get_versions()
+        major_version = random.choice(list(versions.keys()))
+        properties = versions[major_version]
+            
+        __version = {}  
+        if major_version:
+            __version["major"] = major_version
+        if "minor_range" in properties:
+            __version["minor"] = random.randint(*map(int, properties['minor_range']))
+        if self.platform.lower() == 'android':
+            __version['platform_model'] = random.choice(platform_models)
+        if "build_number" in properties:
+            __version["build_number"] = self._generate_build_number(properties['build_number'])
+        
+        return __version
