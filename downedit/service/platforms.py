@@ -417,7 +417,7 @@ class Platform:
             __version["major"] = major_version
         if "minor_range" in properties:
             __version["minor"] = random.randint(*map(int, properties['minor_range']))
-        if self.platform.lower() == 'android':
+        if 'android' == self.platform:
             __version['platform_model'] = random.choice(platform_models)
         if "build_number" in properties:
             __version["build_number"] = self._generate_build_number(properties['build_number'])
