@@ -4,14 +4,17 @@ from ..utils.singleton import Singleton
 from .browsers import Browser
 from .platforms import Platform
 
-def version(version_dict, strip_zero=False):
+def version(version_dict, strip_zero=None):
     major = version_dict['major']
-    minor = version_dict.get('minor', 0)
-    
-    if not strip_zero or minor > 0:
+    minor = int(version_dict.get('minor', 0))
+
+    if strip_zero is None and minor == 0:
+        strip_zero = True
+
+    if minor == 0 and strip_zero:
+        return str(major)
+    else:
         return f"{major}.{minor}"
-    
-    return str(major)
 
 class UserAgent(metaclass=Singleton):
     def __init__(
