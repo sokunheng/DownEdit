@@ -2,7 +2,7 @@ import unittest
 
 from downedit.service.platforms import IOS, Android, Linux, Windows, macOS
 
-class TestOperatingSystems(unittest.TestCase):
+class TestPlatforms(unittest.TestCase):
 
     def setUp(self):
         self.android = Android()
