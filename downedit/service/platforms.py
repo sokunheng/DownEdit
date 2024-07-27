@@ -401,7 +401,7 @@ class Platform:
             version=random.randint(1, 255)
         )
     
-    def get_platform_version(self):
+    def get_version(self):
         """
         Generates version information for the platform.
         """
