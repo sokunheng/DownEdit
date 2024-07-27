@@ -14,25 +14,25 @@ class Chrome():
     def __init__(self):
         pass
     
-    def user_agents(self):
+    def user_agents(self) -> dict:
         return {
-            "windows": (
+            "windows": [
                 'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
                 'Mozilla/5.0 (Windows NT {windows}; WOW64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
-            ),
-            "linux": (
+            ],
+            "linux": [
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
                 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
-            ),
-            "macos":(
+            ],
+            "macos":[
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
-            ),
-            "android": (
+            ],
+            "android": [
                 'Mozilla/5.0 (Linux; Android {android}{model}{build}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome} Mobile Safari/{webkit}'
-            ),
-            "ios": (
+            ],
+            "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) CriOS/{chrome} Mobile/15E148 Safari/{webkit}'
-            ) 
+            ] 
         }
         
     def get_versions(self): 
@@ -81,23 +81,23 @@ class Firefox():
     
     def user_agents(self):
         return {
-            "windows": (
+            "windows": [
                 'Mozilla/5.0 (Windows NT {windows}; Win64; x64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
                 'Mozilla/5.0 (Windows NT {windows}; WOW64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
-            ),
-            "linux": (
+            ],
+            "linux": [
                 'Mozilla/5.0 (X11; Linux x86_64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
                 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
-            ),
-            "macos": (
+            ],
+            "macos": [
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
-            ),
-            "android": (
+            ],
+            "android": [
                 'Mozilla/5.0 (Android {android}; Mobile; rv:{firefox}) Gecko/{firefox} Firefox/{firefox}'
-            ),
-            "ios": (
+            ],
+            "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/{firefox} Mobile/15E148 Safari/605.1.15'
-            )
+            ]
         }
     
     def get_versions(self): 
@@ -153,22 +153,21 @@ class Edge():
     
     def user_agents(self):
         return {
-            "windows": (
+            "windows": [
                 'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}',
-            ),
-            "linux": (
+            ],
+            "linux": [
                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}',
-            ),
-            "macos": (
+            ],
+            "macos": [
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}'
-            ),
-            "android": (
+            ],
+            "android": [
                 'Mozilla/5.0 (Linux; Android {android}{model}{build}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome} Mobile Safari/{webkit} EdgA/{chrome}'
-            ),
-            "ios": (
+            ],
+            "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/15.0 EdgiOS/{chrome} Mobile/15E148 Safari/{webkit}'
-            )
-            
+            ] 
         }
     
     def get_versions(self): 
@@ -218,12 +217,12 @@ class Safari():
     
     def user_agents(self):
         return {
-            'macos': (
+            'macos': [
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Version/{safari} Safari/{webkit}'
-            ),
-            "ios": (
+            ],
+            "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/{safari} Mobile/15E148 Safari/{webkit}'
-            )
+            ]
         }
     
     def get_versions(self): 
@@ -257,6 +256,15 @@ class Browser():
             "safari": Safari()
         }
         return browser_classes.get(self.browser_name, Chrome())
+    
+    def get_user_agents(self):
+        """
+        Retrieves the user agents for the browser.
+        
+        Returns:
+            tuple: A tuple containing the user agents for the browser.
+        """
+        return self.browser.user_agents()
     
     def get_version(self):
         """
