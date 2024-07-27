@@ -14,6 +14,27 @@ class Chrome():
     def __init__(self):
         pass
     
+    def user_agents(self):
+        return {
+            "windows": (
+                'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
+                'Mozilla/5.0 (Windows NT {windows}; WOW64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
+            ),
+            "linux": (
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
+                'Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}',
+            ),
+            "macos":(
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
+            ),
+            "android": (
+                'Mozilla/5.0 (Linux; Android {android}{model}{build}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome} Mobile Safari/{webkit}'
+            ),
+            "ios": (
+                'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) CriOS/{chrome} Mobile/15E148 Safari/{webkit}'
+            ) 
+        }
+        
     def get_versions(self): 
         return  {
             '100.0.4896': {'minor_range': (0, 255), 'webkit': '537.36'},
@@ -57,6 +78,27 @@ class Firefox():
     """
     def __init__(self):
         pass
+    
+    def user_agents(self):
+        return {
+            "windows": (
+                'Mozilla/5.0 (Windows NT {windows}; Win64; x64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
+                'Mozilla/5.0 (Windows NT {windows}; WOW64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
+            ),
+            "linux": (
+                'Mozilla/5.0 (X11; Linux x86_64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
+                'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:{firefox}) Gecko/20100101 Firefox/{firefox}',
+            ),
+            "macos": (
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit}'
+            ),
+            "android": (
+                'Mozilla/5.0 (Android {android}; Mobile; rv:{firefox}) Gecko/{firefox} Firefox/{firefox}'
+            ),
+            "ios": (
+                'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/{firefox} Mobile/15E148 Safari/605.1.15'
+            )
+        }
     
     def get_versions(self): 
         return {
@@ -109,6 +151,26 @@ class Edge():
     def __init__(self):
         pass
     
+    def user_agents(self):
+        return {
+            "windows": (
+                'Mozilla/5.0 (Windows NT {windows}; Win64; x64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}',
+            ),
+            "linux": (
+                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}',
+            ),
+            "macos": (
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Chrome/{chrome} Safari/{webkit} Edg/{chrome}'
+            ),
+            "android": (
+                'Mozilla/5.0 (Linux; Android {android}{model}{build}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome} Mobile Safari/{webkit} EdgA/{chrome}'
+            ),
+            "ios": (
+                'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/15.0 EdgiOS/{chrome} Mobile/15E148 Safari/{webkit}'
+            )
+            
+        }
+    
     def get_versions(self): 
         return {
             '100.0.1185': {'minor_range': (0, 99), 'webkit': '537.36'},
@@ -154,6 +216,16 @@ class Safari():
     def __init__(self):
         pass
     
+    def user_agents(self):
+        return {
+            'macos': (
+                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/{webkit} (KHTML, like Gecko) Version/{safari} Safari/{webkit}'
+            ),
+            "ios": (
+                'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/{safari} Mobile/15E148 Safari/{webkit}'
+            )
+        }
+    
     def get_versions(self): 
         return {
             '10': {'minor_range': (0, 0), 'webkit': '602.4.8'},
@@ -168,21 +240,32 @@ class Safari():
     
 class Browser():
     def __init__(self, browser="chrome"):
-        self.browser = self.get_browser(browser)
+        self.browser_name = browser.lower()
+        self.browser = self._initialize_browser()
     
-    def get_browser(self, browser_name):
-        if browser_name.lower() == 'chrome':
-            return Chrome()
-        elif browser_name.lower() == 'firefox':
-            return Firefox()
-        elif browser_name.lower() == 'edge':
-            return Edge()
-        elif browser_name.lower() == 'safari':
-            return Safari()
-        else:
-            return Chrome()
+    def _initialize_browser(self):
+        """
+        Initializes the Browser instance with a specific browser.
+        
+        Args:
+            browser (str): The name of the browser to use. Defaults to "chrome".
+        """
+        browser_classes = {
+            "chrome": Chrome(),
+            "firefox": Firefox(),
+            "edge": Edge(),
+            "safari": Safari()
+        }
+        return browser_classes.get(self.browser_name, Chrome())
     
     def get_version(self):
+        """
+        Retrieves a random version from the browser's version set.
+        
+        Returns:
+            dict: A dictionary containing the major version, minor version, 
+                    and possibly webkit version if available.
+        """
         versions = self.browser.get_versions()
         major_version = random.choice(list(versions.keys()))
         properties = versions[major_version]
@@ -194,4 +277,4 @@ class Browser():
             __version["minor"] = random.randint(*map(int, properties['minor_range']))
         if "webkit" in properties:
             __version["webkit"] = properties['webkit']
-        return __version
+        return __version    
