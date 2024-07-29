@@ -33,8 +33,7 @@ def display_banner():
     """
     banner_msg = """Use arrow key and enter to select the options"""
     return banner_display, banner_msg
-
-async def display_menu():
+def display_menu():
     banner_display, banner_msg = display_banner()
     tool_selector.display_banner(
         banner_display,
@@ -59,19 +58,16 @@ async def display_menu():
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
     )
 
-async def main():
+def run():
     while True:
         tool_selector.running = True
         try:
-            await display_menu()
+            display_menu()
         except Exception as e:
             logger.error(str(e)[:80])
-            await logger.pause()
+            logger.pause()
         except KeyboardInterrupt:
             logger.debug("Skipping the process..")
-
-def run():
-    asyncio.run(main())
 
 if __name__ == "__main__":
     run()
