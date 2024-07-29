@@ -41,6 +41,7 @@ async def display_menu():
         banner_msg, title=" - Main Menu"
     )
     available_tools = {
+        f" ChatDE {Fore.RED}(Soon)"             : lambda: None,
         " Download Video"                       : vid_dl.main,
         " Edit Video"                           : video_editor.main,
         f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
