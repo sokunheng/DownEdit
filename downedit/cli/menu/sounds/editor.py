@@ -6,7 +6,7 @@ from .._banners import get_banner
 from ....utils.common import tool_selector
 from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
-from ....edit.sound._process import SoundProcess
+from ....edit import SoundProcess
 
 
 def main():

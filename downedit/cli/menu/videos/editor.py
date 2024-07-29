@@ -7,7 +7,7 @@ from .._banners import get_banner
 from ....utils.common import tool_selector
 from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
-from ....edit.video._process import VideoProcess
+from ....edit import VideoProcess
 
 
 def main():
