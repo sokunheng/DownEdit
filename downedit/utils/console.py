@@ -129,14 +129,14 @@ class Column:
         self.columns["estimated_time"] = "•"
         self.columns["time_remaining"] = TimeRemainingColumn()
         return self.columns.copy()
-    
+
     def edit(self):
         """
         Columns configured for edit display.
         """
         self.columns["time_remaining"] = TimeRemainingColumn()
         return self.columns.copy()
-        
+
 
 class Progress:
     """
@@ -152,7 +152,7 @@ class Progress:
     ):
         self.columns = specific_columns or Column().default()
         self.progress_bar = self.columns.get('progress_bar')
-        
+
         if spinner_column:
             self.columns = {"spinner": spinner_column, **self.columns}
         if isinstance(self.progress_bar, BarColumn):
@@ -165,7 +165,7 @@ class Progress:
         )
         self.progress_lock = Lock()
         self.running_tasks = set()
-    
+
     async def add_task(
         self,
         description: str,
@@ -244,7 +244,7 @@ class Progress:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.end()
-    
+
     @property
     def active_tasks(self):
         return self.progress_display.tasks
