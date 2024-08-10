@@ -18,9 +18,8 @@ def main():
             )
             # TODO: Media Video Downloader Algorithm
             menu_list = {
-                " Douyin": douyin.main,
                 " Tiktok": tiktok.main,
-                " Kuaishou": kuaishou.main,
+                " Kuaishou": lambda: None,
                 " Youtube": lambda: None,
                 " Back": lambda: None,
             }
