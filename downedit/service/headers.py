@@ -1,7 +1,8 @@
 from .user_agents import UserAgent
 from .client_hints import ClientHints
+from ..utils.singleton import Singleton
 
-class Headers:
+class Headers(metaclass=Singleton):
     """
     The Headers class.
 
