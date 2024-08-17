@@ -4,7 +4,7 @@ import sys
 
 from ..utils.logger import logger
 from ..utils.system import pc_info
-from ..utils.common import tool_selector
+from ..utils.tool_selector import selector
 
 try:
     from colorama       import Fore, Back
@@ -35,7 +35,7 @@ def display_banner():
     return banner_display, banner_msg
 def display_menu():
     banner_display, banner_msg = display_banner()
-    tool_selector.display_banner(
+    selector.display_banner(
         banner_display,
         banner_msg, title=" - Main Menu"
     )
@@ -53,14 +53,14 @@ def display_menu():
         f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
         " Exit"                                 : lambda: sys.exit(0)
     }
-    return tool_selector.start(
+    return selector.start(
         menu_options=available_tools,
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
     )
 
 def run():
     while True:
-        tool_selector.running = True
+        selector.running = True
         try:
             display_menu()
         except Exception as e:

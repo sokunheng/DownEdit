@@ -203,3 +203,5 @@ class ToolSelector(metaclass=Singleton):
             menu_options
         )
 
+# Create an instance of the ToolSelector class.
+selector = ToolSelector()

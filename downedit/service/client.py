@@ -1,7 +1,7 @@
 import asyncio
 import httpx
 
-class AsyncClient:
+class Client:
     def __init__(
         self,
         proxies: dict = None,
@@ -18,22 +18,36 @@ class AsyncClient:
         self.max_connections = max_connections
         self.timeout = timeout
         self.max_retries = max_retries
-        
-        self._init_client()
 
-    def _init_client(self):
-        limits = httpx.Limits(max_connections=self.max_connections)
-        timeout_config = httpx.Timeout(self.timeout)
-        transport = httpx.AsyncHTTPTransport(retries=self.max_retries)
+        self.limits = httpx.Limits(max_connections=self.max_connections)
+        self.timeout_config = httpx.Timeout(self.timeout)
+        self.transport = httpx.AsyncHTTPTransport(retries=self.max_retries)
 
-        self.client = httpx.AsyncClient(
-            headers=self.headers,
-            proxies=self.proxies,
-            timeout=timeout_config,
-            limits=limits,
-            transport=transport,
-        )
-    
+    @property
+    def aclient(self):
+        if self._aclient is None:
+            self._aclient = httpx.AsyncClient(
+                headers=self.headers,
+                proxies=self.proxies,
+                verify=False,
+                timeout=self.timeout_config,
+                limits=self.limits,
+                transport=self.transport,
+            )
+        return self._aclient
+
+    @property
+    def client(self):
+        if self._client is None:
+            self._client = httpx.Client(
+                headers=self.headers,
+                proxies=self.proxies,
+                verify=False,
+                timeout=self.timeout_config,
+                limits=self.limits,
+                transport=self.transport,
+            )
+
     async def close(self):
         await self.client.aclose()
 
