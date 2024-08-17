@@ -5,7 +5,7 @@ import json as JSON
 
 from pystyle import *
 from colorama import *
-from downedit.utils.common import *
+from downedit.utils.tool_selector import selector
 from downedit.site.enterpix.enterpix_api import EnterpixAPI
 
 
@@ -63,7 +63,7 @@ def display_banner():
 def main():
 
     banner_display, banner_msg = display_banner()
-    tool_selector.display_banner(banner_display, banner_msg)
+    selector.display_banner(banner_display, banner_msg)
     img_gen_prnt_path = Common.ensure_or_create_directory(IMG_GEN)
     
     user_prompt = input(f"{Fore.YELLOW}Enter Prompt:{Fore.WHITE} ")

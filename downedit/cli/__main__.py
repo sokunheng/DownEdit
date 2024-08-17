@@ -1,4 +1,3 @@
-import asyncio
 import os
 import sys
 
@@ -9,8 +8,8 @@ from ..utils.tool_selector import selector
 try:
     from colorama       import Fore, Back
     from .menu.media    import media        as vid_dl
-    from .menu.images   import ai_generator as gen_img_ai
-    from .menu.images   import ai_editor    as ai_img_editor
+    # from .menu.images   import ai_generator as gen_img_ai
+    # from .menu.images   import ai_editor    as ai_img_editor
     from .menu.images   import editor       as image_editor
     from .menu.videos   import editor       as video_editor
     from .menu.sounds   import editor       as sound_editor
@@ -41,14 +40,14 @@ def display_menu():
     )
     available_tools = {
         f" ChatDE {Fore.RED}(Soon)"             : lambda: None,
-        " Download Video"                       : vid_dl.main,
+        f" Download Video {Fore.RED}(Rework)"   : lambda: None,
         " Edit Video"                           : video_editor.main,
         f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
         " Edit Photo"                           : image_editor.main,
-        " AI Edit Photo"                        : ai_img_editor.main,
+        f" AI Edit Photo {Fore.RED}(Rework)"    : lambda: None,
         f" Edit Sound"                          : sound_editor.main,
         f" AI Edit Sound {Fore.RED}(Soon)"      : lambda: None,
-        " AI-Generative Image"                  : gen_img_ai.main,
+        f" AI-Generative Image {Fore.RED}(Rework)": lambda: None,
         f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
         f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
         " Exit"                                 : lambda: sys.exit(0)
