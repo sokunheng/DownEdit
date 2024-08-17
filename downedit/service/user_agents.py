@@ -3,18 +3,7 @@ import random
 from ..utils.singleton import Singleton
 from .browsers import Browser
 from .platforms import Platform
-
-def format_mm_version(version_dict, strip_zero=None):
-    major = version_dict['major']
-    minor = int(version_dict.get('minor', 0))
-
-    if strip_zero is None and minor == 0:
-        strip_zero = True
-
-    if minor == 0 and strip_zero:
-        return str(major)
-    else:
-        return f"{major}.{minor}"
+from .serialization import format_mm_version
 
 class UserAgent():
     def __init__(

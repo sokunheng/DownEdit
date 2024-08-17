@@ -34,7 +34,7 @@ class Headers(metaclass=Singleton):
         """
         self._headers = {'user-agent': str(self.user_agent)}
 
-        if self.user_agent.browser in ('chrome', 'edge') :
+        if self.user_agent.browser_type in ('chrome', 'edge') :
             self._add_standard_hints()
 
         self._is_generated = True
@@ -57,9 +57,6 @@ class Headers(metaclass=Singleton):
         Returns:
             None
         """
-        if not self._is_generated:
-            self._reset_headers()
-
         hint_map = {
             'sec-ch-ua'                  : 'brands',
             'sec-ch-ua-full-version-list': 'brands_full_version_list',
@@ -84,7 +81,9 @@ class Headers(metaclass=Singleton):
         References:
             https://developer.mozilla.org/en-US/docs/Web/HTTP/Client_hints#low_entropy_hints
         """
-        if self.user_agent.browser not in ('chrome', 'edge') :
+        self._reset_headers()
+
+        if self.user_agent.browser_type not in ('chrome', 'edge') :
             return
 
         for hint in map(str.strip, value.split(',')):
