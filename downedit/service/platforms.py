@@ -5,17 +5,17 @@ import string
 class Android():
     """
     Android mobile operating system
-    
+
     description:
         The version of Android is based on the API level. We have used the stable release version provided by Google to determine the minor version range.
-    
+
     Reference:
         https://source.android.com/setup/start/build-numbers
         https://en.wikipedia.org/wiki/Android_version_history
     """
     def __init__(self):
         pass
-    
+
     def get_versions(self): 
         return {
             '8.0': {
