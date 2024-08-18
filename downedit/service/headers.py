@@ -53,9 +53,6 @@ class Headers(metaclass=Singleton):
 
         Args:
             key (str): The hint name.
-
-        Returns:
-            None
         """
         hint_map = {
             'sec-ch-ua'                  : 'brands',
