@@ -35,7 +35,9 @@ class UserAgent():
         self.browser_version = self.browser.get_version()
 
         browser_ua = self.browser.get_user_agents()
-        browser_template = random.choice(browser_ua.get(str(self.device_type), []))
+        browser_template = random.choice(
+            browser_ua.get(str(self.device_type), [])
+        )
 
         replacements = {
             '{windows}' : self.platform_version.get('major', ''),
