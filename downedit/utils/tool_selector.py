@@ -5,10 +5,8 @@ from colorama import Fore
 from pystyle import Box, Center
 from abc import ABC, abstractmethod
 
-from . import (
-    log,
-    Singleton
-)
+from .singleton import Singleton
+from .logger import log
 
 
 class UserInput(ABC):

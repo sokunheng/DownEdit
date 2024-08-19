@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Optional, Union
 from colorama import Fore
 
-from . import log
+from logger import log
 from .. import (
     CHUNK_SIZE,
     EditFolder

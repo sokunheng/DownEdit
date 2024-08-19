@@ -5,7 +5,7 @@ import time
 from colorama import *
 from pystyle import *
 
-from ..utils import log
+from .logger import log
 class Common:
 
     @staticmethod
