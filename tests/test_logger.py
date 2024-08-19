@@ -3,7 +3,7 @@ import os
 
 from rich.logging import RichHandler
 
-from ..downedit.utils.logger import logger
+from ..downedit.utils.logger import log
 from ..downedit.utils.logger import Formatter, init_logging
 
 
@@ -80,6 +80,6 @@ if __name__ == "__main__":
     test_logger_configuration()
     # Run the multiple handlers test
     test_multiple_handlers()
-    print("Before close", logger.handlers)
-    logger.close()
-    print("After close", logger.handlers)
+    print("Before close", log.handlers)
+    log.close()
+    print("After close", log.handlers)
