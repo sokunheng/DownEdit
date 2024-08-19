@@ -3,10 +3,12 @@ import time
 from colorama import Fore
 
 from .. import get_banner
-from ....utils.tool_selector import selector
-from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
 from ....edit import ImageProcess
+from ....utils import (
+    log,
+    selector
+)
 
 
 def main():
@@ -37,9 +39,9 @@ def main():
             image_process.start()
         
     except Exception as e:
-        logger.error(e)
+        log.error(e)
         time.sleep(0.5)
-        logger.pause()
+        log.pause()
         return
 
 if __name__ == "__main__":
