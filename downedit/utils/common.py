@@ -5,7 +5,7 @@ import time
 from colorama import *
 from pystyle import *
 
-from ..utils.logger import logger
+from ..utils import log
 class Common:
 
     @staticmethod
@@ -18,7 +18,7 @@ class Common:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            logger.error("Error Creating directory!")
+            log.error("Error Creating directory!")
             return directory_name
 
     def get_next_video_folder(output_folder):
@@ -32,7 +32,7 @@ class Common:
             
     def check_folder_exist(folder):
         if not os.path.exists(folder):
-            logger.error("No such directory!")
+            log.error("No such directory!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
@@ -40,7 +40,7 @@ class Common:
     
     def check_file_folder_exist(file_folder):
         if not file_folder:
-            logger.error(" No such file!")
+            log.error(" No such file!")
             time.sleep(0.3)
             print(input(f"{Fore.CYAN}[Programs] {Fore.YELLOW}[Status] {Fore.WHITE}Press enter to continue.."))
             return False
