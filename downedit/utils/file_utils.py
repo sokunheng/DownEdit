@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Optional, Union
 from colorama import Fore
 
-from .logger import logger
+from . import log
 from .. import (
     CHUNK_SIZE,
     EditFolder
@@ -95,7 +95,7 @@ class FileUtil:
         """
         limit_title = file_name[:80]
         
-        logger.info(f"{limit_title}\r")
+        log.info(f"{limit_title}\r")
         
         file_path = self.normalize_filename(
             folder_path,
@@ -106,11 +106,11 @@ class FileUtil:
         if not os.path.exists(file_path):
             return file_path
         elif os.path.exists(file_path):
-            logger.critical(f"{file_name}{file_extension} already exists! Skipping...")
+            log.critical(f"{file_name}{file_extension} already exists! Skipping...")
             time.sleep(0.3)
             return False
         else:
-            logger.error("Invalid file! Skipping...")
+            log.error("Invalid file! Skipping...")
             time.sleep(0.3)
             return False
     
