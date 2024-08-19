@@ -1,6 +1,6 @@
 import random
 
-from ..utils.singleton import Singleton
+from ..utils import Singleton
 from .browsers import Browser
 from .platforms import Platform
 from .serialization import format_mm_version
