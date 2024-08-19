@@ -18,6 +18,7 @@ class EditFolder:
     EDITED_SOUND = "Edited_Sound"
     AI_Photo_Gen = "AI_Art"
     AI_Photo_Editor = "AI_Editor"
+    
 
 class Media:
     """
@@ -28,10 +29,11 @@ class Media:
     DOUYIN = "Douyin"
     KUAISHOU = "Kuaishou"
 
+
 class Extensions:
     """
     A class that provides constants for different types of extensions.
     """
     VIDEO = (".mp4", ".avi", ".mov", ".flv", ".wmv")
     IMAGE = (".jpg", ".jpeg", ".png", ".gif", ".bmp")
-    SOUND = (".mp3", ".m4a", ".wav", ".ogg", ".wma", ".aac") 
+    SOUND = (".mp3", ".m4a", ".wav", ".ogg", ".wma", ".aac")
