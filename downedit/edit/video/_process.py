@@ -6,11 +6,15 @@ from colorama import Fore
 
 from ..base import Handler
 from ...__config__ import Extensions
-from ...utils.logger import logger
-from ...utils.observer import Observer
 from ...utils.file_utils import FileUtil
 from ._editor import VideoEditor
 from ._task import VideoTask
+
+from ...utils import (
+    log,
+    observer
+)
+
 from ._operation import (
     VideoOperation,
     Flip,
@@ -35,7 +39,7 @@ class VideoProcess:
         **kwargs
     ):
         self.video_task = VideoTask()
-        self.observer = Observer()
+        self.observer = observer()
         self.batch_size = batch_size
         self._tool = tool
         self._adjust_color = (
@@ -128,10 +132,10 @@ class VideoProcess:
             
         elapsed_time = time.time() - start_time
         
-        logger.info(f"Processed: {elapsed_time:.2f} seconds.")
-        logger.file(f"Saved at [green]{self._output_folder}[/green]")
-        logger.file(f"Processed [green]{proceed_count}[/green] videos successfully.")
-        logger.pause()
+        log.info(f"Processed: {elapsed_time:.2f} seconds.")
+        log.file(f"Saved at [green]{self._output_folder}[/green]")
+        log.file(f"Processed [green]{proceed_count}[/green] videos successfully.")
+        log.pause()
     
             
     async def _process_clip(self, clip) -> bool:
@@ -177,7 +181,7 @@ class VideoProcess:
             return True
             
         except Exception as e:
-            logger.error(e)
+            log.error(e)
             return False
         
     def _build_and_apply_operations(self, video_editor: VideoEditor, output_suffix: str):
@@ -205,7 +209,7 @@ class VideoProcess:
         try:
             asyncio.run(self.start_async())
         except Exception as e:
-            logger.error(e) 
+            log.error(e) 
             
     def __enter__(self):
         """
