@@ -1,4 +1,4 @@
-from downedit.cli.__main__ import run
+from downedit.cli import run
 
 if __name__ == "__main__":
     run()
