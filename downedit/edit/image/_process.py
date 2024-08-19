@@ -10,7 +10,7 @@ from ._task import ImageTask
 from ...utils import (
     log,
     console,
-    observer
+    Observer
 )
 
 from ._operation import (
@@ -35,7 +35,7 @@ class ImageProcess:
         **kwargs
     ) -> None:
         self.image_task = ImageTask()
-        self.observer = observer()
+        self.observer = Observer()
         self.batch_size = batch_size
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)

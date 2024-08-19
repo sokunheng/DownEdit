@@ -10,7 +10,7 @@ from ._task import SoundTask
 
 from ...utils import (
     log,
-    observer
+    Observer
 )
 
 from ._operation import (
@@ -30,7 +30,7 @@ class SoundProcess:
         **kwargs
     ) -> None:
         self.sound_task = SoundTask()
-        self.observer = observer()
+        self.observer = Observer()
         self.batch_size = batch_size
         self._tool = tool
         self._input_folder = FileUtil.get_file_list(

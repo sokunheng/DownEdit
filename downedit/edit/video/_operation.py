@@ -12,7 +12,7 @@ class VideoOperation(Operation, ABC):
     @abstractmethod
     def _run(self, editor: VideoEditor):
         pass
-    
+
     def handle(self, editor: VideoEditor, output_suffix: str) -> str:
         """
         Handles the operation and updates the output suffix.
@@ -26,7 +26,7 @@ class VideoOperation(Operation, ABC):
         """
         self._run(editor)
         return output_suffix + self.suffix
-    
+
 class Flip(VideoOperation):
     """
     Flips the video clip horizontally.
@@ -37,7 +37,7 @@ class Flip(VideoOperation):
             function=self._run,
             suffix="_flipped"
         )
-    
+
     def _run(self, editor: VideoEditor):
         editor.flip()
 

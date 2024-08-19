@@ -12,7 +12,7 @@ from ._task import VideoTask
 
 from ...utils import (
     log,
-    observer
+    Observer
 )
 
 from ._operation import (
@@ -39,7 +39,7 @@ class VideoProcess:
         **kwargs
     ):
         self.video_task = VideoTask()
-        self.observer = observer()
+        self.observer = Observer()
         self.batch_size = batch_size
         self._tool = tool
         self._adjust_color = (
