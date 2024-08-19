@@ -3,12 +3,16 @@ import os
 import time
 
 from ..base import Handler
-from ...__config__ import Extensions
-from ...utils.logger import logger
-from ...utils.observer import Observer
+from ... import Extensions
 from ...utils.file_utils import FileUtil
 from ._editor import SoundEditor
 from ._task import SoundTask
+
+from ...utils import (
+    log,
+    observer
+)
+
 from ._operation import (
     SoundOperation,
     Volume,
@@ -26,7 +30,7 @@ class SoundProcess:
         **kwargs
     ) -> None:
         self.sound_task = SoundTask()
-        self.observer = Observer()
+        self.observer = observer()
         self.batch_size = batch_size
         self._tool = tool
         self._input_folder = FileUtil.get_file_list(
@@ -100,10 +104,10 @@ class SoundProcess:
             
         elapsed_time = time.time() - start_time
 
-        logger.info(f"Processed: {elapsed_time:.2f} seconds.")
-        logger.file(f"Saved at [green]{self._output_folder}[/green]")
-        logger.file(f"Processed [green]{proceed_count}[/green] sounds successfully.")
-        logger.pause()
+        log.info(f"Processed: {elapsed_time:.2f} seconds.")
+        log.file(f"Saved at [green]{self._output_folder}[/green]")
+        log.file(f"Processed [green]{proceed_count}[/green] sounds successfully.")
+        log.pause()
     
     async def _process_sound(self, sound) -> bool:
         """
@@ -145,7 +149,7 @@ class SoundProcess:
             return True
                 
         except Exception as e:
-            logger.error(e)
+            log.error(e)
             return False
 
     
@@ -179,7 +183,7 @@ class SoundProcess:
         try:
             asyncio.run(self.start_async())
         except Exception as e:
-            logger.error(e) 
+            log.error(e) 
     
     def __enter__(self):
         """
