@@ -99,4 +99,4 @@ def init_logging():
     return logger
 
 # Initialize the logger
-logger = init_logging()
+log = init_logging()
