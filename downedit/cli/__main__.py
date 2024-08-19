@@ -1,9 +1,11 @@
 import os
 import sys
 
-from ..utils.logger import logger
-from ..utils.system import pc_info
-from ..utils.tool_selector import selector
+from ..utils import (
+    log,
+    pc_info,
+    selector
+)
 
 try:
     from colorama       import Fore, Back
@@ -16,9 +18,9 @@ try:
     from .. import DE_VERSION
 
 except ImportError as e:
-    logger.error(str(e))
+    log.error(str(e))
     os.system("pip install -r requirements.txt")
-    logger.pause()
+    log.pause()
 
 
 def display_banner():
@@ -63,10 +65,10 @@ def run():
         try:
             display_menu()
         except Exception as e:
-            logger.error(str(e)[:80])
-            logger.pause()
+            log.error(str(e)[:80])
+            log.pause()
         except KeyboardInterrupt:
-            logger.debug("Skipping the process..")
+            log.debug("Skipping the process..")
 
 if __name__ == "__main__":
     run()
