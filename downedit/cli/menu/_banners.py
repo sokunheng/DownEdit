@@ -1,6 +1,6 @@
 from colorama import Fore
 
-from ...__config__ import DE_VERSION
+from ... import DE_VERSION
 
 _BANNERS: dict[
     str,
