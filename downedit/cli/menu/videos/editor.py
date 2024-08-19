@@ -3,7 +3,7 @@ import time
 
 from colorama import Fore
 
-from .._banners import get_banner
+from .. import get_banner
 from ....utils.tool_selector import selector
 from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
