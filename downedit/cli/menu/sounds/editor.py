@@ -3,10 +3,12 @@ import time
 from colorama import Fore
 
 from .. import get_banner
-from ....utils.tool_selector import selector
-from ....utils.logger import logger
 from ....utils.file_utils import FileUtil
 from ....edit import SoundProcess
+from ....utils import (
+    log,
+    selector
+)
 
 
 def main():
@@ -18,7 +20,7 @@ def main():
             folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
         )
         selected_tool = selector.select_menu(
-            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
+            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}",
             choices=available_tools
         )
         sound_params = selector.get_tool_input(
@@ -37,9 +39,9 @@ def main():
             sound_process.start()
         
     except Exception as e:
-        logger.error(e)
+        log.error(e)
         time.sleep(0.5)
-        logger.pause()
+        log.pause()
         return
 
 if __name__ == "__main__":
