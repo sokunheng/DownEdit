@@ -1,15 +1,18 @@
 import asyncio
-import os
 import time
 
-from ...utils.console import Console
 from ..base import Handler
-from ...__config__ import Extensions
-from ...utils.logger import logger
-from ...utils.observer import Observer
+from ... import Extensions
 from ...utils.file_utils import FileUtil
 from ._editor import ImageEditor
 from ._task import ImageTask
+
+from ...utils import (
+    log,
+    console,
+    observer
+)
+
 from ._operation import (
     ImageOperation,
     Flip,
@@ -32,7 +35,7 @@ class ImageProcess:
         **kwargs
     ) -> None:
         self.image_task = ImageTask()
-        self.observer = Observer()
+        self.observer = observer()
         self.batch_size = batch_size
         self._tool = tool
         self._adjust_degrees = kwargs.get("Degrees", 0)
@@ -125,10 +128,10 @@ class ImageProcess:
             
         elapsed_time = time.time() - start_time
 
-        logger.info(f"Processed: {elapsed_time:.2f} seconds.")
-        logger.file(f"Saved at [green]{self._output_folder}[/green]")
-        logger.file(f"Processed [green]{proceed_count}[/green] images successfully.")
-        logger.pause()
+        log.info(f"Processed: {elapsed_time:.2f} seconds.")
+        log.file(f"Saved at [green]{self._output_folder}[/green]")
+        log.file(f"Processed [green]{proceed_count}[/green] images successfully.")
+        log.pause()
 
     async def _process_image(self, image) -> bool:
         """
@@ -171,7 +174,7 @@ class ImageProcess:
             return True
                 
         except Exception as e:
-            logger.error(e)
+            log.error(e)
             return False
 
     
@@ -201,7 +204,7 @@ class ImageProcess:
         try:
             asyncio.run(self.start_async())
         except Exception as e:
-            logger.error(e) 
+            log.error(e) 
     
     def __enter__(self):
         """
