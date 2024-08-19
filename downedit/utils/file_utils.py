@@ -8,7 +8,7 @@ from typing import Optional, Union
 from colorama import Fore
 
 from .logger import logger
-from ..__config__ import (
+from .. import (
     CHUNK_SIZE,
     EditFolder
 )
