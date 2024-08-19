@@ -1,12 +1,14 @@
 import time
 from colorama import Fore
 
-from .._banners import get_banner
-from ....utils.tool_selector import selector
-from ....utils.logger import logger
+from .. import get_banner
 from ....site.douyin import __main__ as douyin
 from ....site.kuaishou import __main__ as kuaishou
 from ....site.tiktok import __main__ as tiktok
+from ....utils import (
+    log,
+    selector
+)
 
 def main():
     while selector.running:
@@ -30,9 +32,9 @@ def main():
             )
 
         except Exception as e:
-            logger.error(str(e[:80]))
+            log.error(str(e[:80]))
             time.sleep(0.5)
-            logger.pause()
+            log.pause()
 
 
 if __name__ == "__main__":
