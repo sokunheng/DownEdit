@@ -13,7 +13,7 @@ try:
     from .menu.images   import editor       as image_editor
     from .menu.videos   import editor       as video_editor
     from .menu.sounds   import editor       as sound_editor
-    from ..__config__   import DE_VERSION
+    from .. import DE_VERSION
 
 except ImportError as e:
     logger.error(str(e))
