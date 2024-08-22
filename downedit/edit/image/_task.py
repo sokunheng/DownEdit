@@ -2,7 +2,11 @@ import asyncio
 import os
 
 from downedit.edit.base import Task
-from downedit.utils import console, column, FileUtil
+from downedit.utils import (
+    console,
+    column,
+    FileUtil
+)
 
 class ImageTask(Task):
     """

@@ -56,7 +56,7 @@ class Process:
         """
         raise NotImplementedError
 
-    def _get_task(self):
+    def _get_task(self) -> Task:
         """
         Gets the appropriate Task object based on the media type.
         """
@@ -79,12 +79,15 @@ class Process:
         Process a single media file.
         """
         try:
+            # Create editor object (specific for each media type)
             editor = self._create_editor(media_path)
             output_suffix = self._build_and_apply_operations(editor, "")
 
+            # Get file info for output file path construction
             file_info = FileUtil.get_file_info(media_path)
             file_name, file_extension, file_size = file_info
 
+            # Construct the output file path
             full_file = f"{file_name}{output_suffix}"
             output_file_path = FileUtil.get_output_file(
                 self._output_folder,
@@ -93,13 +96,13 @@ class Process:
             )
             editor.output_path = output_file_path
 
+            # Add the task to the task queue
             await self._task.add_task(
                 operation_function=lambda: editor.render(**render_kwargs),
                 operation_media=(
                     output_file_path,
                     f"{file_name}{file_extension}",
-                    file_size
-                )
+                    file_size)
             )
             return True
 
