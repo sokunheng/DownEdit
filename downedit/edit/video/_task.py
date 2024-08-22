@@ -1,10 +1,8 @@
 import asyncio
 import os
 
-from ..base import Task
-from ...utils.file_utils import FileUtil
-from ...utils.console import Console as console
-from ...utils.console import Column as column
+from downedit.edit.base import Task
+from downedit.utils import console, column, FileUtil
 
 class VideoTask(Task):
     """

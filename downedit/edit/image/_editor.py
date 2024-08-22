@@ -4,7 +4,7 @@ from PIL import (
     ImageEnhance
 )
 
-from ...edit.base import Editor
+from downedit.edit.base import Editor
 
 
 class ImageEditor(Editor):

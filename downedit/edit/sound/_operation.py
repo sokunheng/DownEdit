@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from ..base import Operation
-from ._editor import SoundEditor
+from downedit.edit.base import Operation
+from downedit.edit.sound._editor import SoundEditor
 
 
 class SoundOperation(Operation, ABC):

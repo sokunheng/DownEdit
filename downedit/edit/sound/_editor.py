@@ -1,6 +1,6 @@
 from moviepy.editor import *
 
-from ...edit.base import Editor
+from downedit.edit.base import Editor
 
 class SoundEditor(Editor):
     def __init__(self, input_path = "", output_path = ""):

@@ -1,27 +1,20 @@
-import os
 import sys
 
-from ..utils import (
+from colorama       import Fore, Back
+
+from downedit                 import DE_VERSION
+from downedit.cli.menu.media  import media        as vid_dl
+# from downedit.cli.menu.images   import ai_generator as gen_img_ai
+# from downedit.cli.menu.images   import ai_editor    as ai_img_editor
+from downedit.cli.menu.images import editor       as image_editor
+from downedit.cli.menu.sounds import editor       as sound_editor
+from downedit.cli.menu.videos import editor       as video_editor
+
+from downedit.utils import (
     log,
     pc_info,
     selector
 )
-
-try:
-    from colorama       import Fore, Back
-    from .menu.media    import media        as vid_dl
-    # from .menu.images   import ai_generator as gen_img_ai
-    # from .menu.images   import ai_editor    as ai_img_editor
-    from .menu.images   import editor       as image_editor
-    from .menu.videos   import editor       as video_editor
-    from .menu.sounds   import editor       as sound_editor
-    from .. import DE_VERSION
-
-except ImportError as e:
-    log.error(str(e))
-    os.system("pip install -r requirements.txt")
-    log.pause()
-
 
 def display_banner():
     banner_display = f"""
@@ -62,13 +55,13 @@ def display_menu():
 def run():
     while True:
         selector.running = True
-        try:
-            display_menu()
-        except Exception as e:
-            log.error(str(e)[:80])
-            log.pause()
-        except KeyboardInterrupt:
-            log.debug("Skipping the process..")
+        # try:
+        display_menu()
+        # except Exception as e:
+        #     log.error(str(e)[:80])
+        #     log.pause()
+        # except KeyboardInterrupt:
+        #     log.debug("Skipping the process..")
 
 if __name__ == "__main__":
     run()

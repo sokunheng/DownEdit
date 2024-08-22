@@ -57,13 +57,14 @@ def main():
         )
         with VideoProcess(
             tool=selected_tool,
-            video_preset=selected_presets,
-            cpu_threads=int(selected_threads),
             process_folder=user_folder,
             batch_size= min(int(selected_batch) if selected_batch.isdigit() else 1, 10),
             **video_params
         ) as video_process:
-            video_process.start()
+            video_process.start(
+                threads=int(selected_threads),
+                preset=selected_presets
+            )
         
     except Exception as e:
         log.error(e)

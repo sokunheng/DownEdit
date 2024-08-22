@@ -5,7 +5,7 @@ class Editor(ABC):
     def __init__(self, input_path, output_path):
         self.input_path = input_path
         self.output_path = output_path
-        
+
     def func(self, **kwargs):
         """
         Implement common editing logic
@@ -60,15 +60,15 @@ class Operation(ABC):
         self._name = name
         self._function = function
         self._suffix = suffix
-    
+
     @property
     def name(self):
-        return self._name 
-    
+        return self._name
+
     @property
     def function(self):
         return self._function
-    
+
     @property
     def suffix(self):
         return self._suffix
@@ -84,7 +84,7 @@ class Task(ABC):
     @abstractmethod
     async def execute(self):
         pass
-    
+
     @abstractmethod
     async def close(self) -> None:
         pass

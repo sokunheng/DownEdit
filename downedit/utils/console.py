@@ -267,6 +267,6 @@ class Console(metaclass=Singleton):
         """
         self._progress = Progress(specific_columns=column_config)
         return self._progress
-    
+
 # Create a global instance of the console
 # console = Console()

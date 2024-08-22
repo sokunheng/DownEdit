@@ -10,7 +10,7 @@ class ImageOperation(Operation, ABC):
     @abstractmethod
     def _run(self, editor: ImageEditor):
         pass
-    
+
     def handle(self, editor: ImageEditor, output_suffix: str) -> str:
         """
         Handles the operation and updates the output suffix.
@@ -35,7 +35,7 @@ class Flip(ImageOperation):
             function=self._run,
             suffix="_flipped"
         )
-    
+
     def _run(self, editor: ImageEditor):
         editor.transpose()
 
@@ -49,7 +49,7 @@ class Crop(ImageOperation):
             function=self._run,
             suffix="_cropped"
         )
-    
+
     def _run(self, editor: ImageEditor):
         editor.crop()
 
@@ -66,7 +66,7 @@ class Enhance(ImageOperation):
 
     def _run(self, editor: ImageEditor):
         editor.enhance()
-        
+
 class Rotate(ImageOperation):
     """
     Rotates the image.
