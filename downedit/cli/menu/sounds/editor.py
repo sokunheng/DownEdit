@@ -37,7 +37,7 @@ def main():
             **sound_params
         ) as sound_process:
             sound_process.start()
-        
+
     except Exception as e:
         log.error(e)
         time.sleep(0.5)

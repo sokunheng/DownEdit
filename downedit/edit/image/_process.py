@@ -71,10 +71,7 @@ class ImageProcess(Process):
             " Grayscale Image"  : _grayscale_edit,
             " Sharpen Image"    : _sharpen_edit,
             " Blur Image"       : _blur_edit
-        }.get(
-            self._tool,
-            []
-        ))
+        })
 
     def _get_task(self) -> ImageTask:
         """

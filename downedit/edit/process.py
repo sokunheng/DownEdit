@@ -102,7 +102,8 @@ class Process:
                 operation_media=(
                     output_file_path,
                     f"{file_name}{file_extension}",
-                    file_size)
+                    file_size
+                )
             )
             return True
 

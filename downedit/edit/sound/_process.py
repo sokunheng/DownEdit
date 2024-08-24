@@ -55,10 +55,7 @@ class SoundProcess(Process):
             " Volume"   : _volume,
             " Fade In"  : _fade_in,
             " Fade Out" : _fade_out
-        }.get(
-            self._tool,
-            []
-        ))
+        })
 
     def _get_task(self) -> SoundTask:
         """

@@ -21,7 +21,7 @@ class VideoTask(Task):
     async def add_task(
         self,
         operation_function,
-        operation_video,
+        operation_media,
     ) -> None:
         """
         Adds a task to the queue and updates the progress bar.
@@ -32,7 +32,7 @@ class VideoTask(Task):
             output_suffix: The suffix to add to the edited video.
             output_folder: The folder to save the edited video.
         """
-        file_output, file_name, file_size = operation_video
+        file_output, file_name, file_size = operation_media
         units_done = (
             file_size
             if os.path.exists(file_output)

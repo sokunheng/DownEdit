@@ -67,10 +67,7 @@ class VideoProcess(Process):
             " Speed + Music"        : [_speed_edit, _add_music_edit],
             " Flip + Speed + Music" : [_flip_edit, _speed_edit, _add_music_edit],
             " Adjust Color"         : _adjust_color_edit
-        }.get(
-            self._tool,
-            []
-        ))
+        })
 
     def _get_task(self) -> VideoTask:
         """

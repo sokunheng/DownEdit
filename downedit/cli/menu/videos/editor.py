@@ -37,7 +37,7 @@ def main():
             folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
         )
         selected_tool = selector.select_menu(
-            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}", 
+            message=f"{Fore.YELLOW}Choose Tools{Fore.WHITE}",
             choices=available_tools
         )
         video_params = selector.get_tool_input(
@@ -65,7 +65,7 @@ def main():
                 threads=int(selected_threads),
                 preset=selected_presets
             )
-        
+
     except Exception as e:
         log.error(e)
         time.sleep(0.5)

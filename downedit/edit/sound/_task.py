@@ -22,7 +22,7 @@ class SoundTask(Task):
     async def add_task(
         self,
         operation_function,
-        operation_sound,
+        operation_media,
     ) -> None:
         """
         Adds a task to the queue and updates the progress bar.
@@ -33,7 +33,7 @@ class SoundTask(Task):
             output_suffix: The suffix to add to the edited sound.
             output_folder: The folder to save the edited sound.
         """
-        file_output, file_name, file_size = operation_sound
+        file_output, file_name, file_size = operation_media
         units_done = (
             file_size
             if os.path.exists(file_output)
