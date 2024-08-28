@@ -13,6 +13,13 @@ from .. import (
     EditFolder
 )
 
+class FileError(Exception):
+    """
+    Exception class for FileUtil errors
+    """
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+        self.message = message
 
 class FileUtil:
     """
@@ -41,7 +48,7 @@ class FileUtil:
                 - bool: False if the folder does not exist.
         """
         if not os.path.exists(folder_path):
-            raise Exception("No such directory!")
+            raise FileError("No such directory!")
         return folder_path
     
     @staticmethod
@@ -57,7 +64,7 @@ class FileUtil:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            raise Exception("Error Creating directory!")
+            raise FileError("Error Creating directory!")
     
     @classmethod
     def create_folder(cls, folder_type: str) -> str:
