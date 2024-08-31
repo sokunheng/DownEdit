@@ -10,7 +10,7 @@ from downedit.utils import (
     console,
     column
 )
-from downedit.utils.file_utils import (
+from downedit.utils import (
     FileUtil,
     log
 )
