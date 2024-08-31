@@ -134,6 +134,7 @@ class Downloader():
         )
 
         if os.path.exists(file_output):
+            log.critical(f"{file_name} already exists! Skipping...")
             return await self.task_progress.update_task(
                 task_id,
                 new_state="success"
