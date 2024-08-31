@@ -198,7 +198,6 @@ class Downloader():
                 new_total=int(content_length)
             )
 
-
             async with aiofiles.open(
                 file=file_output,
                 mode="wb"
