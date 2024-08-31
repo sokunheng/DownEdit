@@ -5,7 +5,7 @@ from typing import Any
 import aiofiles
 import httpx
 
-from downedit.service.client import Client
+from downedit.service import Client
 from downedit.utils import (
     console,
     column
