@@ -53,7 +53,7 @@ class Downloader():
 
     async def _get_content(
         self,
-        url: str,
+        content_url: str,
         headers: dict = ...,
         proxies: dict = ...
     ) -> int:
@@ -78,15 +78,28 @@ class Downloader():
             verify=False,
         ) as aclient:
             try:
-                response = await aclient.head(url, headers=headers, follow_redirects=True)
+                response = await aclient.head(
+                    url=content_url,
+                    headers=headers,
+                    follow_redirects=True
+                )
                 if int(response.headers.get("Content-Length", 0)) == 0:
-                    response = await aclient.get(url, headers=headers, follow_redirects=True)
+                    response = await aclient.get(
+                        url=content_url,
+                        headers=headers,
+                        follow_redirects=True
+                    )
                 response.raise_for_status()
 
             except httpx.HTTPStatusError as exc:
                 if exc.response.status_code in [405, 403, 401, 302]:
                     try:
-                        response = await aclient.get(url, headers=headers, follow_redirects=True, stream=True)
+                        response = await aclient.get(
+                            url=content_url,
+                            headers=headers,
+                            follow_redirects=True,
+                            stream=True
+                        )
                         response.raise_for_status()
                     except Exception as e:
                         log.error(e)
