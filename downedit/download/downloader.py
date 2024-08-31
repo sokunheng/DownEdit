@@ -118,7 +118,7 @@ class Downloader():
 
             return int(response.headers.get("Content-Length", 0))
 
-    async def start(
+    async def add_file(
         self,
         file_url: str,
         file_media: Any,
