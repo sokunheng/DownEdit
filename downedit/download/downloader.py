@@ -55,7 +55,7 @@ class Downloader():
         self,
         content_url: str,
         headers: dict = ...,
-        proxies: dict = ...
+        proxy_url: str = None
     ) -> int:
         """
         (Retrieve the Content-Length for a given URL)
@@ -68,10 +68,6 @@ class Downloader():
         Returns:
             int: (Value of Content-Length, or 0 if retrieval fails)
         """
-
-        proxies = proxies or {"all://": None}
-        proxy_url = proxies.get("http://") or proxies.get("https://") or proxies.get("all://")
-
         async with httpx.AsyncClient(
             timeout=10.0,
             transport=httpx.AsyncHTTPTransport(retries=5, proxy=proxy_url),

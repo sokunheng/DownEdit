@@ -2,6 +2,9 @@ import asyncio
 import httpx
 
 class Client:
+    """
+    Base class for creating an HTTP client.
+    """
     def __init__(
         self,
         proxies: dict = None,
@@ -18,26 +21,38 @@ class Client:
         self.max_connections = max_connections
         self.timeout = timeout
         self.max_retries = max_retries
-
         self.limits = httpx.Limits(max_connections=self.max_connections)
         self.timeout_config = httpx.Timeout(self.timeout)
-        self.transport = httpx.AsyncHTTPTransport(retries=self.max_retries)
+
+        self._aclient = None
+        self._client = None
 
     @property
     def aclient(self):
+        """
+        Property for the async client.
+
+        Returns:
+            httpx.AsyncClient: The async client.
+        """
         if self._aclient is None:
             self._aclient = httpx.AsyncClient(
                 headers=self.headers,
                 proxies=self.proxies,
                 verify=False,
                 timeout=self.timeout_config,
-                limits=self.limits,
-                transport=self.transport,
+                limits=self.limits
             )
         return self._aclient
 
     @property
     def client(self):
+        """
+        Property for the client.
+
+        Returns:
+            httpx.Client: The client
+        """
         if self._client is None:
             self._client = httpx.Client(
                 headers=self.headers,
@@ -45,11 +60,15 @@ class Client:
                 verify=False,
                 timeout=self.timeout_config,
                 limits=self.limits,
-                transport=self.transport,
             )
+        return self._client
 
     async def close(self):
-        await self.client.aclose()
+        """
+        Close the client.
+        """
+        if self._client: self.client.close()
+        if self._aclient: await self.aclient.aclose()
 
     async def __aenter__(self):
         """
@@ -61,4 +80,4 @@ class Client:
         """
         Close the client when exiting the context manager.
         """
-        await self.client.aclose()
+        self.aclose()
