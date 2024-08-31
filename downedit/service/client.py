@@ -1,20 +1,23 @@
 import asyncio
 import httpx
 
+from .proxy import Proxy
+from .headers import Headers
+
 class Client:
     """
     Base class for creating an HTTP client.
     """
     def __init__(
         self,
-        proxies: dict = None,
+        proxies: Proxy = None,
         max_retries: int = 5,
         max_connections: int = 10,
         timeout: int = 10,
         max_tasks: int = 10,
-        headers: dict = None,
+        headers: Headers = {}
     ):
-        self.proxies = proxies if proxies else {}
+        self.proxies = proxies if proxies else Proxy().get_proxy()
         self.headers = headers if headers else {}
         self.max_tasks = max_tasks
         self.semaphore = asyncio.Semaphore(max_tasks)
