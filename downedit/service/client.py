@@ -44,7 +44,8 @@ class Client:
                 proxies=self.proxies,
                 verify=False,
                 timeout=self.timeout_config,
-                limits=self.limits
+                limits=self.limits,
+                http2=True,
             )
         return self._aclient
 
