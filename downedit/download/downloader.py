@@ -8,9 +8,7 @@ import httpx
 from downedit.service import Client
 from downedit.utils import (
     console,
-    column
-)
-from downedit.utils import (
+    column,
     FileUtil,
     log
 )
