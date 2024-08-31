@@ -21,3 +21,4 @@ gdown
 wmi
 psutil
 httpx
+aiofiles
