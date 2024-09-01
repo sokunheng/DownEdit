@@ -225,7 +225,7 @@ class FileUtil:
     @staticmethod
     def get_file_list(
         directory,
-        extensions
+        extensions = None
     ):
         """
         This function filters a list of files and returns a new list containing only files with the specified extension.
@@ -240,7 +240,7 @@ class FileUtil:
         filtered_files = []
         for root, _, files in os.walk(directory):
             for file in files:
-                if file.lower().endswith(extensions):
+                if extensions is None or file.lower().endswith(extensions):
                     full_file_path = os.path.join(root, file)
                     filtered_files.append(full_file_path)
         return filtered_files

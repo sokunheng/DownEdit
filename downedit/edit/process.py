@@ -50,6 +50,14 @@ class Process:
         Gets the output folder path based on the tool and media type.
         """
         raise NotImplementedError
+    
+    def _get_output_files(self) -> List[str]:
+        """
+        Gets the list of output files based on the media type.
+        """
+        return FileUtil.get_file_list(
+            directory=self._output_folder
+        )
 
     def _init_operations(self, **kwargs) -> Handler:
         """
@@ -121,7 +129,6 @@ class Process:
         """
         Process the media files in the input folder asynchronously.
         """
-        proceed_count = 0
         start_time = time.time()
 
         for start_idx in range(0, len(self._input_folder), self.batch_size):
@@ -134,10 +141,8 @@ class Process:
             for media_path in batch:
                 if self.observer.is_termination_signaled():
                     break
-                if await self._process_media(media_path, **render_kwargs):
-                    proceed_count += 1
-                else:
-                    continue
+                await self._process_media(media_path, **render_kwargs)
+
             await self._task.execute()
             await self._task.close()
 
@@ -145,7 +150,7 @@ class Process:
 
         log.info(f"Processed: {elapsed_time:.2f} seconds.")
         log.file(f"Saved at [green]{self._output_folder}[/green]")
-        log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
+        log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")
         log.pause()
 
     def start(self, **render_kwargs):
