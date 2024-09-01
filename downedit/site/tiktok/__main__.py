@@ -4,7 +4,6 @@ import time
 
 from pystyle import *
 from colorama import *
-from .extractor import TikTokExtractor as tt_extractor
 
 
 def display_banner():
