@@ -110,8 +110,6 @@ class Process:
             )
             editor.output_path = output_file_path
 
-            await self._task.init_progress()
-
             # Add the task to the task queue
             await self._task.add_task(
                 operation_function= await editor.render(**render_kwargs),
@@ -132,6 +130,7 @@ class Process:
         Process the media files in the input folder asynchronously.
         """
         start_time = time.time()
+        proceed_count = 0
 
         for start_idx in range(0, len(self._input_folder), self.batch_size):
             if self.observer.is_termination_signaled():
@@ -143,7 +142,9 @@ class Process:
             for media_path in batch:
                 if self.observer.is_termination_signaled():
                     break
-                await self._process_media(media_path, **render_kwargs)
+                await self._task.init_progress()
+                if await self._process_media(media_path, **render_kwargs):
+                    proceed_count += 1
 
             await self._task.execute()
             await self._task.close()
@@ -152,7 +153,8 @@ class Process:
 
         log.info(f"Processed: {elapsed_time:.2f} seconds.")
         log.file(f"Saved at [green]{self._output_folder}[/green]")
-        log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")
+        log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
+        # log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")
         log.pause()
 
     def start(self, **render_kwargs):
