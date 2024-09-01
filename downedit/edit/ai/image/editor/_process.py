@@ -34,7 +34,7 @@ class AIImgEditProcess(Process):
         Gets the output folder path for edited images.
         """
         return FileUtil.folder_path(
-            folder_root=FileUtil.create_folder(folder_type="AI_Editor"),
+            folder_root=FileUtil.create_folder(folder_type="AI_Photo_Editor"),
             directory_name=tool
         )
 
@@ -65,6 +65,5 @@ class AIImgEditProcess(Process):
         Get the available image editing tools.
         """
         return {
-            " Remove Background"  : {},
-            " Back"               : {},
+            " Remove Background"  : {}
         }

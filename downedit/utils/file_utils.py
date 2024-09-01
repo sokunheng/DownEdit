@@ -72,7 +72,8 @@ class FileUtil:
         Creates a folder based on the specified type and returns its absolute path.
 
         Args:
-            folder_type (str): The type of folder to create (e.g., "EDITED_VIDEO").
+            folder_type (str): The type of folder to create.
+            - Options: "EDITED_VIDEO", "EDITED_IMG", "EDITED_SOUND", "AI_Photo_Gen", "AI_Photo_Editor"
 
         Returns:
             str: The absolute path of the created folder.
