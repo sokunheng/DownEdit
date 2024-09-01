@@ -83,7 +83,7 @@ class ImageProcess(Process):
         """
         Creates an ImageEditor object.
         """
-        return ImageEditor(media_path)
+        return ImageEditor(media_path).load()
 
     @staticmethod
     def get_tools() -> Dict[str, Dict[str, type]]:
