@@ -17,7 +17,13 @@ class VideoTask(Task):
         self.task_progress = console().progress_bar(
             column_config=column().edit()
         )
-    
+
+    async def init_progress(self):
+        """
+        Initializes the progress bar.
+        """
+        self.task_progress.start()
+
     async def add_task(
         self,
         operation_function,

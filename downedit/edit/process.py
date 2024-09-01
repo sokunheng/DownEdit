@@ -110,6 +110,8 @@ class Process:
             )
             editor.output_path = output_file_path
 
+            await self._task.init_progress()
+
             # Add the task to the task queue
             await self._task.add_task(
                 operation_function= await editor.render(**render_kwargs),

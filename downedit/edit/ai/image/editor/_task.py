@@ -12,12 +12,18 @@ class AIImageTask(Task):
     """
     Task to be performed on image editor based on the selected operation.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         self.img_tasks = []
         self.task_progress = console().progress_bar(
             column_config=column().edit()
         )
-    
+
+    async def init_progress(self):
+        """
+        Initializes the progress bar.
+        """
+        self.task_progress.start()
+
     async def add_task(
         self,
         operation_function,
@@ -60,7 +66,7 @@ class AIImageTask(Task):
                 )
             )
             self.img_tasks.append(edit_task)
-            
+
     async def task_wrapper(self, task_id, operation_function, completed):
         """
         Wrapper function for the task to be performed on the image editor.
@@ -76,7 +82,7 @@ class AIImageTask(Task):
             new_description="Done",
             new_state="success"
         )
-        
+
     async def execute(self):
         """
         Executes all queued image editing tasks concurrently.
