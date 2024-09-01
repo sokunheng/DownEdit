@@ -95,7 +95,7 @@ class ImageEditor(Editor):
         self._img.close()
         return self
     
-    def render(self):
+    async def render(self):
         """Renders the image."""
         self.save().close()
         return self

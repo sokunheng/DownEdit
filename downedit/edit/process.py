@@ -3,6 +3,7 @@ import time
 
 from typing import List
 
+from downedit.edit.ai.image.editor import AIImageOperation
 from downedit.edit.image import ImageOperation
 from downedit.edit.sound import SoundOperation
 from downedit.edit.video import VideoOperation
@@ -67,7 +68,12 @@ class Process:
         Builds and applies the operations to the editor.
         """
         operations = self._operations._get(self._tool)
-        if isinstance(operations, (ImageOperation, SoundOperation, VideoOperation)):
+        if isinstance(operations, (
+            ImageOperation,
+            SoundOperation,
+            VideoOperation,
+            AIImageOperation
+        )):
             output_suffix = operations.handle(editor, output_suffix)
         elif isinstance(operations, list):
             for operation in operations:
@@ -98,7 +104,7 @@ class Process:
 
             # Add the task to the task queue
             await self._task.add_task(
-                operation_function=lambda: editor.render(**render_kwargs),
+                operation_function= await editor.render(**render_kwargs),
                 operation_media=(
                     output_file_path,
                     f"{file_name}{file_extension}",

@@ -76,7 +76,7 @@ class VideoEditor(Editor):
         )
         return self
 
-    def render(
+    async def render(
         self, 
         threads: int = 1,
         preset: str = "medium"

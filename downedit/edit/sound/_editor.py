@@ -40,7 +40,7 @@ class SoundEditor(Editor):
         self.audio_clip = self.audio_clip.audio_fadeout(duration)
         return self
     
-    def render(
+    async def render(
         self
     ):
         """
