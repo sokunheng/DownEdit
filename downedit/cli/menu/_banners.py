@@ -176,7 +176,29 @@ _BANNERS: dict[
 }
 
 def get_banner(name: str):
-    """Returns the banner display and message for a given module."""
+    """
+    Returns the banner display and message for a given module.
+
+    Args:
+        name (str):
+            - `VIDEO_EDITOR`: Video editor module.
+            - `IMAGE_EDITOR`: Image editor module.
+            - `SOUND_EDITOR`: Sound editor module.
+            - `AI_VIDEO_EDITOR`: AI video editor module.
+            - `AI_IMAGE_EDITOR`: AI image editor module.
+            - `AI_SOUND_EDITOR`: AI sound editor module.
+            - `AI_VIDEO_GENERATOR`: AI video generator module.
+            - `AI_IMAGE_GENERATOR`: AI image generator module.
+            - `AI_SOUND_GENERATOR`: AI sound generator module.
+            - `VIDEO_DL`: Video downloader module.
+            - `TIKTOK_DL`: TikTok downloader module.
+            - `DOUYIN_DL`: Douyin downloader module.
+            - `KUAISHOU_DL`: Kuaishou downloader module.
+            - `YOUTUBE_DL`: Youtube downloader module.
+
+    Returns:
+        - Tuple[str, str]: The banner display and message.
+    """
     if name in _BANNERS:
         return _BANNERS[name]["display"], _BANNERS[name]["message"]
     else:

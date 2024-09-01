@@ -37,7 +37,7 @@ def main():
             **image_params
         ) as image_process:
             image_process.start()
-        
+
     except Exception as e:
         log.error(e)
         time.sleep(0.5)
