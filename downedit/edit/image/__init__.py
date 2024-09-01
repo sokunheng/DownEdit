@@ -14,7 +14,7 @@ class OperationFactory:
     @staticmethod
     def create(operation_name: str, **kwargs) -> ImageOperation:
         """
-        Creates a video editing operation based on the operation name and parameters.
+        Creates a image editing operation based on the operation name and parameters.
         """
         operations = {
             "flip"      : Flip,
