@@ -139,14 +139,16 @@ class Process:
             end_idx = min(start_idx + self.batch_size, len(self._input_folder))
             batch = self._input_folder[start_idx:end_idx]
 
+            await self._task.init_progress()
+
             for media_path in batch:
                 if self.observer.is_termination_signaled():
                     break
-                await self._task.init_progress()
                 if await self._process_media(media_path, **render_kwargs):
                     proceed_count += 1
 
             await self._task.execute()
+            await self._task.end_progress()
             await self._task.close()
 
         elapsed_time = time.time() - start_time

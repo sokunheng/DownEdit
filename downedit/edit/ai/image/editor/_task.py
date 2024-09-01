@@ -83,6 +83,12 @@ class AIImageTask(Task):
             new_state="success"
         )
 
+    async def end_progress(self):
+        """
+        Ends the progress bar.
+        """
+        self.task_progress.end()
+
     async def execute(self):
         """
         Executes all queued image editing tasks concurrently.

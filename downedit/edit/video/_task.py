@@ -66,23 +66,32 @@ class VideoTask(Task):
                 )
             )
             self.vid_tasks.append(edit_task)
-            
+
     async def task_wrapper(self, task_id, operation_function, completed):
         """
         Wrapper function for the task to be performed on the video editor.
         """
         await self.task_progress.update_task(
             task_id,
-            new_state="starting"
+            new_state="starting",
+            force_refresh=True
         )
         await asyncio.to_thread(operation_function)
         await self.task_progress.update_task(
             task_id=task_id,
             new_completed=completed,
             new_description="Done",
+            force_refresh=True,
+            still_visible=False,
             new_state="success"
         )
-        
+
+    async def end_progress(self):
+        """
+        Ends the progress bar.
+        """
+        self.task_progress.end()
+
     async def execute(self):
         """
         Executes all queued video editing tasks concurrently.

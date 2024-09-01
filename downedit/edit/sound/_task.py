@@ -67,7 +67,13 @@ class SoundTask(Task):
                 )
             )
             self.img_tasks.append(edit_task)
-            
+
+    async def end_progress(self):
+        """
+        Ends the progress bar.
+        """
+        self.task_progress.end()
+
     async def task_wrapper(self, task_id, operation_function, completed):
         """
         Wrapper function for the task to be performed on the sound editor.
