@@ -1,12 +1,11 @@
 pystyle
-requests 
+requests
 inquirer
 colorama
 moviepy
 rich
 requests-html
 playwright
-undetected-chromedriver
 beautifulsoup4
 numpy
 scikit-image

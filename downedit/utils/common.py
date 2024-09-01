@@ -6,6 +6,7 @@ from colorama import *
 from pystyle import *
 
 from .logger import log
+
 class Common:
 
     @staticmethod
@@ -29,7 +30,7 @@ class Common:
                 os.makedirs(dir_path)
                 return dir_path
             counter += 1
-            
+
     def check_folder_exist(folder):
         if not os.path.exists(folder):
             log.error("No such directory!")
