@@ -27,6 +27,7 @@ def display_banner():
     """
     banner_msg = """Use arrow key and enter to select the options"""
     return banner_display, banner_msg
+
 def display_menu():
     banner_display, banner_msg = display_banner()
     selector.display_banner(
