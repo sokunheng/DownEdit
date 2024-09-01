@@ -4,7 +4,6 @@ import time
 
 from pystyle import *
 from colorama import *
-from downedit.utils.common import *
 from .extractor import TikTokExtractor as tt_extractor
 
 
@@ -30,7 +29,7 @@ def main():
     user_selection = tool_selector.site_manual_select(banner_display, banner_msg)
 
     if user_selection == ' Single User':
-        tiktok_user = tool_selector.single_user_select(banner_display, "Example: tiktok")
+        tiktok_user = selector.single_user_select(banner_display, "Example: tiktok")
         
         if not tiktok_user: 
             logger.keybind("Press enter to continue...")
