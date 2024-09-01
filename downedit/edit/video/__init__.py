@@ -12,6 +12,17 @@ class OperationFactory:
     def create(operation_name: str, **kwargs) -> VideoOperation:
         """
         Creates a video editing operation based on the operation name and parameters.
+
+        Args:
+            operation_name (str):
+                - `flip`: Flip a video.
+                - `speed`: Change the speed of a video.
+                - `add_music`: Add music to a video.
+                - `loop`: Loop a video.
+                - `adjust_color`: Adjust the color of a video.
+
+        Returns:
+            VideoOperation: A video operation object.
         """
         operations = {
             "flip"        : Flip,

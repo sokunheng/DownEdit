@@ -15,6 +15,20 @@ class OperationFactory:
     def create(operation_name: str, **kwargs) -> ImageOperation:
         """
         Creates a image editing operation based on the operation name and parameters.
+
+        Args:
+            operation_name (str):
+                - `flip`: Flip an image.
+                - `crop`: Crop an image.
+                - `enhance`: Enhance an image.
+                - `rotate`: Rotate an image.
+                - `resize`: Resize an image.
+                - `grayscale`: Convert an image to grayscale.
+                - `sharpen`: Sharpen an image.
+                - `blur`: Blur an image.
+
+        Returns:
+            ImageOperation: An image operation object.
         """
         operations = {
             "flip"      : Flip,

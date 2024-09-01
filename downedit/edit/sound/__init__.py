@@ -10,6 +10,15 @@ class OperationFactory:
     def create(operation_name: str, **kwargs) -> SoundOperation:
         """
         Creates a video editing operation based on the operation name and parameters.
+
+        Args:
+            operation_name (str):
+                - `Volume`: Change the volume of a sound.
+                - `Fade In`: Fade in a sound.
+                - `Fade Out`: Fade out a sound.
+
+        Returns:
+            SoundOperation: A sound operation object.
         """
         operations = {
             "Volume"     : Volume,
