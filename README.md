@@ -4,7 +4,7 @@
 
 ![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
 
-<p>DownEdit is a powerful program that allows you to download videos from various social media platforms such as TikTok, Douyin, Kuaishou, and more. With DownEdit, you can easily download videos from user profiles and edit them in bulk. You have the option to flip the videos horizontally or vertically throughout the entire directory with just a single click. Stay tuned for more exciting features coming soon!</p>
+<p>DownEdit is a fast and powerful program for downloading and editing videos from top platforms like TikTok, Douyin, and Kuaishou. Effortlessly grab videos from user profiles, make bulk edits, throughout the entire directory with just one click. Plus, our advanced Chat & AI features let you download, edit, and generate videos, images, and sounds in bulk. Exciting new features are coming soon—stay tuned!</p>
 
 ## ✨ Preview
 <p align="center">
