@@ -21,9 +21,9 @@ class OperationFactory:
             SoundOperation: A sound operation object.
         """
         operations = {
-            "Volume"     : Volume,
-            "Fade In"    : FadeIn,
-            "Fade Out"   : FadeOut
+            "volume"     : Volume,
+            "fade in"    : FadeIn,
+            "fade out"   : FadeOut
         }
         operation_class = operations.get(operation_name.lower())
         if operation_class is None:
