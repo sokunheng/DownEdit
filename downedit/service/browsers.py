@@ -64,6 +64,8 @@ class Chrome():
             '125.0.6422': {'minor_range': (0, 255), 'webkit': '537.36'},
             '126.0.6478': {'minor_range': (0, 255), 'webkit': '537.36'},
             '127.0.6533': {'minor_range': (0, 255), 'webkit': '537.36'},
+            '128.0.6613': {'minor_range': (0, 255), 'webkit': '537.36'},
+            '129.0.6668': {'minor_range': (0, 255), 'webkit': '537.36'},
         }
 
 class Firefox():
@@ -135,7 +137,8 @@ class Firefox():
             '125.0': {'minor_range': (1, 3)},
             '126.0': {'minor_range': (0, 0)},
             '127.0': {'minor_range': (0, 2)},
-            '128.0': {'minor_range': (0, 2)},
+            '128.0': {'minor_range': (0, 1)},
+            '129.0': {'minor_range': (0, 0)},
         }
 
 class Edge():

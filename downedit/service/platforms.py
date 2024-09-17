@@ -208,6 +208,8 @@ class IOS():
             '17.3': {'minor_range': (0, 1)},
             '17.4': {'minor_range': (0, 1)},
             '17.5': {'minor_range': (0, 1)},
+            '17.6': {'minor_range': (0, 1)},
+            '18.0': {'minor_range': (0, 0)},
         }
 
 class macOS():
@@ -254,6 +256,8 @@ class macOS():
             '14.3': {'minor_range': (0, 1)},
             '14.4': {'minor_range': (0, 1)},
             '14.5': {'minor_range': (0, 0)},
+            '14.6': {'minor_range': (0, 1)},
+            '15.0': {'minor_range': (0, 0)},
         }
 
 class Linux():
