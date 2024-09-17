@@ -92,7 +92,7 @@ class ClientHints:
         browser_brands = brand_map.get(self.__user_agent.browser_type, [])
         browser_version = self.get_browser_version(full_version=full_version_list)
 
-        brands = [{'brand': 'Not)A;Brand', 'version': '99'}]
+        brands = [{'brand': 'Not)A;Brand', 'version': '99.0.0.0' if full_version_list else '99'}]
         for brand in browser_brands:
             brands.append({'brand': brand, 'version': browser_version})
 
