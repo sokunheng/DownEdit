@@ -8,6 +8,7 @@ from downedit.edit.image import ImageOperation
 from downedit.edit.sound import SoundOperation
 from downedit.edit.video import VideoOperation
 from downedit.edit.base import (
+    Editor,
     Handler,
     Task
 )
@@ -94,7 +95,7 @@ class Process:
         """
         try:
             # Create editor object (specific for each media type)
-            editor = self._create_editor(media_path)
+            editor: Editor = self._create_editor(media_path)
             output_suffix = self._build_and_apply_operations(editor, "")
 
             # Get file info for output file path construction
