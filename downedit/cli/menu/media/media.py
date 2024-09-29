@@ -2,10 +2,10 @@ import time
 from colorama import Fore
 
 from .. import get_banner
-from ....site.douyin import __main__ as douyin
-from ....site.kuaishou import __main__ as kuaishou
-from ....site.tiktok import __main__ as tiktok
-from ....utils import (
+from downedit.site.douyin import __main__ as douyin
+from downedit.site.kuaishou import __main__ as kuaishou
+from downedit.site.tiktok import __main__ as tiktok
+from downedit.utils import (
     log,
     selector
 )

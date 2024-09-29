@@ -1,13 +1,12 @@
-import os
+
 import time
-import gdown
 
 from pystyle import *
 from colorama import *
 
-from downedit.edit import AIImgEditProcess
 from .. import get_banner
-from ....utils import (
+from downedit.edit import AIImgEditProcess
+from downedit.utils import (
     FileUtil,
     log,
     selector

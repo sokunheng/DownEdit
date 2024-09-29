@@ -4,11 +4,11 @@ import time
 from colorama import Fore
 
 from .. import get_banner
-from ....utils.file_utils import FileUtil
-from ....edit import VideoProcess
-from ....utils import (
+from downedit.edit import VideoProcess
+from downedit.utils import (
     log,
-    selector
+    selector,
+    FileUtil
 )
 
 
