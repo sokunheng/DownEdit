@@ -3,7 +3,7 @@ import time
 
 from typing import List
 
-from downedit.edit.ai.image.editor import AIImageOperation
+from downedit.edit.ai.local.image.editor import AIImageOperation
 from downedit.edit.image import ImageOperation
 from downedit.edit.sound import SoundOperation
 from downedit.edit.video import VideoOperation

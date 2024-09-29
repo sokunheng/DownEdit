@@ -2,8 +2,8 @@ from typing import Dict, List
 
 from . import OperationFactory
 
-from downedit.edit.ai.image.editor._task import AIImageTask
-from downedit.edit.ai.image.editor._editor import AIImageEditor
+from downedit.edit.ai.local.image.editor._task import AIImageTask
+from downedit.edit.ai.local.image.editor._editor import AIImageEditor
 from downedit.__config__ import Extensions
 from downedit.utils import FileUtil
 from downedit.edit.base import Handler

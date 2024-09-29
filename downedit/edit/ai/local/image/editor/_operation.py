@@ -1,8 +1,9 @@
 
 from abc import ABC, abstractmethod
 
+from downedit.edit.base import Operation
 from ._editor import AIImageEditor
-from ....base import Operation
+
 
 class AIImageOperation(Operation, ABC):
     """
