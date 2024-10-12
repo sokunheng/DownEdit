@@ -81,22 +81,9 @@ class Sitius:
         Returns:
             str: The URL of the generated image.
         """
-        try:
-            job_id = await self.request_job()
-            if not job_id: return None
+        job_id = await self.request_job()
+        if not job_id: return None
 
-            image_url = await self.poll_status(job_id)
-            if not image_url: return None
-            return image_url
-
-        except (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.HTTPStatusError,
-            httpx.ProxyError,
-            httpx.UnsupportedProtocol,
-            httpx.StreamError,
-            Exception
-        ) as e:
-            log.error(f"Error during image generation: {e}")
-            return None
+        image_url = await self.poll_status(job_id)
+        if not image_url: return None
+        return image_url
