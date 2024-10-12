@@ -44,8 +44,9 @@ class Sitius:
                 response = await self.service.aclient.send(
                     request=content_request
                 )
+                
                 response.raise_for_status()
-                return response.json().get("job_id")
+                return response.json()
 
         except (
             httpx.TimeoutException,
