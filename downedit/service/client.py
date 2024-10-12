@@ -84,4 +84,4 @@ class Client:
         """
         Close the client when exiting the context manager.
         """
-        self.aclose()
+        await self.close()
