@@ -29,7 +29,7 @@ class Sitius:
             if not steps: self.context.load({"steps": 28})
             if not sampler: self.context.load({"sampler": "DPM++ 2M Karras"})
 
-            request_method = "GET"
+            request_method = "POST"
             request_headers = self.service.headers
             request_proxies = self.service.proxies
 
