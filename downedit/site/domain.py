@@ -59,6 +59,9 @@ class SITIUS_API:
 
     # Generate image
     GENERATE = f"{API}v1/generate/"
+    
+    # Get image
+    IMAGE = f"{API}v1/image/"
 
 
 class Domain:
