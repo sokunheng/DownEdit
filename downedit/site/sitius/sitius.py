@@ -29,12 +29,23 @@ class Sitius:
             if not steps: self.context.load({"steps": 28})
             if not sampler: self.context.load({"sampler": "DPM++ 2M Karras"})
 
-            response = await self.service.aclient.post(
-                url=Domain.SITIUS.GENERATE,
-                json=self.context.json(),
-            )
-            response.raise_for_status()
-            return response.json()
+            request_method = "GET"
+            request_headers = self.service.headers
+            request_proxies = self.service.proxies
+
+            async with self.service.semaphore:
+                content_request = self.service.aclient.build_request(
+                    method=request_method,
+                    url=Domain.SITIUS.GENERATE,
+                    headers=request_headers,
+                    timeout=self.service.timeout,
+                    json=self.context.json()
+                )
+                response = await self.service.aclient.send(
+                    request=content_request
+                )
+                response.raise_for_status()
+                return response.json().get("job_id")
 
         except (
             httpx.TimeoutException,
