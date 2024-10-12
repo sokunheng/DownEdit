@@ -67,7 +67,8 @@ class Sitius:
         for attempt in range(max_retries):
             try:
                 response = await self.service.aclient.get(
-                    f"{Domain.SITIUS.IMAGE}/{job_id}"
+                    url=f"{Domain.SITIUS.IMAGE}/{job_id}",
+                    follow_redirects=True
                 )
                 if response.status_code == 200:
                     return response.json()
