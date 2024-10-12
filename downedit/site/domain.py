@@ -11,6 +11,9 @@ class SITIUS_API:
     # Get available models
     MODELS = f"{API}v1/models/"
 
+    # Generate image
+    GENERATE = f"{API}v1/generate/"
+
 class Domain:
     """
     Provides access to different site domains.
