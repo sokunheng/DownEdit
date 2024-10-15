@@ -24,6 +24,7 @@ def display_menu():
         menu_options=available_tools,
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
     )
+
 def main():
     selector.run(
         display_menu
