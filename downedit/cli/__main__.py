@@ -4,12 +4,11 @@ from colorama       import Fore, Back
 
 from downedit                 import DE_VERSION
 from downedit.cli.menu.media  import media        as vid_dl
-# from downedit.cli.menu.images   import ai_generator as gen_img_ai
-from downedit.cli.menu.images   import ai_editor    as ai_img_editor
+from downedit.cli.menu.images import ai_generator as ai_img_gen
+from downedit.cli.menu.images import ai_editor    as ai_img_editor
 from downedit.cli.menu.images import editor       as image_editor
 from downedit.cli.menu.sounds import editor       as sound_editor
 from downedit.cli.menu.videos import editor       as video_editor
-
 from downedit.utils import (
     log,
     pc_info,
@@ -43,7 +42,7 @@ def display_menu():
         f" AI Edit Photo"                       : ai_img_editor.main,
         f" Edit Sound"                          : sound_editor.main,
         f" AI Edit Sound {Fore.RED}(Soon)"      : lambda: None,
-        f" AI-Generative Image {Fore.RED}(Rework)": lambda: None,
+        f" AI-Generative Image"                 : ai_img_gen.main,
         f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
         f" AI-Generative Music {Fore.RED}(Soon)": lambda: None,
         " Exit"                                 : lambda: sys.exit(0)
