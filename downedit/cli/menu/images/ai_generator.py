@@ -16,8 +16,8 @@ def main():
         banner_msg, "- ai generative"
     )
     available_tools = {
-        f" Cloud {Fore.RED}(Soon)" : lambda: None,
-        f" Local"                  : lambda: None,
+        f" Cloud"                  : lambda: None,
+        f" Local {Fore.RED}(Soon)" : lambda: None,
         f" Back"                   : lambda: None,
     }
     return selector.start(
