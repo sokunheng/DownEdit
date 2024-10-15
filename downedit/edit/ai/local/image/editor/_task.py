@@ -34,9 +34,7 @@ class AIImageTask(Task):
 
         Args:
             operation_function: The asynchronous function to perform the image edit.
-            operation_image: The identifier for the image.
-            output_suffix: The suffix to add to the edited image.
-            output_folder: The folder to save the edited image.
+            operation_media: The identifier for the image.
         """
         file_output, file_name, file_size = operation_media
         units_done = (
