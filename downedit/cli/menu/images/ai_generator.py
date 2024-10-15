@@ -9,7 +9,7 @@ from downedit.utils import (
     selector
 )
 
-def main():
+def display_menu():
     banner_display, banner_msg = get_banner("AI_IMAGE_GENERATOR")
     selector.display_banner(
         banner_display,
@@ -23,6 +23,10 @@ def main():
     return selector.start(
         menu_options=available_tools,
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
+    )
+def main():
+    selector.run(
+        display_menu
     )
 
 if __name__ == "__main__":
