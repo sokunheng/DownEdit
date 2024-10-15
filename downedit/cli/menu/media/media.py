@@ -10,32 +10,30 @@ from downedit.utils import (
     selector
 )
 
+def display_menu():
+    banner_display, banner_msg = get_banner("VIDEO_DL")
+    selector.display_banner(
+        banner_display,
+        banner_msg
+    )
+    # TODO: Media Video Downloader Algorithm
+    menu_list = {
+        " Tiktok": tiktok.main,
+        f" Douyin {Fore.RED}(Maintain)": lambda: None,
+        f" Kuaishou {Fore.RED}(Maintain)": lambda: None,
+        f" Youtube {Fore.RED}(Soon)": lambda: None,
+        " Back": lambda: None,
+    }
+
+    selector.start(
+        menu_options=menu_list,
+        input_message=f"{Fore.YELLOW}Select Media Platform{Fore.WHITE}"
+    )
+
 def main():
-    while selector.running:
-        try:
-            banner_display, banner_msg = get_banner("VIDEO_DL")
-            selector.display_banner(
-                banner_display,
-                banner_msg
-            )
-            # TODO: Media Video Downloader Algorithm
-            menu_list = {
-                " Tiktok": tiktok.main,
-                f" Douyin {Fore.RED}(Maintain)": lambda: None,
-                f" Kuaishou {Fore.RED}(Maintain)": lambda: None,
-                f" Youtube {Fore.RED}(Soon)": lambda: None,
-                " Back": lambda: None,
-            }
-
-            selector.start(
-                menu_options=menu_list,
-                input_message=f"{Fore.YELLOW}Select Media Platform{Fore.WHITE}"
-            )
-
-        except Exception as e:
-            log.error(str(e[:80]))
-            time.sleep(0.5)
-            log.pause()
+    selector.run(
+        display_menu
+    )
 
 
 if __name__ == "__main__":
