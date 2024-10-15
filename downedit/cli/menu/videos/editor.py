@@ -12,7 +12,7 @@ from downedit.utils import (
 )
 
 
-def display_menu():
+def main():
     max_cpu_cores = multiprocessing.cpu_count()
     banner_display, banner_msg = get_banner("VIDEO_EDITOR")
     selector.display_banner(banner_display, banner_msg, "- Video editor")
@@ -64,11 +64,6 @@ def display_menu():
             threads=int(selected_threads),
             preset=selected_presets
         )
-
-def main():
-    selector.run(
-        display_menu
-    )
 
 if __name__ == "__main__":
     main()

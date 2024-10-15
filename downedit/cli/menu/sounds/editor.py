@@ -11,7 +11,7 @@ from downedit.utils import (
 )
 
 
-def display_menu():
+def main():
     banner_display, banner_msg = get_banner("SOUND_EDITOR")
     selector.display_banner(banner_display, banner_msg, "- Sound editor")
     available_tools = SoundProcess.get_tools()
@@ -36,12 +36,6 @@ def display_menu():
         **sound_params
     ) as sound_process:
         sound_process.start()
-
-
-def main():
-    selector.run(
-        display_menu
-    )
 
 if __name__ == "__main__":
     main()
