@@ -3,7 +3,7 @@ import asyncio
 
 from downedit import AIContext
 from downedit.service import Client
-from downedit.site.domain import Domain
+from downedit.site import Domain
 from downedit.utils import (
     log
 )
