@@ -3,7 +3,7 @@ from typing import Dict, List
 from . import OperationFactory
 
 from ... import Extensions
-from ...utils.file_utils import FileUtil
+from ...utils.resource import ResourceUtil
 
 from downedit.edit.sound._editor import SoundEditor
 from downedit.edit.sound._task import SoundTask
@@ -30,7 +30,7 @@ class SoundProcess(Process):
         """
         Gets the list of input sound files.
         """
-        return FileUtil.get_file_list(
+        return ResourceUtil.get_file_list(
             directory=process_folder,
             extensions=Extensions.SOUND
         )
@@ -39,8 +39,8 @@ class SoundProcess(Process):
         """
         Gets the output folder path for edited sound files.
         """
-        return FileUtil.folder_path(
-            folder_root=FileUtil.create_folder(folder_type="EDITED_SOUND"),
+        return ResourceUtil.folder_path(
+            folder_root=ResourceUtil.create_folder(folder_type="EDITED_SOUND"),
             directory_name=tool
         )
 

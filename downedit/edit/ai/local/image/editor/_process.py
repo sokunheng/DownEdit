@@ -5,7 +5,7 @@ from . import OperationFactory
 from downedit.edit.ai.local.image.editor._task import AIImageTask
 from downedit.edit.ai.local.image.editor._editor import AIImageEditor
 from downedit.__config__ import Extensions
-from downedit.utils import FileUtil
+from downedit.utils import ResourceUtil
 from downedit.edit.base import Handler
 from downedit.edit.process import Process
 
@@ -24,7 +24,7 @@ class AIImgEditProcess(Process):
         """
         Gets the list of input images.
         """
-        return FileUtil.get_file_list(
+        return ResourceUtil.get_file_list(
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
@@ -33,8 +33,8 @@ class AIImgEditProcess(Process):
         """
         Gets the output folder path for edited images.
         """
-        return FileUtil.folder_path(
-            folder_root=FileUtil.create_folder(folder_type="AI_Photo_Editor"),
+        return ResourceUtil.folder_path(
+            folder_root=ResourceUtil.create_folder(folder_type="AI_Photo_Editor"),
             directory_name=tool
         )
 

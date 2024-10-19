@@ -3,7 +3,7 @@ from typing import Dict, List
 from . import OperationFactory
 
 from ... import Extensions
-from ...utils.file_utils import FileUtil
+from ...utils.resource import ResourceUtil
 
 from downedit.edit.image._editor import ImageEditor
 from downedit.edit.image._task import ImageTask
@@ -35,7 +35,7 @@ class ImageProcess(Process):
         """
         Gets the list of input images.
         """
-        return FileUtil.get_file_list(
+        return ResourceUtil.get_file_list(
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
@@ -44,8 +44,8 @@ class ImageProcess(Process):
         """
         Gets the output folder path for edited images.
         """
-        return FileUtil.folder_path(
-            folder_root=FileUtil.create_folder(folder_type="EDITED_IMG"),
+        return ResourceUtil.folder_path(
+            folder_root=ResourceUtil.create_folder(folder_type="EDITED_IMG"),
             directory_name=tool
         )
 

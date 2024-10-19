@@ -13,21 +13,21 @@ from .. import (
     EditFolder
 )
 
-class FileError(Exception):
+class ResourceError(Exception):
     """
-    Exception class for FileUtil errors
+    Exception class for ResourceUtil errors
     """
     def __init__(self, message: str) -> None:
         super().__init__(message)
         self.message = message
 
-class FileUtil:
+class ResourceUtil:
     """
     A class that provides utility functions for managing files.
     """
     def __init__(self, folder_root: str = ".") -> None:
         """
-        Initializes the FileUtil object with the specified folder path.
+        Initializes the ResourceUtil object with the specified folder path.
 
         Args:
             folder_path (str): The base folder path for file operations.
@@ -48,7 +48,7 @@ class FileUtil:
                 - bool: False if the folder does not exist.
         """
         if not os.path.exists(folder_path):
-            raise FileError("No such directory!")
+            raise ResourceError("No such directory!")
         return folder_path
     
     @staticmethod

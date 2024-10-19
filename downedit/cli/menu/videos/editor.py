@@ -8,7 +8,7 @@ from downedit.edit import VideoProcess
 from downedit.utils import (
     log,
     selector,
-    FileUtil
+    ResourceUtil
 )
 
 
@@ -32,7 +32,7 @@ def main():
             max_cpu_cores + 1
         )
     ]
-    user_folder = FileUtil.validate_folder(
+    user_folder = ResourceUtil.validate_folder(
         folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
     )
     selected_tool = selector.select_menu(

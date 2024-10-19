@@ -9,7 +9,7 @@ from downedit.service import Client
 from downedit.utils import (
     console,
     column,
-    FileUtil,
+    ResourceUtil,
     log
 )
 
@@ -129,12 +129,12 @@ class Downloader():
         start_step, _, _ = service_step
         task_id = await self.task_progress.add_task(
             description=start_step,
-            file_name=FileUtil.trim_filename(file_name, 40).ljust(40),
+            file_name=ResourceUtil.trim_filename(file_name, 40).ljust(40),
             current_state="idle"
         )
 
         if os.path.exists(file_output):
-            log.critical(f"{FileUtil.trim_filename(file_name, 40)} already exists! Skipping...")
+            log.critical(f"{ResourceUtil.trim_filename(file_name, 40)} already exists! Skipping...")
             return await self.task_progress.update_task(
                 task_id,
                 new_state="success"

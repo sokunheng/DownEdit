@@ -7,7 +7,7 @@ from downedit.edit import ImageProcess
 from downedit.utils import (
     log,
     selector,
-    FileUtil
+    ResourceUtil
 )
 
 
@@ -15,7 +15,7 @@ def main():
     banner_display, banner_msg = get_banner("IMAGE_EDITOR")
     selector.display_banner(banner_display, banner_msg, "- Photo editor")
     available_tools = ImageProcess.get_tools()
-    user_folder = FileUtil.validate_folder(
+    user_folder = ResourceUtil.validate_folder(
         folder_path=input(f"{Fore.YELLOW}Enter folder:{Fore.WHITE} ")
     )
     selected_tool = selector.select_menu(

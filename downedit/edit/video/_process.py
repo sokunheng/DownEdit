@@ -3,7 +3,7 @@ from typing import Dict, List
 from . import OperationFactory
 
 from ... import Extensions
-from ...utils.file_utils import FileUtil
+from ...utils.resource import ResourceUtil
 
 from downedit.edit.video._editor import VideoEditor
 from downedit.edit.video._task import VideoTask
@@ -29,7 +29,7 @@ class VideoProcess(Process):
         """
         Gets the list of input video files.
         """
-        return FileUtil.get_file_list(
+        return ResourceUtil.get_file_list(
             directory=process_folder,
             extensions=Extensions.VIDEO
         )
@@ -38,8 +38,8 @@ class VideoProcess(Process):
         """
         Gets the output folder path for edited video files.
         """
-        return FileUtil.folder_path(
-            folder_root=FileUtil.create_folder(folder_type="EDITED_VIDEO"),
+        return ResourceUtil.folder_path(
+            folder_root=ResourceUtil.create_folder(folder_type="EDITED_VIDEO"),
             directory_name=tool
         )
 

@@ -14,7 +14,7 @@ from downedit.edit.base import (
 )
 from downedit.utils import (
     Observer,
-    FileUtil,
+    ResourceUtil,
     log
 )
 
@@ -56,7 +56,7 @@ class Process:
         """
         Gets the list of output files based on the media type.
         """
-        return FileUtil.get_file_list(
+        return ResourceUtil.get_file_list(
             directory=self._output_folder
         )
 
@@ -99,12 +99,12 @@ class Process:
             output_suffix = self._build_and_apply_operations(editor, "")
 
             # Get file info for output file path construction
-            file_info = FileUtil.get_file_info(media_path)
+            file_info = ResourceUtil.get_file_info(media_path)
             file_name, file_extension, file_size = file_info
 
             # Construct the output file path
             full_file = f"{file_name}{output_suffix}"
-            output_file_path = FileUtil.get_output_file(
+            output_file_path = ResourceUtil.get_output_file(
                 self._output_folder,
                 full_file,
                 file_extension
