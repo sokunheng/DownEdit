@@ -53,7 +53,7 @@ class Downloader():
         self,
         content_url: str,
         headers: dict = ...,
-        proxy_url: str = None
+        proxy_url: dict = ...
     ) -> int:
         """
         (Retrieve the Content-Length for a given URL)
