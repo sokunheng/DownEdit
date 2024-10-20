@@ -1,8 +1,7 @@
 
 import time
 
-from pystyle import *
-from colorama import *
+from colorama import Fore
 
 from .. import get_banner
 from downedit.edit import AIImgEditProcess

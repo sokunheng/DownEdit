@@ -28,6 +28,7 @@ class Sitius:
             if not cfg_scale: self.context.load({"cfg_scale": 7})
             if not steps: self.context.load({"steps": 28})
             if not sampler: self.context.load({"sampler": "DPM++ 2M Karras"})
+            if not self.service.headers.get("auth"): self.service.headers.update({"auth": "test"})
 
             request_method = "POST"
             request_headers = self.service.headers

@@ -66,6 +66,8 @@ class Downloader():
         Returns:
             int: (Value of Content-Length, or 0 if retrieval fails)
         """
+        if isinstance(proxy_url, dict): proxy_url = proxy_url.get("url")
+
         async with httpx.AsyncClient(
             timeout=10.0,
             transport=httpx.AsyncHTTPTransport(retries=5, proxy=proxy_url),
