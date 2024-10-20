@@ -10,7 +10,6 @@ class Proxy:
         Args:
             proxies (dict): A dictionary of proxy settings.
         """
-
         self.proxies = proxies or {"all://": None}
 
     def get_proxy(self, scheme: str) -> str:
@@ -25,11 +24,16 @@ class Proxy:
         """
         return self.proxies.get(f"{scheme}://") or self.proxies.get("all://")
 
-    def set_proxies(self, proxies: dict) -> None:
+    def to_httpx_format(self) -> dict:
         """
-        Sets or updates the proxy settings.
+        Converts the proxy settings to the format expected by httpx.
 
-        Args:
-            proxies (dict): A dictionary of proxy settings.
+        Returns:
+            dict: A dictionary of proxies formatted for httpx.
         """
-        self.proxies = proxies
+        formatted_proxies = {
+            key.replace("all", "http"): value for key, value in self.proxies.items()
+        }
+        if "all://" in self.proxies:
+            formatted_proxies["https"] = self.proxies["all://"]
+        return formatted_proxies

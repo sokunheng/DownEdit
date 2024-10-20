@@ -107,3 +107,17 @@ class Headers(metaclass=Singleton):
         if not self._is_generated:
             self._reset_headers()
         return self._headers
+
+    def get_value(self, key: str) -> str:
+        """
+        Get a specific header by key.
+
+        Args:
+            key (str): The header key to retrieve.
+
+        Returns:
+            str: The value of the header if it exists, otherwise None.
+        """
+        if not self._is_generated:
+            self._reset_headers()
+        return self._headers.get(key, None)

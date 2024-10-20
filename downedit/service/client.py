@@ -17,7 +17,7 @@ class Client:
         max_tasks: int = 10,
         headers: Headers = {}
     ):
-        self.proxies = proxies if proxies else Proxy().get_proxy()
+        self.proxies = proxies.to_httpx_format() if proxies else {}
         self.headers = headers if headers else {}
         self.max_tasks = max_tasks
         self.semaphore = asyncio.Semaphore(max_tasks)
@@ -41,11 +41,10 @@ class Client:
         if self._aclient is None:
             self._aclient = httpx.AsyncClient(
                 headers=self.headers,
-                proxies=self.proxies,
                 verify=False,
                 timeout=self.timeout_config,
                 limits=self.limits,
-                http2=True,
+                # http2=True,
             )
         return self._aclient
 
