@@ -64,7 +64,7 @@ class ResourceUtil:
                 os.makedirs(abs_path)
             return abs_path
         except Exception as e:
-            raise FileError("Error Creating directory!")
+            raise ResourceError("Error Creating directory!")
     
     @classmethod
     def create_folder(cls, folder_type: str) -> str:
