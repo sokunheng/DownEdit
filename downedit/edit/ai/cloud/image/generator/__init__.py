@@ -10,7 +10,6 @@ class OperationFactory:
 
         Args:
             operation_name (str):
-                - `sitius`: Generate an image using the Sitius API.
 
         Returns:
             AIImgGenOperation: The image generation operation instance.

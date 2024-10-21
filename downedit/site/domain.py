@@ -45,29 +45,9 @@ class Tiktok_API:
     POST_SEARCH = f"{TIKTOK_DOMAIN}/api/search/item/full/"
 
 
-class SITIUS_API:
-    """
-    Contains the base API URL for SITIUS services.
-    """
-    API = "https://api.sitius.ir/"
-
-    # Get available samplers
-    SAMPLERS = f"{API}v1/samplers/"
-
-    # Get available models
-    MODELS = f"{API}v1/models/"
-
-    # Generate image
-    GENERATE = f"{API}v1/generate/"
-
-    # Get image
-    IMAGE = f"{API}v1/image/"
-
-
 class Domain:
     """
     Provides access to different site domains.
     """
-    SITIUS = SITIUS_API()
     TIKTOK = Tiktok_API()
     KUAI_SHOU = KauiShou_API()

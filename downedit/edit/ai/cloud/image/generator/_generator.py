@@ -1,5 +1,4 @@
 from downedit         import AIContext
-from downedit.site import Sitius
 from downedit.service import (
     Client,
     ClientHints,
