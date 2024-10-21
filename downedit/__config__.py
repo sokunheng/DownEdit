@@ -88,11 +88,11 @@ class AIContext:
         """
         AIContext.DEFAULT.update(default_data)
 
-    def reset(self):
+    def reset(self, new_config=None):
         """
-        Reset the config to the default settings.
+        Reset the config to the default settings or to new provided settings.
         """
-        self.config_data = AIContext.DEFAULT.copy()
+        self.config_data = new_config or AIContext.DEFAULT.copy()
 
     def json(self):
         """
