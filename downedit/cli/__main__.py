@@ -4,8 +4,8 @@ from colorama       import Fore, Back
 
 from downedit                 import DE_VERSION
 from downedit.cli.menu.media  import media        as vid_dl
-from downedit.cli.menu.images import ai_generator as ai_img_gen
-from downedit.cli.menu.images import ai_editor    as ai_img_editor
+from downedit.cli.menu.images import ai_gen_image as ai_img_gen
+from downedit.cli.menu.images import ai_edit_image    as ai_img_editor
 from downedit.cli.menu.images import editor       as image_editor
 from downedit.cli.menu.sounds import editor       as sound_editor
 from downedit.cli.menu.videos import editor       as video_editor
