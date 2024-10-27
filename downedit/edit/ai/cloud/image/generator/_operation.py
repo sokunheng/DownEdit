@@ -29,3 +29,17 @@ class AIImgGenOperation(Operation, ABC):
             _img_url,
             output_suffix + self.suffix
         )
+
+class AIImgGenAPI(AIImgGenOperation):
+    """
+    Abstract class for ai image operations that use an API.
+    """
+    def __init__(self):
+        super().__init__(
+            name="DownEdit Provider",
+            function=self._run,
+            suffix="_ai_gen"
+        )
+
+    def _run(self, gen: AIImgGenerator):
+        gen.generate()

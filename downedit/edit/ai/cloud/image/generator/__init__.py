@@ -1,4 +1,5 @@
 from ._operation import (
+    AIImgGenAPI,
     AIImgGenOperation,
 )
 
@@ -15,7 +16,7 @@ class OperationFactory:
             AIImgGenOperation: The image generation operation instance.
         """
         operations = {
-            "testew321"
+            "ai_img_gen": AIImgGenAPI
         }
         operation_class = operations.get(operation_name.lower())
         if operation_class is None:
