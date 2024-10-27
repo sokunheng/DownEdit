@@ -24,10 +24,10 @@ class AIImgGenOperation(Operation, ABC):
         Returns:
             str: The updated output suffix.
         """
-        _img_url = await self._run(gen)
+        _img_name, _img_url = await self._run(gen)
         return (
             _img_url,
-            output_suffix + self.suffix
+            f"{_img_name}{output_suffix}{self.suffix}"
         )
 
 class AIImgGenAPI(AIImgGenOperation):
@@ -42,4 +42,4 @@ class AIImgGenAPI(AIImgGenOperation):
         )
 
     async def _run(self, gen: AIImgGenerator):
-        await gen.generate()
+        return await gen.generate()

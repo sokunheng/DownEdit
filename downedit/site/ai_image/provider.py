@@ -1,7 +1,8 @@
 import httpx
 import asyncio
+import random
 
-from random import random as uniform
+from random import uniform
 from playwright.async_api import async_playwright
 
 from downedit import AIContext
@@ -295,7 +296,10 @@ class PerchanceCC:
                     )
 
                 if response.status_code == 200:
-                    return response.json()
+                    fileResponse = response.json()
+                    fileId = fileResponse.get("fileId")
+                    fileUrl = fileResponse.get("url")
+                    return (fileId, fileUrl)
                 else:
                     await asyncio.sleep(1)
 
@@ -362,7 +366,10 @@ class AIGG:
                     )
 
                 if response.status_code == 200:
-                    return response.json()
+                    fileResponse = response.json()
+                    fileId = fileResponse.get("fileId")
+                    fileUrl = fileResponse.get("url")
+                    return (fileId, fileUrl)
                 else:
                     await asyncio.sleep(1)
 
@@ -392,15 +399,14 @@ class DE_AI_GENERATOR:
         Returns a list of AI image providers.
         """
         provider_classes = [PerchanceCC, AIGG]
-        selected_provider = uniform.choice(provider_classes)
+        selected_provider = random.choice(provider_classes)
 
         prov_arg = {}
         prov_arg["key"] = "RANDOM"
         prov_arg["size"] = self.context.get("size", "512x512")
         prov_arg["prompt"] = self.context.get("prompt")
-        prov_arg["negativePrompt"] = self.context.get("negative_prompt")
+        prov_arg["negativePrompt"] = self.context.get("negativePrompt")
         self.context.reset(prov_arg)
-
         return selected_provider(self.service, self.context)
 
     async def generate(self):

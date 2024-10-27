@@ -30,17 +30,16 @@ class AIImgGenerator:
             sec-ch-ua-model,
             sec-ch-ua-wow64
         """)
-        self.provider = self._init()
-
-    async def _init(self):
-        """
-        Initialize the AI image generator.
-        """
-        async with Client(self.headers) as client:
-            return DE_AI_GENERATOR(client, self.ai_context)
 
     async def generate(self):
         """
         Generate an image.
         """
-        return await self.provider.generate()
+        prov_arg = {}
+        prov_arg["size"] = self.user_context.get("size", "512x512")
+        prov_arg["prompt"] = self.user_context.get("prompt")
+        prov_arg["negativePrompt"] = self.ai_context.get("negative_prompt")
+        self.ai_context.reset(prov_arg)
+
+        async with Client(headers=self.headers.get()) as client:
+            return await DE_AI_GENERATOR(client, self.ai_context).generate()

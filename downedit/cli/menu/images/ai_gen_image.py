@@ -14,12 +14,23 @@ def cloud_ai_generator():
     user_prompt = input(
         f"{Fore.YELLOW}Enter prompt:{Fore.WHITE} "
     )
+    image_sizes = {
+        " 512x512": "512x512",
+        " 512x768": "512x768",
+        " 768x512": "768x512",
+    }
+    selected_size = selector.select_menu(
+        message=f"{Fore.YELLOW}Image Size{Fore.WHITE}",
+        choices=image_sizes
+    ).strip()
     image_amounts = input(
         f"{Fore.YELLOW}Enter amount of images (Max: 99):{Fore.WHITE} "
     )
     with AIImgGenProcess(
-        prompt=user_prompt,
-        context={},
+        context={
+            "prompt": user_prompt,
+            "size": selected_size
+        },
         amount= min(int(image_amounts) if image_amounts.isdigit() else 1, 99),
         batch_size=5,
         **{}

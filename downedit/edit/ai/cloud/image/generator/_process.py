@@ -17,13 +17,11 @@ from downedit.utils import (
 class AIImgGenProcess:
     def __init__(
         self,
-        prompt: str,
         context: dict,
         amount: int,
         batch_size: int = 5,
         **kwargs
     ):
-        self.prompt = prompt
         self.context = context
         self.amount = amount
         self.batch_size = batch_size
@@ -103,7 +101,6 @@ class AIImgGenProcess:
         """
         Creates an ImageEditor object.
         """
-        _context["prompt"] = self.prompt
         return AIImgGenerator(_provider, _context)
 
     async def start_async(self, **ai_kwargs):
