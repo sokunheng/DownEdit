@@ -1,3 +1,56 @@
+class Perchance_API:
+    """
+    Contains the base API URL for Perchance services.
+    """
+
+    # Perchance Domain
+    PERCHANCE_DOMAIN = "https://perchance.org"
+
+    PERCHANCE_CC =  "https://perchanceai.cc"
+
+    # Perchance API
+    PERCHANCE_API = "https://image-generation.perchance.org"
+
+    # Get Access Code
+    ACCESS_CODE = f"{PERCHANCE_DOMAIN}/api/getAccessCodeForAdPoweredStuff"
+
+    # Check Verification Status
+    CHECK_VERYIFY = f"{PERCHANCE_API}/api/checkVerificationStatus"
+
+    # User Verify
+    USER_VERIFY = f"{PERCHANCE_API}/api/verifyUser"
+
+    # Turnstile
+    EMBED_TURNSTILE = f"{PERCHANCE_API}//embed"
+
+    # Download Image
+    DOWNLOAD_IMAGE = f"{PERCHANCE_API}/api/downloadTemporaryImage"
+
+    # Generate Image
+    GENERATE_IMAGE = f"{PERCHANCE_API}/api/generate"
+
+    PREDICT = f"{PERCHANCE_CC}/api/model/predict/v1"
+
+    # Text to Image
+    TEXT_TO_IMAGE = f"{PERCHANCE_API}/textToImage"
+
+
+class AIGG_API:
+    """
+    Contains the base API URL for Downedit services.
+    """
+    DOMAIN = "https://aiimagegenerator.io"
+
+    GENERATE_IMAGE = f"{DOMAIN}/api/model/predict-peach"
+
+
+class AI_Image_API:
+    """
+    Contains the base API URL for AI Image services.
+    """
+    PERCHANCE = Perchance_API()
+    AIGG = AIGG_API()
+
 
 class KauiShou_API:
     """
@@ -49,5 +102,6 @@ class Domain:
     """
     Provides access to different site domains.
     """
+    AI_IMAGE = AI_Image_API()
     TIKTOK = Tiktok_API()
     KUAI_SHOU = KauiShou_API()
