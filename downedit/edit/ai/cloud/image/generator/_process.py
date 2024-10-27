@@ -47,6 +47,7 @@ class AIImgGenProcess:
         Initializes the AI image generator provider.
         """
         return Handler({
+            "ai_img_gen": OperationFactory.create("ai_img_gen", **kwargs)
         })
 
     def _get_task(self) -> AIImgGenTask:
@@ -65,7 +66,7 @@ class AIImgGenProcess:
         Returns:
             str: The updated output suffix.
         """
-        providers = self._provider._get("")
+        providers = self._provider._get("ai_img_gen")
         if isinstance(providers, AIImgGenOperation):
             img_url, output_suffix = await providers.handle(generator, output_suffix)
         elif isinstance(providers, list):

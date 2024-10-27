@@ -19,8 +19,8 @@ class AIImgGenTask(Task):
     """
     def __init__(self) -> None:
         self.user_agent = UserAgent(
-            platform_type='desktop',
-            device_type='windows',
+            platform_type='mobile',
+            device_type='android',
             browser_type='chrome'
         )
         self.client_hints = ClientHints(self.user_agent)
