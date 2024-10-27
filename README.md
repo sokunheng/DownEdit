@@ -138,7 +138,7 @@ Tips: If you still getting error, try changing your Browser, use Incognito/Priva
 </details>
 
 ## 🔎 Requirements
-- Python 3.8 or better
+- Python version must be between 3.8 and 3.12.
 
 ## ⚙ Installation 
 Step 1. Download and install [python](https://www.python.org/downloads/) on your pc.
