@@ -15,7 +15,7 @@ class OperationFactory:
             AIImgGenOperation: The image generation operation instance.
         """
         operations = {
-            "test2"
+            "test21"
         }
         operation_class = operations.get(operation_name.lower())
         if operation_class is None:
