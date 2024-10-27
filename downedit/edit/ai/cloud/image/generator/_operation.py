@@ -41,5 +41,5 @@ class AIImgGenAPI(AIImgGenOperation):
             suffix="_ai_gen"
         )
 
-    def _run(self, gen: AIImgGenerator):
-        gen.generate()
+    async def _run(self, gen: AIImgGenerator):
+        await gen.generate()
