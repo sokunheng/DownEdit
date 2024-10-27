@@ -298,7 +298,6 @@ class PerchanceCC:
                     return response.json()
                 else:
                     await asyncio.sleep(1)
-                    await self.refresh_key()
 
             except (
                 httpx.TimeoutException,
@@ -366,7 +365,6 @@ class AIGG:
                     return response.json()
                 else:
                     await asyncio.sleep(1)
-                    await self.refresh_key()
 
             except (
                 httpx.TimeoutException,
