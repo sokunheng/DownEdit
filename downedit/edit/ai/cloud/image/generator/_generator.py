@@ -1,3 +1,4 @@
+from downedit.site    import DE_AI_GENERATOR
 from downedit         import AIContext
 from downedit.service import (
     Client,
@@ -11,10 +12,9 @@ class AIImgGenerator:
     def __init__(self, provider, context: str):
         self.user_context = context
         self.ai_context = AIContext()
-        self.provider = provider
         self.user_agent = UserAgent(
-            platform_type='desktop',
-            device_type='windows',
+            platform_type='mobile',
+            device_type='android',
             browser_type='chrome'
         )
         self.client_hints = ClientHints(self.user_agent)
@@ -30,3 +30,17 @@ class AIImgGenerator:
             sec-ch-ua-model,
             sec-ch-ua-wow64
         """)
+        self.provider = self._init()
+
+    async def _init(self):
+        """
+        Initialize the AI image generator.
+        """
+        async with Client(self.headers) as client:
+            return DE_AI_GENERATOR(client, self.ai_context)
+
+    async def generate(self):
+        """
+        Generate an image.
+        """
+        return await self.provider.generate()
