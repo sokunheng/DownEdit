@@ -292,16 +292,16 @@ class PerchanceCC:
                         json=self.context.json()
                     )
                     response = await self.service.aclient.send(
-                        request=content_request
+                        request=content_request,
+                        follow_redirects=True
                     )
 
-                if response.status_code == 200:
-                    fileResponse = response.json()
-                    fileId = fileResponse.get("fileId")
-                    fileUrl = fileResponse.get("url")
-                    return (fileId, fileUrl)
-                else:
-                    await asyncio.sleep(1)
+                    if not response.text.strip() or not response.content:
+                        await asyncio.sleep(0.5)
+                        continue
+
+                    response.raise_for_status()
+                    return response.json()
 
             except (
                 httpx.TimeoutException,
@@ -362,16 +362,16 @@ class AIGG:
                     )
 
                     response = await self.service.aclient.send(
-                        request=content_request
+                        request=content_request,
+                        follow_redirects=True
                     )
 
-                if response.status_code == 200:
-                    fileResponse = response.json()
-                    fileId = fileResponse.get("fileId")
-                    fileUrl = fileResponse.get("url")
-                    return (fileId, fileUrl)
-                else:
-                    await asyncio.sleep(1)
+                    if not response.text.strip() or not response.content:
+                        await asyncio.sleep(0.5)
+                        continue
+
+                    response.raise_for_status()
+                    return response.json()
 
             except (
                 httpx.TimeoutException,

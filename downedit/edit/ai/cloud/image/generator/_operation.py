@@ -42,4 +42,11 @@ class AIImgGenAPI(AIImgGenOperation):
         )
 
     async def _run(self, gen: AIImgGenerator):
-        return await gen.generate()
+        fileInfo = await gen.generate()
+        fileData = fileInfo.get("data")
+        fileId = fileData.get("fileId")
+        fileUrl = fileData.get("url")
+        return (
+            f"{fileId}",
+            fileUrl
+        )
