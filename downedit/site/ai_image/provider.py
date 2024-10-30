@@ -7,6 +7,7 @@ from playwright.async_api import async_playwright
 
 from downedit import AIContext
 from downedit.service import Client
+from downedit.service import retry
 from downedit.site import Domain
 from downedit.utils import (
     log
@@ -212,6 +213,17 @@ class Perchance:
         ) as e:
             return False
 
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol, httpx.StreamError
+        )
+    )
     async def generate(self):
         """
         Generates an image using the Perchance API.
@@ -221,45 +233,29 @@ class Perchance:
         if not self.context.get("adAccessCode"):
             await self._get_ad_access_code()
 
-        for _ in range(3):
-            try:
+        self.context.set("requestId", uniform())
+        self.context.set("__cacheBust", uniform())
 
-                self.context.set("requestId", uniform())
-                self.context.set("__cacheBust", uniform())
+        request_method = "POST"
+        request_headers = self.service.headers
+        request_proxies = self.service.proxies
 
-                request_method = "POST"
-                request_headers = self.service.headers
-                request_proxies = self.service.proxies
+        async with self.service.semaphore:
+            content_request = self.service.aclient.build_request(
+                method=request_method,
+                url=Domain.AI_IMAGE.PERCHANCE.GENERATE_IMAGE,
+                headers=request_headers,
+                timeout=self.service.timeout,
+                json=self.context.json()
+            )
+            response = await self.service.aclient.send(
+                request=content_request
+            )
 
-                async with self.service.semaphore:
-                    content_request = self.service.aclient.build_request(
-                        method=request_method,
-                        url=Domain.AI_IMAGE.PERCHANCE.GENERATE_IMAGE,
-                        headers=request_headers,
-                        timeout=self.service.timeout,
-                        json=self.context.json()
-                    )
-                    response = await self.service.aclient.send(
-                        request=content_request
-                    )
-
-                if response.status_code == 200:
-                    return response.json()
-                else:
-                    await asyncio.sleep(1)
-                    await self.refresh_key()
-
-            except (
-                httpx.TimeoutException,
-                httpx.NetworkError,
-                httpx.HTTPStatusError,
-                httpx.ProxyError,
-                httpx.UnsupportedProtocol,
-                httpx.StreamError,
-                Exception
-            ) as e:
-                print(f"Error during job request: {e}")
-                return None
+        if response.status_code == 200:
+            return response.json()
+        else:
+            await self.refresh_key()
 
 
 class PerchanceCC:
@@ -271,48 +267,44 @@ class PerchanceCC:
         self.service = service
         self.context = context
 
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError
+    ))
     async def generate(self):
         """
         Generates an image using the Perchance API.
         """
-        for _ in range(3):
-            try:
+        request_method = "POST"
+        request_headers = self.service.headers
+        request_proxies = self.service.proxies
+        self.service.timeout = 18
 
-                request_method = "POST"
-                request_headers = self.service.headers
-                request_proxies = self.service.proxies
-                self.service.timeout = 18
+        async with self.service.semaphore:
+            content_request = self.service.aclient.build_request(
+                method=request_method,
+                url=Domain.AI_IMAGE.PERCHANCE.PREDICT,
+                headers=request_headers,
+                timeout=self.service.timeout,
+                json=self.context.json()
+            )
+            response = await self.service.aclient.send(
+                request=content_request,
+                follow_redirects=True
+            )
 
-                async with self.service.semaphore:
-                    content_request = self.service.aclient.build_request(
-                        method=request_method,
-                        url=Domain.AI_IMAGE.PERCHANCE.PREDICT,
-                        headers=request_headers,
-                        timeout=self.service.timeout,
-                        json=self.context.json()
-                    )
-                    response = await self.service.aclient.send(
-                        request=content_request,
-                        follow_redirects=True
-                    )
+            if not response.text.strip() or not response.content:
+                await asyncio.sleep(0.5)
 
-                    if not response.text.strip() or not response.content:
-                        await asyncio.sleep(0.5)
-                        continue
-
-                    response.raise_for_status()
-                    return response.json()
-
-            except (
-                httpx.TimeoutException,
-                httpx.NetworkError,
-                httpx.HTTPStatusError,
-                httpx.ProxyError,
-                httpx.UnsupportedProtocol,
-                httpx.StreamError,
-                Exception
-            ) as e:
-                continue
+            response.raise_for_status()
+            return response.json()
 
 
 class AIGG:
@@ -340,49 +332,46 @@ class AIGG:
         self.context.set("width", width)
         self.context.set("height", height)
 
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError
+    ))
     async def generate(self):
         """
         Generates an image using the AIGG API.
         """
-        for _ in range(3):
-            try:
+        request_method = "POST"
+        request_headers = self.service.headers
+        request_proxies = self.service.proxies
+        self.service.timeout = 18
 
-                request_method = "POST"
-                request_headers = self.service.headers
-                request_proxies = self.service.proxies
-                self.service.timeout = 18
+        async with self.service.semaphore:
+            content_request = self.service.aclient.build_request(
+                method=request_method,
+                url=Domain.AI_IMAGE.AIGG.GENERATE_IMAGE,
+                headers=request_headers,
+                timeout=self.service.timeout,
+                json=self.context.json()
+            )
 
-                async with self.service.semaphore:
-                    content_request = self.service.aclient.build_request(
-                        method=request_method,
-                        url=Domain.AI_IMAGE.AIGG.GENERATE_IMAGE,
-                        headers=request_headers,
-                        timeout=self.service.timeout,
-                        json=self.context.json()
-                    )
+            response = await self.service.aclient.send(
+                request=content_request,
+                follow_redirects=True
+            )
 
-                    response = await self.service.aclient.send(
-                        request=content_request,
-                        follow_redirects=True
-                    )
+            if not response.text.strip() or not response.content:
+                await asyncio.sleep(0.5)
 
-                    if not response.text.strip() or not response.content:
-                        await asyncio.sleep(0.5)
-                        continue
+            response.raise_for_status()
+            return response.json()
 
-                    response.raise_for_status()
-                    return response.json()
-
-            except (
-                httpx.TimeoutException,
-                httpx.NetworkError,
-                httpx.HTTPStatusError,
-                httpx.ProxyError,
-                httpx.UnsupportedProtocol,
-                httpx.StreamError,
-                Exception
-            ) as e:
-                continue
 
 class DE_AI_GENERATOR:
     def __init__(
