@@ -2,21 +2,16 @@
 import os
 import time
 
-from pystyle import *
-from colorama import *
+from colorama import Fore
+
+from downedit.utils import (
+    ResourceUtil,
+    log,
+    selector
+)
 
 def main():
-    
-    banner_display, banner_msg = get_banner("KUAISHOU_DL")
-    selector.display_banner(
-        banner_display,
-        banner_msg, title=" - Kuaishou"
-    )
-    
-    user = input(f"{Fore.YELLOW}Enter User Link:{Fore.WHITE} ")
-    
-    time.sleep(0.5)
-    logger.info(input("Press enter to continue..."))
+    None
 
 
 if __name__ == "__main__":
