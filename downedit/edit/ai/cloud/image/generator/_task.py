@@ -36,7 +36,7 @@ class AIImgGenTask(Task):
             sec-ch-ua-model,
             sec-ch-ua-wow64
         """)
-        self.client = Client(headers=self.headers)
+        self.client = Client(headers=self.headers.get())
         self.task_progress = Downloader(self.client)
 
     async def add_task(
@@ -61,7 +61,6 @@ class AIImgGenTask(Task):
         Executes all queued image editing tasks concurrently.
         """
         self.task_progress.execute()
-        await asyncio.sleep(0.1)
 
     async def close(self):
         """
