@@ -150,7 +150,11 @@ https://www.python.org/downloads/
 ```
 Step 2. Click <u>install.bat<u> for automatic python libraries installation
 ```html
- run.bat
+ .\run.bat
+```
+or 
+```bash
+pip install -r requirements.txt
 ```
 Step 3. Run the script
 ```ht
