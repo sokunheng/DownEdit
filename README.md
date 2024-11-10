@@ -4,6 +4,8 @@
 
 ![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sokunheng/DownEdit)](https://github.com/sokunheng/DownEdit)
+[![Shield: Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-limegreen.svg)](#contributing)
+[![Shield: License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![Run on Repl.it](https://replit.com/badge/github/sokunheng/DownEdit)](https://replit.com/new/github/sokunheng/DownEdit)
 
