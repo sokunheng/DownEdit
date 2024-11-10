@@ -2,12 +2,14 @@
   <img src="https://github.com/sokunheng/DownEdit/blob/main/docs/logo.png?raw=true" alt="logo" />
 </p>
 
-![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
-[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sokunheng/DownEdit)](https://github.com/sokunheng/DownEdit)
-[![Shield: Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-limegreen.svg)](#contributing)
-[![Shield: License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.8%2B-brightgreen" alt="Python Version Badge">
+  <a href="https://github.com/sokunheng/DownEdit"><img src="https://img.shields.io/github/languages/code-size/sokunheng/DownEdit" alt="GitHub Code Size"></a>
+  <a href="#contributing"><img src="https://img.shields.io/badge/Contributions-Welcome-limegreen.svg" alt="Contributions Welcome"></a>
+  <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GPL v3 License"></a>
+</p>
 
-[![Run on Repl.it](https://replit.com/badge/github/sokunheng/DownEdit)](https://replit.com/new/github/sokunheng/DownEdit)
+<a href="https://replit.com/new/github/sokunheng/DownEdit"><img src="https://replit.com/badge/github/sokunheng/DownEdit" alt="Run on Repl.it"></a>
 
 <p>DownEdit is a fast and powerful program for downloading and editing videos from top platforms like TikTok, Douyin, and Kuaishou. Effortlessly grab videos from user profiles, make bulk edits, throughout the entire directory with just one click. Plus, our advanced Chat & AI features let you download, edit, and generate videos, images, and sounds in bulk. Exciting new features are coming soon—stay tuned!</p>
 
