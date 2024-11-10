@@ -5,7 +5,7 @@
 ![Static Badge](https://img.shields.io/badge/python-3.8%2B-brightgreen)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sokunheng/DownEdit)](https://github.com/sokunheng/DownEdit)
 
-<!--- [![Run on Repl.it](https://replit.com/badge/github/sokunheng/DownEdit)](https://replit.com/new/github/sokunheng/DownEdit) -->
+[![Run on Repl.it](https://replit.com/badge/github/sokunheng/DownEdit)](https://replit.com/new/github/sokunheng/DownEdit)
 
 <p>DownEdit is a fast and powerful program for downloading and editing videos from top platforms like TikTok, Douyin, and Kuaishou. Effortlessly grab videos from user profiles, make bulk edits, throughout the entire directory with just one click. Plus, our advanced Chat & AI features let you download, edit, and generate videos, images, and sounds in bulk. Exciting new features are coming soon—stay tuned!</p>
 
