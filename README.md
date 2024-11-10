@@ -162,21 +162,23 @@ If you're a non coder, you can also download the application and use it on your 
 **Additional**: Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
 
 ## 🔨 Module
-  
+  The following dependencies are required for the project:
+
   <details>
 <summary>List</summary>
     
-- [Moviepy](https://github.com/Zulko/moviepy)
+- [Pystyle](https://github.com/billythegoat356/pystyle)
+- [Requests](https://requests.readthedocs.io/en/latest/)
 - [Inquirer](https://pypi.org/project/inquirer/)
 - [Colorama](https://github.com/tartley/colorama)
+- [Moviepy](https://github.com/Zulko/moviepy)
 - [Rich](https://github.com/Textualize/rich)
-- [Requests](https://requests.readthedocs.io/en/latest/)
-- [Pystyle](https://github.com/billythegoat356/pystyle)
-- [Request_HTML](https://github.com/kennethreitz/requests-html)
-- [Random_User_Agent](https://pypi.org/project/requests-random-user-agent/)
-- [Pillow](https://github.com/python-pillow/Pillow)
-- [Gdown](https://github.com/wkentaro/gdown)
-- [Torch](https://pypi.org/project/torch/)
+- [Playwright](https://github.com/microsoft/playwright)
+- [Rembg](https://github.com/danielgatis/rembg)
+- [WMI](https://github.com/wmi-py/wmi)
+- [Psutil](https://github.com/giampaolo/psutil)
+- [Httpx](https://github.com/encode/httpx)
+- [Aiofiles](https://github.com/Tinche/aiofiles)
 
 </details>
 
