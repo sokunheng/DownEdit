@@ -244,7 +244,7 @@ class ResourceUtil:
                     full_file_path = os.path.join(root, file)
                     filtered_files.append(full_file_path)
         return filtered_files
-    
+
     @staticmethod
     def get_output_file(
         folder_path: str,

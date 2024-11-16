@@ -60,7 +60,8 @@ class AIImgGenTask(Task):
         """
         Executes all queued image editing tasks concurrently.
         """
-        self.task_progress.execute()
+        async with self.task_progress:
+            await self.task_progress.execute()
 
     async def close(self):
         """
