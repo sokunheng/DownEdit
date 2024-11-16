@@ -47,7 +47,7 @@ def display_menu():
         banner_msg, "- ai generative"
     )
     available_tools = {
-        f" Cloud"                  : lambda: None,
+        f" Cloud"                  : cloud_ai_generator,
         f" Local {Fore.RED}(Soon)" : lambda: None,
         f" Back"                   : lambda: None,
     }
