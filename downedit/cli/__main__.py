@@ -18,11 +18,11 @@ from downedit.utils import (
 def display_banner():
     banner_display = f"""
     {Fore.MAGENTA}██████╗░███████╗{Back.RESET}  {Back.RED}{Fore.BLACK}sokunheng@GitHub - DownEdit v{DE_VERSION}{Fore.RESET}{Back.RESET}
-    {Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}--------------------------{Back.RESET}
-    {Fore.MAGENTA}██║░░██║█████╗░░{Back.RESET}  {Fore.CYAN}OS : {Fore.YELLOW}{pc_info["OS"]}, {pc_info["USER"]}{Fore.RESET}
-    {Fore.MAGENTA}██║░░██║██╔══╝░░{Back.RESET}  {Fore.CYAN}CPU: {Fore.YELLOW}{pc_info["CPU"]}{Fore.RESET}
-    {Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.CYAN}RAM: {Fore.YELLOW}{pc_info["RAM"]:.3f} GB{Fore.RESET}
-    {Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.CYAN}GPU: {Fore.YELLOW}{pc_info["GPU"]}{Fore.RESET}
+    {Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}----------------------------------{Back.RESET}
+    {Fore.MAGENTA}██║░░██║█████╗░░{Back.RESET}  {Fore.WHITE}OS : {Fore.YELLOW}{pc_info["OS"]}, {pc_info["USER"]}{Fore.RESET}
+    {Fore.MAGENTA}██║░░██║██╔══╝░░{Back.RESET}  {Fore.WHITE}CPU: {Fore.YELLOW}{pc_info["CPU"]}{Fore.RESET}
+    {Fore.MAGENTA}██████╔╝███████╗{Back.RESET}  {Fore.WHITE}RAM: {Fore.YELLOW}{pc_info["RAM"]:.3f} GB{Fore.RESET}
+    {Fore.MAGENTA}╚═════╝░╚══════╝{Back.RESET}  {Fore.WHITE}GPU: {Fore.YELLOW}{pc_info["GPU"]}{Fore.RESET}
     """
     banner_msg = """Use arrow key and enter to select the options"""
     return banner_display, banner_msg
