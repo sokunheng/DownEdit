@@ -233,13 +233,13 @@ class Downloader():
                     httpx.StreamError,
                     Exception
                 ) as e:
-                    log.error(f"Error during {working_step}: {e}")
+                    # log.error(f"Error during {working_step}: {e}")
                     return await self.task_progress.update_task(
                         task_id,
                         new_state="failure"
                     )
 
-        log.info(f"{end_step}: {file_output}")
+        # log.info(f"{end_step}: {file_output}")
         await self.task_progress.update_task(
             task_id,
             new_state="success"
