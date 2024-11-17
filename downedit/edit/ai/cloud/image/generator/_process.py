@@ -114,8 +114,9 @@ class AIImgGenProcess:
             if self.observer.is_termination_signaled():
                 break
             proceed_count += await self._generate_media((proceed_count, ".jpg"), **ai_kwargs)
-            await self._task.execute()
-            await self._task.close()
+
+        await self._task.execute()
+        await self._task.close()
 
         elapsed_time = time.time() - start_time
 

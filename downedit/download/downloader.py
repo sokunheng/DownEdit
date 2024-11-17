@@ -151,6 +151,7 @@ class Downloader():
             self.download_file(
                 service_step,
                 task_id,
+                file_name,
                 file_url,
                 file_output
             )
@@ -161,6 +162,7 @@ class Downloader():
         self,
         seveice_step: tuple,
         task_id,
+        file_name: str,
         file_url: Any,
         file_output: Any
     ):
@@ -187,7 +189,8 @@ class Downloader():
             if content_length == 0:
                 return await self.task_progress.update_task(
                     task_id,
-                    new_state="failure"
+                    new_state="failure",
+                    still_visible = False,
                 )
 
             await self.task_progress.update_task(
@@ -233,16 +236,18 @@ class Downloader():
                     httpx.StreamError,
                     Exception
                 ) as e:
-                    # log.error(f"Error during {working_step}: {e}")
+                    log.error(f"Error during {working_step}: {e}")
                     return await self.task_progress.update_task(
                         task_id,
-                        new_state="failure"
+                        new_state="failure",
+                        still_visible = False,
                     )
 
-        # log.info(f"{end_step}: {file_output}")
+        log.info(f"{end_step}: {file_name}")
         await self.task_progress.update_task(
             task_id,
-            new_state="success"
+            new_state="success",
+            still_visible = False,
         )
 
     async def execute(self):
