@@ -3,7 +3,7 @@ import sys
 from colorama       import Fore, Back
 
 from downedit                 import DE_VERSION
-from downedit.cli.menu.media  import media          as vid_dl
+from downedit.cli.menu.media  import media          as video_dl
 from downedit.cli.menu.images import ai_gen_image   as ai_img_gen
 from downedit.cli.menu.images import ai_edit_image  as ai_img_editor
 from downedit.cli.menu.images import editor         as image_editor
@@ -35,7 +35,7 @@ def display_menu():
     )
     available_tools = {
         f" ChatDE {Fore.RED}(Soon)"             : lambda: None,
-        f" Download Video {Fore.RED}(Rework)"   : lambda: None,
+        f" Download Video {Fore.RED}(Rework)"   : video_dl.main,
         " Edit Video"                           : video_editor.main,
         f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
         " Edit Photo"                           : image_editor.main,

@@ -97,6 +97,25 @@ class Tiktok_API:
     # Post Search
     POST_SEARCH = f"{TIKTOK_DOMAIN}/api/search/item/full/"
 
+class Youtube_API:
+    """
+    Contains the base API URL for Youtube services.
+    """
+    DOMAIN = "https://www.youtube.com"
+
+    CHANNEL = f"{DOMAIN}/channel/"
+
+    USER_NAME = f"{DOMAIN}/@"
+
+    PLAYLIST = f"{DOMAIN}/playlist?list="
+
+    VIDEO = f"{DOMAIN}/watch?v="
+
+    SEARCH = f"{DOMAIN}/results?search_query="
+
+    YT_BROWSE = "https://www.youtube.com/youtubei/v1/browse"
+
+    YT_SEARCH = "https://www.youtube.com/youtubei/v1/search"
 
 class Domain:
     """
@@ -105,3 +124,4 @@ class Domain:
     AI_IMAGE = AI_Image_API()
     TIKTOK = Tiktok_API()
     KUAI_SHOU = KauiShou_API()
+    YOUTUBE = Youtube_API()

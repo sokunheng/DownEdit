@@ -5,6 +5,7 @@ from .. import get_banner
 from downedit.site.douyin import __main__ as douyin
 from downedit.site.kuaishou import __main__ as kuaishou
 from downedit.site.tiktok import __main__ as tiktok
+from downedit.site.youtube import __main__ as youtube
 from downedit.utils import (
     log,
     selector
@@ -21,7 +22,7 @@ def display_menu():
         " Tiktok": tiktok.main,
         f" Douyin {Fore.RED}(Maintain)": lambda: None,
         f" Kuaishou {Fore.RED}(Maintain)": lambda: None,
-        f" Youtube {Fore.RED}(Soon)": lambda: None,
+        " Youtube": youtube.main,
         " Back": lambda: None,
     }
 
