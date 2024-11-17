@@ -132,6 +132,7 @@ class Downloader():
         task_id = await self.task_progress.add_task(
             description=start_step,
             file_name=ResourceUtil.trim_filename(file_name, 40).ljust(40),
+            start=True,
             current_state="idle"
         )
 
