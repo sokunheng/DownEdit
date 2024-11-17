@@ -35,7 +35,7 @@ def display_menu():
     )
     available_tools = {
         f" ChatDE {Fore.RED}(Soon)"             : lambda: None,
-        f" Download Video {Fore.RED}(Rework)"   : video_dl.main,
+        f" Download Video"                      : video_dl.main,
         " Edit Video"                           : video_editor.main,
         f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
         " Edit Photo"                           : image_editor.main,

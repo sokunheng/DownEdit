@@ -19,9 +19,9 @@ def display_menu():
     )
     # TODO: Media Video Downloader Algorithm
     menu_list = {
-        " Tiktok": tiktok.main,
-        f" Douyin {Fore.RED}(Maintain)": lambda: None,
-        f" Kuaishou {Fore.RED}(Maintain)": lambda: None,
+        f" Tiktok  {Fore.RED}(Rework)": tiktok.main,
+        f" Douyin {Fore.RED}(Rework)": lambda: None,
+        f" Kuaishou {Fore.RED}(Rework)": lambda: None,
         " Youtube": youtube.main,
         " Back": lambda: None,
     }
