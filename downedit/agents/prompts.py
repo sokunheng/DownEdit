@@ -39,7 +39,44 @@ PROMPTS = {
                 "type": "string",
                 "description": "Encoding preset (ultrafast, superfast, veryfast, faster, fast, medium, slow)."
             }
-        }
+        },
+        "examples": [
+            {
+                "input": "Flip all videos in the folder /path/to/videos horizontally.",
+                "output": """
+                ```json
+                {
+                    "tool_name": "edit_video",
+                    "tool_args": {
+                        "tool": "Flip Horizontal",
+                        "process_folder": "/path/to/videos",
+                        "batch_size": 5,
+                        "threads": 1,
+                        "preset": "medium"
+                    }
+                }
+                ```
+                """
+            },
+            {
+                "input": "Speed up videos in /path/to/videos 2x, using 4 threads and the ultrafast preset.",
+                "output": """
+                ```json
+                {
+                    "tool_name": "edit_video",
+                    "tool_args": {
+                        "tool": "Custom Speed",
+                        "process_folder": "/path/to/videos",
+                        "batch_size": 5,
+                        "speed": 2.0,
+                        "threads": 4,
+                        "preset": "ultrafast"
+                    }
+                }
+                ```
+                """
+            }
+        ]
     },
     "edit_image": {
         "description": "Edits images with various operations like flipping, cropping, rotating, and adjusting color.",
@@ -56,11 +93,29 @@ PROMPTS = {
                 "type": "integer",
                 "description": "Batch size... (default: 5, max 10)"
             },
-            "degrees": {
-                "type": "integer",
-                "description": "Rotation degrees..."
+            "**image_params": {
+                "type": "various",
+                "description": "Additional parameters specific to the image editing tool."
             },
-        }
+        },
+        "examples": [
+            {
+                "input": "Rotate the images in C:/images 90 degrees clockwise.",
+                "output": """
+                ```json
+                {
+                    "tool_name": "edit_image",
+                    "tool_args": {
+                        "tool": "Rotate Image",
+                        "process_folder": "C:/images",
+                        "batch_size": 5,
+                        "degrees": 90
+                    }
+                }
+                ```
+                """
+            }
+        ]
     },
     "edit_sound": {
         "description": "Edits sound files with various operations like adjusting volume, fading in/out.",
@@ -77,7 +132,7 @@ PROMPTS = {
                 "type": "integer",
                 "description": "Batch size... (default: 5, max 10)"
             },
-            "level" : {
+            "level": {
                 "type": "float",
                 "description": "Volume level"
             },
@@ -98,6 +153,7 @@ PROMPTS = {
     }
 }
 
+
 def get_tool_prompt(tool_name: str) -> str:
     """
     Retrieves the prompt for a specific tool.
@@ -106,13 +162,17 @@ def get_tool_prompt(tool_name: str) -> str:
         tool_name (str): The name of the tool to retrieve the prompt for.
     """
     tool_data = PROMPTS.get(tool_name)
-    if not tool_data:
-        return ""
+    tool_prompt = f"{tool_name}:\n{tool_data['description']}\nParameters:\n"
 
-    prompt = f"{tool_name}:\n{tool_data['description']}\nParameters:\n"
-    for param_name, param_data in tool_data['parameters'].items():
-        prompt += f"- {param_name}: {param_data['description']} (type: {param_data['type']})\n"
-    return prompt
+    for param_name, param_data in tool_data["parameters"].items():
+            tool_prompt += f"- {param_name}: {param_data['description']} (type: {param_data['type']})\n"
+
+    if tool_data.get("examples"):
+            tool_prompt += "\nExamples:\n"
+            for example in tool_data["examples"]:
+                tool_prompt += f"Input: {example['input']}\nOutput:\n{example['output']}\n"
+
+    return tool_prompt
 
 def build_main_prompt() -> str:
     """
