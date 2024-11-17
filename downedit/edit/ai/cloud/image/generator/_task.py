@@ -3,9 +3,6 @@ import os
 
 from downedit.download import Downloader
 from downedit.edit.base import Task
-from downedit.utils import (
-    ResourceUtil
-)
 from downedit.service import (
     Client,
     ClientHints,

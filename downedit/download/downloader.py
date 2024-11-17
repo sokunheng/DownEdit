@@ -190,7 +190,7 @@ class Downloader():
                 return await self.task_progress.update_task(
                     task_id,
                     new_state="failure",
-                    still_visible = False,
+                    still_visible = True,
                 )
 
             await self.task_progress.update_task(
@@ -236,18 +236,18 @@ class Downloader():
                     httpx.StreamError,
                     Exception
                 ) as e:
-                    log.error(f"Error during {working_step}: {e}")
+                    # log.error(f"Error during {working_step}: {e}")
                     return await self.task_progress.update_task(
                         task_id,
                         new_state="failure",
-                        still_visible = False,
+                        still_visible = True,
                     )
 
-        log.info(f"{end_step}: {file_name}")
+        # log.info(f"{end_step}: {file_name}")
         await self.task_progress.update_task(
             task_id,
             new_state="success",
-            still_visible = False,
+            still_visible = True,
         )
 
     async def execute(self):

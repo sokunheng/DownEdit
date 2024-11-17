@@ -83,6 +83,7 @@ class AIImgGenProcess:
             file_name, file_extension = file_info
             gen_url, output_suffix = await self._build_and_apply_providers(self._ai, "")
             full_file = f"{file_name}{output_suffix}"
+            log.info(f"Image: {full_file}{file_extension}")
             output_file_path = ResourceUtil.get_output_file(
                 self._output_folder,
                 full_file,
@@ -109,6 +110,7 @@ class AIImgGenProcess:
         """
         start_time = time.time()
         proceed_count = 0
+        log.info(f"Start Generating Image ...")
 
         for _ in range(self.amount):
             if self.observer.is_termination_signaled():
