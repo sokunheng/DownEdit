@@ -145,25 +145,50 @@ Tips: If you still getting error, try changing your Browser, use Incognito/Priva
 </details>
 
 ## 🔎 Requirements
-- Python version must be between 3.8 and 3.12.
+- Python
+> [!NOTE]
+> Version must be between 3.8 and 3.12.
 
 ## ⚙ Installation 
-Step 1. Download and install [python](https://www.python.org/downloads/) on your pc.
-```html
+
+#### Step 1. Download and install [python](https://www.python.org/downloads/) on your pc.
+```sh
 https://www.python.org/downloads/
 ```
-Step 2. Click <u>install.bat<u> for automatic python libraries installation
-```html
- run.bat
+#### Step 2. libraries installation
+You have three options to install the required libraries:
+
+- **Option 1: Manual Installation**
+```sh
+pip install -r requirements.txt
 ```
-Step 3. Run the script
-```ht
- main.py
+
+- **Option 2: Automatic installation & virtual environments**
+```sh
+Click -> run.bat
+```
+- **Option 3: Terminal & virtual environments**
+```sh
+cd DownEdit
+.\run.bat
+```
+
+#### Step 3. Run the script
+```sh
+python main.py
 ```
 -----
-If you're a non coder, you can also download the application and use it on your Window without installing python. [Download here.](https://github.com/SokunHeng/DownEdit/releases)
 
-**Additional**: Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
+**For Regular Use:**
+
+You can also download the application and use it on your PC without installing python.
+- **Windows:** [Download](https://github.com/SokunHeng/DownEdit/releases)
+- **macOS:** [None](https://github.com/SokunHeng/DownEdit/releases)
+
+> [!TIP]
+> **Fix Terminal Font Issues**
+> 
+> Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
 
 ## 🔨 Module
   The following dependencies are required for the project:
