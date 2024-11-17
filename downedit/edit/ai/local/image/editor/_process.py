@@ -20,15 +20,6 @@ class AIImgEditProcess(Process):
         self._tool = tool
         super().__init__(tool, process_folder, batch_size, **kwargs)
 
-    # def _get_input_files(self, process_folder: str) -> List[str]:
-    #     """
-    #     Gets the list of input images.
-    #     """
-    #     return ResourceUtil.get_file_list(
-    #         directory=process_folder,
-    #         extensions=Extensions.IMAGE
-    #     )
-
     def _generate_file_paths(self, process_folder: str) -> Generator[str, None, None]:
         """
         Yields input image paths.
@@ -37,7 +28,6 @@ class AIImgEditProcess(Process):
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
-
 
     def _get_output_folder(self, tool: str) -> str:
         """
