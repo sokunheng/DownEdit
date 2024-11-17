@@ -33,7 +33,7 @@ class AIImgEditProcess(Process):
         """
         Yields input image paths.
         """
-        return ResourceUtil.get_file_list_async(
+        return ResourceUtil.get_file_list_yield(
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
