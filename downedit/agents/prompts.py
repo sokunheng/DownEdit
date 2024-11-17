@@ -147,7 +147,7 @@ PROMPTS = {
             },
             "size": {
                 "type": "string",
-                "description": "Image size (e.g., 512x512, 512x768, 768x512",
+                "description": "Image size (e.g., 512x512, 512x768, 768x512)",
             }
         },
     }
