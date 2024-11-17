@@ -130,6 +130,15 @@ class Column:
         self.columns["time_remaining"] = TimeRemainingColumn()
         return self.columns.copy()
 
+    def generate(self):
+        """
+        Columns configured for spinner display.
+        """
+        self.columns.pop("progress_bar")
+        self.columns.pop("percentage")
+        self.columns.pop("divider")
+        return self.columns.copy()
+
     def edit(self):
         """
         Columns configured for edit display.

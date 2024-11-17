@@ -59,20 +59,19 @@ class Process:
         Yields:
             List[str]: A list of file paths in each batch.
         """
-        file_paths_generator = iter(
-            self._generate_file_paths(process_folder)
+        file_paths_generator = iter(self._generate_file_paths(process_folder))
+        return (
+            list(batch) for batch in iter(
+                lambda: tuple(islice(file_paths_generator, batch_size)), ()
+            )
         )
-        for batch in iter(
-            lambda: list(islice(file_paths_generator, batch_size)), []
-        ):
-            yield batch
 
     def _get_output_folder(self, tool: str) -> str:
         """
         Gets the output folder path based on the tool and media type.
         """
         raise NotImplementedError
-    
+
     def _get_output_files(self) -> List[str]:
         """
         Gets the list of output files based on the media type.
@@ -147,25 +146,6 @@ class Process:
             log.error(e)
             return False
 
-    async def _process_batch(self, batch: List[str], **render_kwargs) -> int:
-        """
-        Processes a single batch of media files asynchronously.
-
-        Args:
-            batch (List[str]): List of media file paths.
-            **render_kwargs: Additional render arguments.
-
-        Returns:
-            int: Count of successfully processed files in the batch.
-        """
-        success_count = 0
-        for media_path in batch:
-            if self.observer.is_termination_signaled():
-                break
-            if await self._process_media(media_path, **render_kwargs):
-                success_count += 1
-        return success_count
-
     async def start_async(self, **render_kwargs):
         """
         Process the media files in the input folder asynchronously.
@@ -178,8 +158,12 @@ class Process:
                 break
 
             await self._task.init_progress()
-            success_count = await self._process_batch(batch, **render_kwargs)
-            proceed_count += success_count
+
+            for media_path in batch:
+                if self.observer.is_termination_signaled():
+                    break
+                if await self._process_media(media_path, **render_kwargs):
+                    proceed_count += 1
 
             await self._task.execute()
             await self._task.end_progress()
