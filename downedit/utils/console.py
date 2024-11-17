@@ -80,8 +80,8 @@ class PercentageColumn(ProgressColumn):
 
     def render(self, task: Task):
         return self.text_objects.render(task)
-    
-    
+
+
 class DescriptionColumn(ProgressColumn):
     """
     A column to display task description.
@@ -105,7 +105,7 @@ class DescriptionColumn(ProgressColumn):
 
 
 class Column:
-    """	
+    """
     Default columns for progress display
     """
     def __init__(self):
@@ -116,10 +116,10 @@ class Column:
             "percentage"        : PercentageColumn(),
             "divider"           : "|"
         }
-        
+
     def default(self):
         return self.columns.copy()
-    
+
     def download(self):
         """
         Columns configured for download display.
@@ -161,6 +161,8 @@ class Progress:
         self.progress_display = RichProgress(
             *self.columns.values(),
             transient=False,
+            redirect_stdout=True,
+            redirect_stderr=True,
             expand=full_width
         )
         self.progress_lock = Lock()

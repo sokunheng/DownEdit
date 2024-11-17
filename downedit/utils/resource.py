@@ -141,30 +141,6 @@ class ResourceUtil:
         trim_length = (max_length - 3) // 2
         return f"{filename[:trim_length]}...{filename[-trim_length:]}"
 
-    def write_file(
-        self,
-        file_path: str,
-        file_bytes: bytes,
-        size_default: int = 0,
-        total_length: Optional[int] = 0,
-    ):   
-        """
-        Writes a file to the specified path with progress bar visualization.
-
-        Args:
-            file_path (str): The path to write the file to.
-            file_bytes (bytes): The content of the file as bytes.
-            size_default (int, optional): The starting size for tracking progress (defaults to 0).
-            total_length (int, optional): The total length of the file for calculating progress (optional).
-        """             
-        with open(file_path, 'wb') as out_file:
-            for data in file_bytes.iter_content(chunk_size=CHUNK_SIZE):
-                size_default += len(data)
-                print('\r' +
-                        f"{Fore.CYAN}[Programs] {Fore.GREEN}[Download]{Fore.WHITE} " + '%s %.2f%%' %
-                        ('>' * int(size_default * 50 / total_length), float(size_default / total_length * 100)), end=' ')
-                out_file.write(data)
-
     def normalize_filename(
         self,
         folder_location: str,
@@ -183,12 +159,12 @@ class ResourceUtil:
             str: The normalized filename with a path.
         """
         cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)
-        
+
         dir_path = os.path.join(
             folder_location,
             cleaned_name + file_extension
         )
-        
+
         if cleaned_name == "" or cleaned_name.isspace():
             counter = 1
             while True:
@@ -197,15 +173,15 @@ class ResourceUtil:
                 if not os.path.exists(dir_path):
                     return dir_path
                 counter += 1
-                
+
     @staticmethod
     def get_file_info(file_path: str) -> tuple:
         """
         Returns the name and extension of a file.
-        
+
         Args:
             file_path (str): The path to the file.
-        
+
         Returns:
             tuple: A tuple containing the file name and extension.
         """
@@ -221,7 +197,7 @@ class ResourceUtil:
             size = None
 
         return name, extension, size
-    
+
     @staticmethod
     def get_file_list(
         directory,
@@ -244,6 +220,26 @@ class ResourceUtil:
                     full_file_path = os.path.join(root, file)
                     filtered_files.append(full_file_path)
         return filtered_files
+
+    @staticmethod
+    def get_file_list_yield(
+        directory,
+        extensions = None
+    ):
+        """
+        This function filters a list of files and return a generator containing only files with the specified extension.
+
+        Args:
+            directory: directory: The path to the directory to search for files (string).
+            extension: The extension to filter by (including the dot, e.g., ".mp4", ".jpeg").
+
+        Returns:
+            A list of filenames that have the provided extension.
+        """
+        for root, _, files in os.walk(directory):
+            for file in files:
+                if extensions is None or file.lower().endswith(extensions):
+                    yield os.path.join(root, file)
 
     @staticmethod
     def get_output_file(

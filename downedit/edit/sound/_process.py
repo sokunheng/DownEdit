@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, Generator, List
 
 from . import OperationFactory
 
@@ -26,11 +26,11 @@ class SoundProcess(Process):
     ):
         super().__init__(tool, process_folder, batch_size, **kwargs)
 
-    def _get_input_files(self, process_folder: str) -> List[str]:
+    def _generate_file_paths(self, process_folder: str) -> Generator[str, None, None]:
         """
-        Gets the list of input sound files.
+        Yields input sound file paths.
         """
-        return ResourceUtil.get_file_list(
+        return ResourceUtil.get_file_list_yield(
             directory=process_folder,
             extensions=Extensions.SOUND
         )

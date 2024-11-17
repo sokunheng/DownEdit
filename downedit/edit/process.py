@@ -1,7 +1,8 @@
 import asyncio
 import time
 
-from typing import List
+from typing import Generator, List
+from itertools import islice
 
 from downedit.edit.ai.local.image.editor import AIImageOperation
 from downedit.edit.image import ImageOperation
@@ -33,18 +34,38 @@ class Process:
         self.observer = Observer()
         self.batch_size = batch_size
         self._tool = tool
-        self._input_folder = self._get_input_files(process_folder)
+        self._process_folder = process_folder
+        # self._input_folder = None
         self._output_folder = self._get_output_folder(tool)
         self._operations = self._init_operations(**kwargs)
 
         # Initialize task based on media type
         self._task = self._get_task()
 
-    def _get_input_files(self, process_folder: str) -> List[str]:
+    def _generate_file_paths(self, process_folder:str) -> Generator[str, None, None]:
         """
-        Gets the list of input files based on the media type.
+        Gets a generator of individual file paths (to be implemented by subclasses).
         """
         raise NotImplementedError
+
+    def _get_input_files(self, process_folder: str, batch_size: int = 5) -> Generator[List[str], None, None]:
+        """
+        Generates batches of input file paths from the given folder.
+
+        Args:
+            process_folder (str): The folder containing files to process.
+            batch_size (int): Number of files per batch. Defaults to 5.
+
+        Yields:
+            List[str]: A list of file paths in each batch.
+        """
+        file_paths_generator = iter(
+            self._generate_file_paths(process_folder)
+        )
+        for batch in iter(
+            lambda: list(islice(file_paths_generator, batch_size)), []
+        ):
+            yield batch
 
     def _get_output_folder(self, tool: str) -> str:
         """
@@ -126,6 +147,25 @@ class Process:
             log.error(e)
             return False
 
+    async def _process_batch(self, batch: List[str], **render_kwargs) -> int:
+        """
+        Processes a single batch of media files asynchronously.
+
+        Args:
+            batch (List[str]): List of media file paths.
+            **render_kwargs: Additional render arguments.
+
+        Returns:
+            int: Count of successfully processed files in the batch.
+        """
+        success_count = 0
+        for media_path in batch:
+            if self.observer.is_termination_signaled():
+                break
+            if await self._process_media(media_path, **render_kwargs):
+                success_count += 1
+        return success_count
+
     async def start_async(self, **render_kwargs):
         """
         Process the media files in the input folder asynchronously.
@@ -133,20 +173,13 @@ class Process:
         start_time = time.time()
         proceed_count = 0
 
-        for start_idx in range(0, len(self._input_folder), self.batch_size):
+        for batch in self._get_input_files(self._process_folder):
             if self.observer.is_termination_signaled():
                 break
 
-            end_idx = min(start_idx + self.batch_size, len(self._input_folder))
-            batch = self._input_folder[start_idx:end_idx]
-
             await self._task.init_progress()
-
-            for media_path in batch:
-                if self.observer.is_termination_signaled():
-                    break
-                if await self._process_media(media_path, **render_kwargs):
-                    proceed_count += 1
+            success_count = await self._process_batch(batch, **render_kwargs)
+            proceed_count += success_count
 
             await self._task.execute()
             await self._task.end_progress()
@@ -159,6 +192,40 @@ class Process:
         log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
         # log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")
         log.pause()
+
+    # async def start_async(self, **render_kwargs):
+    #     """
+    #     Process the media files in the input folder asynchronously.
+    #     """
+    #     start_time = time.time()
+    #     proceed_count = 0
+
+    #     for start_idx in range(0, len(self._input_folder), self.batch_size):
+    #         if self.observer.is_termination_signaled():
+    #             break
+
+    #         end_idx = min(start_idx + self.batch_size, len(self._input_folder))
+    #         batch = self._input_folder[start_idx:end_idx]
+
+    #         await self._task.init_progress()
+
+    #         for media_path in batch:
+    #             if self.observer.is_termination_signaled():
+    #                 break
+    #             if await self._process_media(media_path, **render_kwargs):
+    #                 proceed_count += 1
+
+    #         await self._task.execute()
+    #         await self._task.end_progress()
+    #         await self._task.close()
+
+    #     elapsed_time = time.time() - start_time
+
+    #     log.info(f"Processed: {elapsed_time:.2f} seconds.")
+    #     log.file(f"Saved at [green]{self._output_folder}[/green]")
+    #     log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
+    #     # log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")
+    #     log.pause()
 
     def start(self, **render_kwargs):
         """

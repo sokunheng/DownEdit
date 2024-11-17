@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, Generator, List
 
 from . import OperationFactory
 
@@ -20,14 +20,24 @@ class AIImgEditProcess(Process):
         self._tool = tool
         super().__init__(tool, process_folder, batch_size, **kwargs)
 
-    def _get_input_files(self, process_folder: str) -> List[str]:
+    # def _get_input_files(self, process_folder: str) -> List[str]:
+    #     """
+    #     Gets the list of input images.
+    #     """
+    #     return ResourceUtil.get_file_list(
+    #         directory=process_folder,
+    #         extensions=Extensions.IMAGE
+    #     )
+
+    def _generate_file_paths(self, process_folder: str) -> Generator[str, None, None]:
         """
-        Gets the list of input images.
+        Yields input image paths.
         """
-        return ResourceUtil.get_file_list(
+        return ResourceUtil.get_file_list_async(
             directory=process_folder,
             extensions=Extensions.IMAGE
         )
+
 
     def _get_output_folder(self, tool: str) -> str:
         """

@@ -113,7 +113,8 @@ class AIImgGenProcess:
         for _ in range(self.amount):
             if self.observer.is_termination_signaled():
                 break
-            proceed_count += await self._generate_media((proceed_count, ".jpg"), **ai_kwargs)
+            if await self._generate_media((proceed_count, ".jpg"), **ai_kwargs):
+                proceed_count += 1
 
         await self._task.execute()
         await self._task.close()
