@@ -39,11 +39,11 @@ def display_menu():
     available_tools = {
         f" ChatDE {Fore.RED}(Soon)"             : lambda: None,
         f" Download Video"                      : video_dl.main,
-        " Edit Video"                           : video_editor.main,
+        f" Edit Video {Fore.RED}(Rework)"       : lambda: None,
         f" AI Edit Video {Fore.RED}(Soon)"      : lambda: None,
         " Edit Photo"                           : image_editor.main,
         f" AI Edit Photo"                       : ai_img_editor.main,
-        f" Edit Sound"                          : sound_editor.main,
+        f" Edit Sound {Fore.RED}(Rework)"       : lambda: None,
         f" AI Edit Sound {Fore.RED}(Soon)"      : lambda: None,
         f" AI-Generative Image"                 : ai_img_gen.main,
         f" AI-Generative Video {Fore.RED}(Soon)": lambda: None,
