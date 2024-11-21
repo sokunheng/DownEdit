@@ -55,7 +55,7 @@ def display_menu():
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
     )
 
-def     run():
+def run():
     while True:
         selector.running = True
         try:
