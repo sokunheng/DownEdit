@@ -1,2 +1,5 @@
 $(VENV_NAME)/
 __pycache__/
+
+./.vscode/
+./.idea/
