@@ -38,7 +38,7 @@ class VideoProcess(Process):
         """
         Gets the output folder path for edited video files.
         """
-        return ResourceUtil.folder_path(
+        return ResourceUtil.get_folder_path(
             folder_root=ResourceUtil.create_folder(folder_type="EDITED_VIDEO"),
             directory_name=tool
         )

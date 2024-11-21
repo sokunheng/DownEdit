@@ -6,6 +6,7 @@ moviepy
 rich
 playwright
 rembg
+onnxruntime
 wmi
 psutil
 httpx

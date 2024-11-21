@@ -16,6 +16,9 @@ from downedit.utils import (
 )
 
 def display_banner():
+    """
+    Display the banner of the application
+    """
     banner_display = f"""
     {Fore.MAGENTA}██████╗░███████╗{Back.RESET}  {Back.RED}{Fore.BLACK}sokunheng@GitHub - DownEdit v{DE_VERSION}{Fore.RESET}{Back.RESET}
     {Fore.MAGENTA}██╔══██╗██╔════╝{Back.RESET}  {Fore.WHITE}----------------------------------{Back.RESET}
@@ -52,7 +55,7 @@ def display_menu():
         input_message=f"{Fore.YELLOW}Select Tools{Fore.WHITE}"
     )
 
-def run():
+def     run():
     while True:
         selector.running = True
         try:

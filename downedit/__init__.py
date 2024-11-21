@@ -3,7 +3,7 @@ from .__config__ import (
     DE_VERSION,
     Config,
     EditFolder,
-    Media,
+    MediaFolder,
     Extensions,
     AIContext
 )

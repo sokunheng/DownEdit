@@ -33,36 +33,24 @@ class AIImgGenTask(Task):
             sec-ch-ua-model,
             sec-ch-ua-wow64
         """)
-        self.client = Client(headers=self.headers.get())
-        self.task_progress = Downloader(self.client)
 
-    async def add_task(
-        self,
-        operation_url,
-        operation_media,
-    ) -> None:
+    async def execute(self, operation_url: str, operation_media: tuple):
         """
-        Adds a task to the queue and updates the progress bar.
+        Starts the task for downloading
 
         Args:
-            operation_url: The URL of the image to be generated.
-            operation_media: The identifier for the image.
+            video_url (str): The URL of the iamge to download.
+            operation_media (tuple): The media file information.
         """
-        await self.task_progress.add_file(
-            file_url=operation_url,
-            file_media=operation_media
-        )
+        client = Client(headers=self.headers.get())
 
-    async def execute(self):
-        """
-        Executes all queued image editing tasks concurrently.
-        """
-        async with self.task_progress:
-            await self.task_progress.execute()
+        async with Downloader(client) as downloader:
+            await downloader.add_file(
+                file_url=operation_url,
+                file_media=operation_media
+            )
+            await downloader.execute()
+            await downloader.close()
 
-    async def close(self):
-        """
-        Clears the list of queued tasks.
-        """
-        self.task_progress.close()
-        await asyncio.sleep(0.1)
+    async def close(self) -> None:
+        pass

@@ -1,5 +1,6 @@
 import asyncio
 import time
+import traceback
 
 from downedit.edit.ai.cloud.image.generator._task import AIImgGenTask
 from downedit.edit.ai.cloud.image.generator._generator import AIImgGenerator
@@ -35,7 +36,7 @@ class AIImgGenProcess:
         """
         Gets the output folder path for edited video files.
         """
-        return ResourceUtil.folder_path(
+        return ResourceUtil.get_folder_path(
             folder_root=ResourceUtil.create_folder(folder_type="AI_Photo_Gen"),
             directory_name="Cloud"
         )
@@ -70,6 +71,7 @@ class AIImgGenProcess:
         elif isinstance(providers, list):
             for provider in providers:
                 img_url, output_suffix = await provider.handle(generator, output_suffix)
+
         return (
             img_url,
             output_suffix
@@ -83,19 +85,19 @@ class AIImgGenProcess:
             file_name, file_extension = file_info
             gen_url, output_suffix = await self._build_and_apply_providers(self._ai, "")
             full_file = f"{file_name}{output_suffix}"
-            log.info(f"Image: {full_file}{file_extension}")
+
             output_file_path = ResourceUtil.get_output_file(
                 self._output_folder,
                 full_file,
                 file_extension
             )
-            await self._task.add_task(
+            await self._task.execute(
                 operation_url = gen_url,
                 operation_media = (output_file_path, full_file)
             )
             return True
         except Exception as e:
-            log.error(e)
+            log.error("Unable to generate image.")
             return False
 
     def _create_ai(self, _provider: AIImgGenOperation, _context: dict) -> AIImgGenerator:
@@ -118,9 +120,6 @@ class AIImgGenProcess:
             if await self._generate_media((proceed_count, ".jpg"), **ai_kwargs):
                 proceed_count += 1
 
-        await self._task.execute()
-        await self._task.close()
-
         elapsed_time = time.time() - start_time
 
         log.info(f"Processed: {elapsed_time:.2f} seconds.")
@@ -136,7 +135,7 @@ class AIImgGenProcess:
         try:
             asyncio.run(self.start_async(**ai_kwargs))
         except Exception as e:
-            log.error(e)
+            log.error(traceback.format_exc())
 
     def __enter__(self):
         """

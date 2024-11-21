@@ -1,4 +1,4 @@
-from moviepy.editor import *
+from moviepy import *
 
 from downedit.edit.base import Editor
 

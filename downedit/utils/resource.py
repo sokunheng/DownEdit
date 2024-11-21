@@ -1,16 +1,13 @@
-import os
-from pathlib import Path
 import re
-import time
+import uuid
 
-from datetime import datetime
-from typing import Optional, Union
-from colorama import Fore
+from typing import Union, Generator, Optional
+from pathlib import Path
 
-from .logger import log
 from .. import (
     CHUNK_SIZE,
-    EditFolder
+    EditFolder,
+    MediaFolder
 )
 
 class ResourceError(Exception):
@@ -23,49 +20,51 @@ class ResourceError(Exception):
 
 class ResourceUtil:
     """
-    A class that provides utility functions for managing files.
+    A utility class for managing folders and files.
     """
-    def __init__(self, folder_root: str = ".") -> None:
+
+    def __init__(self, folder_root: Union[str, Path] = ".") -> None:
         """
-        Initializes the ResourceUtil object with the specified folder path.
+        Initializes the ResourceUtil object with the specified folder root.
 
         Args:
-            folder_path (str): The base folder path for file operations.
+            folder_root (str | Path): The base folder path for file operations.
         """
-        self.folder_root = folder_root
-    
-    @staticmethod
-    def validate_folder(folder_path: str) -> Union[str, bool]:
+        self.folder_root = Path(folder_root).resolve()
+
+    def folder(self, folder_path: Union[str, Path]) -> Path:
         """
-        Validates a folder path by checking if it exists.
+        Creates a folder if it does not exist.
 
         Args:
-            folder_path (str): The folder path to validate.
+            folder_path (str | Path): The folder path to create.
 
         Returns:
-            Union[str, bool]:
-                - str: The folder path if it exists.
-                - bool: False if the folder does not exist.
+            Path: The created or existing folder path.
         """
-        if not os.path.exists(folder_path):
-            raise ResourceError("No such directory!")
+        folder_path = Path(folder_path).resolve()
+        folder_path.mkdir(parents=True, exist_ok=True)
         return folder_path
-    
+
     @staticmethod
-    def folder_path(folder_root, directory_name: str) -> Union[str, bool]:
+    def validate_folder(folder_path: Union[str, Path]) -> Path:
         """
-        Ensures a directory exists. If not, it creates one and returns the absolute path.
+        Validates if a folder exists.
+
+        Args:
+            folder_path (str | Path): The folder path to validate.
+
+        Returns:
+            Path: The folder path if it exists.
+
+        Raises:
+            ResourceError: If the folder does not exist.
         """
-        directory = directory_name.lstrip()
-        try:
-            dir_path = os.path.join(folder_root, directory)
-            abs_path = os.path.abspath(dir_path)
-            if not os.path.exists(abs_path):
-                os.makedirs(abs_path)
-            return abs_path
-        except Exception as e:
-            raise ResourceError("Error Creating directory!")
-    
+        folder_path = Path(folder_path).resolve()
+        if not folder_path.exists() or not folder_path.is_dir():
+            raise ResourceError(f"Folder does not exist: {folder_path}")
+        return folder_path
+
     @classmethod
     def create_folder(cls, folder_type: str) -> str:
         """
@@ -79,49 +78,116 @@ class ResourceUtil:
             str: The absolute path of the created folder.
         """
         folder_root = cls().folder_root
-        folder_name = getattr(EditFolder, folder_type)
-        return cls.folder_path(folder_root, folder_name)
-    
-    def check_file(
-        self,
-        folder_path: str, 
-        file_name: str, 
-        file_extension: str
-    ) -> Union[str, bool]:
+
+        if hasattr(EditFolder, folder_type):
+            folder_name = getattr(EditFolder, folder_type)
+        elif hasattr(MediaFolder, folder_type):
+            folder_name = getattr(MediaFolder, folder_type)
+        else:
+            raise ValueError(f"Invalid folder type: {folder_type}")
+
+        return cls.folder(folder_root, folder_name)
+
+    @classmethod
+    def get_folder_path(cls, folder_root: str, directory_name: str) -> str:
         """
-        Checks if a file exists with the given name and extension within the specified folder path.
+        Gets or creates a subfolder within the root folder.
 
         Args:
-            folder_path (str): The folder path to check.
-            file_name (str): The name of the file.
-            file_extension (str): The extension of the file (including the dot, e.g., ".mp4", ".jpeg").
+            folder_name (str): The subfolder name.
 
         Returns:
-            Union[str, bool]:
-                - str: The full file path if the file does not exist.
-                - bool: False if the file already exists, indicating skipping.
+            str: The absolute path of the subfolder.
         """
-        limit_title = file_name[:80]
-        
-        log.info(f"{limit_title}\r")
-        
-        file_path = self.normalize_filename(
-            folder_path,
-            file_name, 
-            file_extension
-        )
-        
-        if not os.path.exists(file_path):
-            return file_path
-        elif os.path.exists(file_path):
-            log.critical(f"{file_name}{file_extension} already exists! Skipping...")
-            time.sleep(0.3)
-            return False
-        else:
-            log.error("Invalid file! Skipping...")
-            time.sleep(0.3)
-            return False
-    
+        return cls.folder(folder_root, directory_name)
+
+    @staticmethod
+    def get_file_info(file_path: Union[str, Path]) -> Optional[tuple]:
+        """
+        Retrieves file name, extension, and size.
+
+        Args:
+            file_path (str | Path): The file path.
+
+        Returns:
+            tuple | None: Tuple of (name, extension, size) or None if file does not exist.
+        """
+        file_path = Path(file_path)
+        if not file_path.exists() or not file_path.is_file():
+            return None
+        return file_path.stem, file_path.suffix, file_path.stat().st_size
+
+    @staticmethod
+    def get_file_list(
+        directory: Union[str, Path],
+        extensions: Optional[Union[str, tuple]] = None
+    ) -> list:
+        """
+        Lists files in a directory filtered by extension.
+
+        Args:
+            directory (str | Path): The directory to search.
+            extensions (str | tuple, optional): File extensions to filter by.
+
+        Returns:
+            list: List of file paths.
+        """
+        directory = Path(directory).resolve()
+        if extensions:
+            if isinstance(extensions, str):
+                extensions = [extensions]
+            extensions = [ext.lower() for ext in extensions]
+
+        return [
+            file for file in directory.rglob("*")
+            if file.is_file() and (not extensions or file.suffix.lower() in extensions)
+        ]
+
+    @staticmethod
+    def get_file_list_yield(
+        directory: Union[str, Path],
+        extensions: Optional[Union[str, tuple]] = None
+    ) -> Generator[Path, None, None]:
+        """
+        Yields files in a directory filtered by extension.
+
+        Args:
+            directory (str | Path): The directory to search.
+            extensions (str | tuple, optional): File extensions to filter by.
+
+        Yields:
+            Path: File paths.
+        """
+        directory = Path(directory).resolve()
+        if extensions:
+            if isinstance(extensions, str):
+                extensions = [extensions]
+            extensions = [ext.lower() for ext in extensions]
+
+        for file in directory.rglob("*"):
+            if file.is_file() and (not extensions or file.suffix.lower() in extensions):
+                yield file
+
+    @staticmethod
+    def get_output_file(
+        folder_path: Union[str, Path],
+        file_name: str,
+        file_extension: str
+    ) -> Path:
+        """
+        Constructs an output file path.
+
+        Args:
+            folder_path (str | Path): Folder to save the file.
+            file_name (str): The file name.
+            file_extension (str): The file extension.
+
+        Returns:
+            Path: The output file path.
+        """
+        folder_path = Path(folder_path).resolve()
+        return folder_path / f"{file_name}{file_extension}"
+
     @staticmethod
     def trim_filename(filename: Union[str, Path], max_length: int = 50) -> str:
         """
@@ -136,13 +202,12 @@ class ResourceUtil:
         """
         filename = str(filename)
         if len(filename) <= max_length: return filename
-        
-        # Length for each part before/after ellipsis
+
         trim_length = (max_length - 3) // 2
         return f"{filename[:trim_length]}...{filename[-trim_length:]}"
 
+    @staticmethod
     def normalize_filename(
-        self,
         folder_location: str,
         file_name: str,
         file_extension: str
@@ -158,104 +223,14 @@ class ResourceUtil:
         Returns:
             str: The normalized filename with a path.
         """
-        cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name)
+        cleaned_name = re.sub(r'["*<>?\\|/:]', '', file_name).strip()
+        if not cleaned_name: cleaned_name = str(uuid.uuid4())
 
-        dir_path = os.path.join(
-            folder_location,
-            cleaned_name + file_extension
-        )
+        dir_path = Path(folder_location) / (cleaned_name + file_extension)
 
-        if cleaned_name == "" or cleaned_name.isspace():
-            counter = 1
-            while True:
-                final_name = f"{cleaned_name}{counter}{file_extension}"
-                dir_path = os.path.join(folder_location, final_name)
-                if not os.path.exists(dir_path):
-                    return dir_path
-                counter += 1
+        counter = 1
+        while dir_path.exists():
+            dir_path = Path(folder_location) / f"{counter}{cleaned_name}{file_extension}"
+            counter += 1
 
-    @staticmethod
-    def get_file_info(file_path: str) -> tuple:
-        """
-        Returns the name and extension of a file.
-
-        Args:
-            file_path (str): The path to the file.
-
-        Returns:
-            tuple: A tuple containing the file name and extension.
-        """
-        if not os.path.exists(file_path):
-            return None
-
-        name = os.path.splitext(os.path.basename(file_path))[0]
-        extension = os.path.splitext(os.path.basename(file_path))[1].lower()
-        
-        try:
-            size = os.path.getsize(file_path)
-        except (FileNotFoundError, PermissionError):
-            size = None
-
-        return name, extension, size
-
-    @staticmethod
-    def get_file_list(
-        directory,
-        extensions = None
-    ):
-        """
-        This function filters a list of files and returns a new list containing only files with the specified extension.
-
-        Args:
-            directory: directory: The path to the directory to search for files (string).
-            extension: The extension to filter by (including the dot, e.g., ".mp4", ".jpeg").
-
-        Returns:
-            A list of filenames that have the provided extension.
-        """
-        filtered_files = []
-        for root, _, files in os.walk(directory):
-            for file in files:
-                if extensions is None or file.lower().endswith(extensions):
-                    full_file_path = os.path.join(root, file)
-                    filtered_files.append(full_file_path)
-        return filtered_files
-
-    @staticmethod
-    def get_file_list_yield(
-        directory,
-        extensions = None
-    ):
-        """
-        This function filters a list of files and return a generator containing only files with the specified extension.
-
-        Args:
-            directory: directory: The path to the directory to search for files (string).
-            extension: The extension to filter by (including the dot, e.g., ".mp4", ".jpeg").
-
-        Returns:
-            A list of filenames that have the provided extension.
-        """
-        for root, _, files in os.walk(directory):
-            for file in files:
-                if extensions is None or file.lower().endswith(extensions):
-                    yield os.path.join(root, file)
-
-    @staticmethod
-    def get_output_file(
-        folder_path: str,
-        file_name: str,
-        file_extension: str
-    ) -> str:
-        """
-        Returns the output file path for the processed video.
-
-        Args:
-            folder_path (str): The folder path to save the processed video.
-            file_name (str): The name of the processed video.
-            file_extension (str): The extension of the processed video.
-
-        Returns:
-            str: The output file path for the processed video.
-        """
-        return os.path.join(folder_path, f"{file_name}{file_extension}")
+        return str(dir_path)

@@ -5,6 +5,8 @@ from typing import Any
 import aiofiles
 import httpx
 
+from aiofiles.os import path as aiopath
+
 from downedit.service import Client
 from downedit.utils import (
     console,
@@ -136,8 +138,13 @@ class Downloader():
             current_state="idle"
         )
 
-        if os.path.exists(file_output):
-            log.critical(f"{ResourceUtil.trim_filename(file_name, 40)} already exists! Skipping...")
+        if await aiopath.exists(file_output):
+            await self.task_progress.update_task(
+                task_id=task_id,
+                description="Skipping",
+                total=1,
+                completed=1,
+            )
             return await self.task_progress.update_task(
                 task_id,
                 new_state="success"
@@ -256,25 +263,37 @@ class Downloader():
         Executes all queued sound editing tasks concurrently.
         """
         await asyncio.gather(*self.download_tasks)
+        self.download_tasks.clear()
 
     async def close(self):
         """
         Clears the list of queued tasks.
         """
-        self.download_tasks.clear()
-        if self.service.client: self.service.client.close()
-        if self.service.aclient: await self.service.aclient.aclose()
+        try:
+            if self.service.client: self.service.client.close()
+            if self.service.aclient: await self.service.aclient.aclose()
+        except Exception as e:
+            log.error(f"Error while closing resources: {e}")
+            log.pause()
 
     async def __aenter__(self):
         """
         Enter the context manager
         """
-        self.task_progress.__enter__()
-        return self
+        try:
+            self.task_progress.__enter__()
+            return self
+        except Exception as e:
+            log.error(f"Error during __aenter__: {e}")
+            log.pause()
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """
         Exit the context manager
         """
-        self.task_progress.__exit__(exc_type, exc_val, exc_tb)
-        await self.close()
+        try:
+            self.task_progress.__exit__(exc_type, exc_val, exc_tb)
+            await self.close()
+        except Exception as e:
+            log.error(f"Error during __aexit__: {e}")
+            log.pause()

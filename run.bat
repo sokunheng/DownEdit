@@ -8,7 +8,7 @@ if %errorlevel% neq 0 (
 
 if not exist venv (
     echo [Programs][INFO] Creating virtual environment...
-    python -m venv venv
+    python -m venv .venv
 )
 
 echo [Programs][INFO] Activating virtual environment...

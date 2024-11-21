@@ -44,7 +44,7 @@ class ImageProcess(Process):
         """
         Gets the output folder path for edited images.
         """
-        return ResourceUtil.folder_path(
+        return ResourceUtil.get_folder_path(
             folder_root=ResourceUtil.create_folder(folder_type="EDITED_IMG"),
             directory_name=tool
         )

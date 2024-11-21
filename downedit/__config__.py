@@ -18,9 +18,9 @@ class EditFolder:
     EDITED_SOUND = "Edited_Sound"
     AI_Photo_Gen = "AI_Art"
     AI_Photo_Editor = "AI_Editor"
-    
 
-class Media:
+
+class MediaFolder:
     """
     A class that provides constants for different types of media.
     """

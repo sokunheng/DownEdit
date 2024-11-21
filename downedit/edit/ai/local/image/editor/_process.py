@@ -33,7 +33,7 @@ class AIImgEditProcess(Process):
         """
         Gets the output folder path for edited images.
         """
-        return ResourceUtil.folder_path(
+        return ResourceUtil.get_folder_path(
             folder_root=ResourceUtil.create_folder(folder_type="AI_Photo_Editor"),
             directory_name=tool
         )

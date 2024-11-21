@@ -113,9 +113,11 @@ class Youtube_API:
 
     SEARCH = f"{DOMAIN}/results?search_query="
 
-    YT_BROWSE = "https://www.youtube.com/youtubei/v1/browse"
+    YT_BROWSE = f"{DOMAIN}/youtubei/v1/browse"
 
-    YT_SEARCH = "https://www.youtube.com/youtubei/v1/search"
+    YT_SEARCH = f"{DOMAIN}/youtubei/v1/search"
+
+    YT_PLAYER = f"{DOMAIN}/youtubei/v1/player"
 
 class Domain:
     """
