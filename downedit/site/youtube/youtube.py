@@ -28,6 +28,19 @@ class Youtube:
         return ResourceUtil.create_folder(
             folder_type="YOUTUBE"
         )
+    
+    async def download(self, video_url: str, video_name: str = "starting..."):
+        """
+        Downloads the video from the provided URL.
+        """
+        try:
+            await self.youtube_dl.download_video(
+                video_url = video_url,
+                video_name = video_name
+            )
+        except Exception as e:
+            log.error(traceback.format_exc())
+            log.pause()
 
     async def download_all_videos_async(self):
         """
@@ -40,10 +53,10 @@ class Youtube:
             if self.observer.is_termination_signaled():
                     break
 
-            await self.youtube_dl.download_video(
-                video_url = video["videoId"],
+            await self.download(
+                video_url=video["videoId"],
                 # video_name = video["title"]["accessibility"]["accessibilityData"]["label"]
-                video_name = video["title"]["runs"][0]["text"]
+                video_name=video["title"]["runs"][0]["text"]
             )
 
     def download_all_videos(self):
