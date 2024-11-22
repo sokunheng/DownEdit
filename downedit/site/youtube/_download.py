@@ -86,7 +86,7 @@ class YoutubeDL:
 
         async with Downloader(client) as downloader:
             await downloader.add_file(
-                video_url=video_url,
+                file_url=video_url,
                 file_media=(output_file, video_name)
             )
             await downloader.execute()
