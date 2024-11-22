@@ -18,7 +18,7 @@ class SoundEditor(Editor):
         self.audio_clip = self.audio_clip.with_multiply_volume(volume)
         return self
     
-    def fade_in(self, duration=2):
+    def fade_in(self, duration="00:00:02"):
         """Fades in an audio file.
 
         Args:
@@ -26,7 +26,7 @@ class SoundEditor(Editor):
             output_path (str): Path to save the processed audio file.
             duration (float, optional): Fade-in duration in seconds (default: 2).
         """
-        self.audio_clip = self.audio_clip.audio_fadein(duration)
+        self.audio_clip = self.audio_clip.with_effects([afx.AudioFadeIn(duration=duration)])
         return self
     
     def fade_out(self, duration=2):
@@ -37,7 +37,7 @@ class SoundEditor(Editor):
             output_path (str): Path to save the processed audio file.
             duration (float, optional): Fade-out duration in seconds (default: 2).
         """
-        self.audio_clip = self.audio_clip.audio_fadeout(duration)
+        self.audio_clip = self.audio_clip.with_effects([afx.AudioFadeOut(duration=duration)])
         return self
     
     async def render(
