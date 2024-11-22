@@ -225,3 +225,7 @@ Please ⭐️ this repository if this project helped you!
 
 ## 📝 License
 Copyright © 2022 [SokunHeng](https://github.com/SokunHeng).<br />
+
+## 📚 Reference
+> [!NOTE]
+> Learn more about this research in the [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
