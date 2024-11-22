@@ -190,9 +190,9 @@ You can also download the application and use it on your PC without installing p
 > 
 > Install the Microsoft [Cascadia](https://github.com/microsoft/cascadia-code) font on your computer if your terminal does not support the font, which is resulting in program error.
 
-## 📚 Citation
-If you use this research, please cite it as follows:
-- [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
+## 📚 Reference
+> [!NOTE]
+> Learn more about this research in the [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
 
 ## 🔨 Module
   The following dependencies are required for the project:
