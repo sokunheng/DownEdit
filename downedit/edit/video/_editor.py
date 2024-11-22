@@ -1,5 +1,9 @@
-from moviepy import *
-
+from moviepy import (
+    afx,
+    vfx,
+    VideoFileClip,
+    AudioFileClip
+)
 from ...edit.base import Editor
 
 
@@ -12,7 +16,7 @@ class VideoEditor(Editor):
         """
         Flips the video horizontally.
         """
-        self.clip = self.clip.fx(vfx.mirror_x)
+        self.clip = self.clip.with_effects([vfx.MirrorX()])
         return self
 
     def speed(self, factor = 1.0):
@@ -28,56 +32,46 @@ class VideoEditor(Editor):
 
             Defaults to 1.0 (normal speed).
         """
-        self.clip = self.clip.fx(vfx.speedx, factor)
+        self.clip = self.clip.with_effects([vfx.MultiplySpeed(factor)])
         return self
 
     def add_music(self, music_path):
         """
         Adds background music to the video
-        
+
         Args:
             music_path (str): The path to the audio file to be used as background music.
         """
         audio_clip = AudioFileClip(music_path)
-        final_duration = self.clip.duration / self.clip.speed_ratio
-        new_audio_clip = afx.audio_loop(audio_clip, duration=final_duration)
-        self.clip = self.clip.set_audio(new_audio_clip)
-        
+        final_duration = self.clip.duration
+        new_audio_clip = audio_clip.with_effects([afx.AudioLoop(duration=final_duration)])
+        self.clip = self.clip.with_audio(new_audio_clip)
         return self
-    
+
     def loop(self, amount=1):
         """
         Loops the video a specified number of times.
-        
+
         Args:
             amount (int, optional): The number of times to loop the video. Defaults to 1.
         """
-        self.clip = self.clip.fx(vfx.loop, n=amount)
+        self.clip = self.clip = self.clip.with_effects([vfx.Loop(n=amount)])
         return self
 
     def adjust_color(self, brightness=1, contrast=1, saturation=1):
         """
         Adjusts the color properties (brightness, contrast, saturation) of the video.
-        
+
         Args:
             brightness (float, optional): The brightness factor to apply. Defaults to 1.0.
             contrast (float, optional): The contrast factor to apply. Defaults to 1.0.
             saturation (float, optional): The saturation factor to apply. Defaults to 1.0.
         """
-        self.clip = self.clip.fx(
-            vfx.colorx,
-            factor=brightness
-        ).fx(
-            vfx.colorx,
-            contrast=contrast
-        ).fx(
-            vfx.colorx,
-            saturation=saturation
-        )
+
         return self
 
     async def render(
-        self, 
+        self,
         threads: int = 1,
         preset: str = "medium"
     ):
