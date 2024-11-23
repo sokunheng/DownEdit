@@ -1,4 +1,5 @@
-
+import asyncio
+import traceback
 
 from downedit.utils import (
     ResourceUtil,
@@ -6,11 +7,10 @@ from downedit.utils import (
     log
 )
 
-# /live_api/profile/public?count=9999&pcursor=&principalId={tbUid.Text}&hasMore=true
-
 class KuaiShou:
     def __init__(self, user, **kwargs):
         self.user = user
+        self.observer = Observer()
 
     def _get_output_folder(self) -> str:
         """
@@ -30,5 +30,11 @@ class KuaiShou:
         """
         Download all videos from the user
         """
-        pass
+        self.observer.register_termination_handlers()
+        try:
+            asyncio.run(
+                self.download_all_videos_async()
+            )
+        except Exception as e:
+            log.error(traceback.format_exc())
 
