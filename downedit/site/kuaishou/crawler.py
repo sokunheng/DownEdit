@@ -1,3 +1,5 @@
+import httpx
+
 from downedit.site.kuaishou.client import KuaiShouClient
 from downedit.site.domain import Domain
 from downedit.service import retry, httpx_capture
@@ -33,6 +35,19 @@ class KuaishouCrawler:
             sec-ch-ua-wow64
         """)
 
+    @httpx_capture
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
+    )
     async def __crawl_user_videos(self, userId: str):
         """
         Crawls the user information.
