@@ -6,6 +6,7 @@ from downedit.utils import (
     log
 )
 
+# /live_api/profile/public?count=9999&pcursor=&principalId={tbUid.Text}&hasMore=true
 
 class KuaiShou:
     def __init__(self, user, **kwargs):
@@ -13,13 +14,13 @@ class KuaiShou:
 
     def _get_output_folder(self) -> str:
         """
-        Gets the output folder path for youtube video.
+        Gets the output folder path for KUAISHOU video.
         """
         return ResourceUtil.create_folder(
-            folder_type="YOUTUBE"
+            folder_type="KUAISHOU"
         )
 
-    def dpwnload(self, video_url: str, video_name: str = "starting..."):
+    def download(self, video_url: str, video_name: str = "starting..."):
         """
         Downloads the video from the provided URL.
         """

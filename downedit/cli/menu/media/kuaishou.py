@@ -1,6 +1,6 @@
 from colorama import Fore
 
-from downedit.site.kuaishou import KuaiShou
+from downedit.site import KuaiShou
 from .. import get_banner
 
 from downedit.utils import (
