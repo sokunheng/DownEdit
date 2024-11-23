@@ -33,7 +33,7 @@ class KuaishouCrawler:
             sec-ch-ua-wow64
         """)
 
-    async def __crawl_user_videos(self):
+    async def __crawl_user_videos(self, userId: str):
         """
         Crawls the user information.
         """

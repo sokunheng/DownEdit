@@ -58,7 +58,6 @@ class KauiShou_API:
     KAUI_SHOU_DOMAIN: str  = "https://www.kuaishou.com"
 
     DOMAIN: str = "https://live.kuaishou.com"
-    # /live_api/profile/public?count=9999&pcursor=&principalId={tbUid.Text}&hasMore=true
 
     DISCOVERY = f"{DOMAIN}/new-reco"
 
