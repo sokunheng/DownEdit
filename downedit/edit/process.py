@@ -171,7 +171,7 @@ class Process:
 
         elapsed_time = time.time() - start_time
 
-        log.info(f"Processed: {elapsed_time:.2f} seconds.")
+        log.info(f"[white]Processed: {elapsed_time:.2f} seconds.[/]")
         log.file(f"Saved at [green]{self._output_folder}[/green]")
         log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
         # log.file(f"Processed [green]{len(self._get_output_files())}[/green] media files successfully.")

@@ -26,6 +26,18 @@ SORT_BY_MAP = {
     "popular": 1,
     "oldest": 2,
 }
+SORT_BY_VALUES = {
+    "relevance": "A",
+    "upload_date": "I",
+    "view_count": "M",
+    "rating": "E"
+}
+RESULTS_TYPE_VALUES = {
+    "video": ["B", "videoRenderer"],
+    "channel": ["C", "channelRenderer"],
+    "playlist": ["D", "playlistRenderer"],
+    "movie": ["E", "videoRenderer"]
+}
 
 class YouTubeCrawler:
     """
@@ -390,18 +402,6 @@ class YouTubeCrawler:
         Yields:
             dict: Information about each search result.
         """
-        SORT_BY_VALUES = {
-            "relevance": "A",
-            "upload_date": "I",
-            "view_count": "M",
-            "rating": "E"
-        }
-        RESULTS_TYPE_VALUES = {
-            "video": ["B", "videoRenderer"],
-            "channel": ["C", "channelRenderer"],
-            "playlist": ["D", "playlistRenderer"],
-            "movie": ["E", "videoRenderer"]
-        }
         param_string = f"CA{SORT_BY_VALUES[sort_by]}SAhA{RESULTS_TYPE_VALUES[results_type][0]}"
 
         async for result in self.aget_videos(

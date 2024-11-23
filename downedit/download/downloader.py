@@ -1,10 +1,8 @@
 import asyncio
-import os
-from typing import Any
-
 import aiofiles
 import httpx
 
+from typing import Any, List
 from aiofiles.os import path as aiopath
 
 from downedit.service import Client
@@ -15,127 +13,79 @@ from downedit.utils import (
     log
 )
 
-class Downloader():
+CHUNK_SIZES = [
+    (10 * 1024, 64 * 1024),
+    (1 * 1024 * 1024, 256 * 1024),
+    (10 * 1024 * 1024, 1 * 1024 * 1024),
+    (100 * 1024 * 1024, 10 * 1024 * 1024),
+]
+
+class Downloader:
     """
-    Base class for downloading files.
+    A class to handle file downloads from the internet.
     """
 
     def __init__(self, service: Client):
         self.service = service
-        self.download_tasks = []
+        self.download_tasks: List[asyncio.Task] = []
         self.task_progress = console().progress_bar(
             column_config=column().download()
         )
 
     def _get_chunk_size(self, file_size: int) -> int:
         """
-        Determines the chunk size for downloading a file based on its size.
-
-        Args:
-            file_size (int): The size of the file in bytes.
-
-        Returns:
-            int: The chunk size in bytes.
+        Determines the optimal chunk size based on file size.
         """
-        chunk_sizes = [
-            (10 * 1024, 64 * 1024),
-            (1 * 1024 * 1024, 256 * 1024),
-            (10 * 1024 * 1024, 1 * 1024 * 1024),
-            (100 * 1024 * 1024, 10 * 1024 * 1024)
-        ]
-        default_chunk_size = 5 * 1024 * 1024
-
-        for limit, size in chunk_sizes:
+        for limit, size in CHUNK_SIZES:
             if file_size < limit:
                 return size
+        return 5 * 1024 * 1024
 
-        return default_chunk_size
-
-    async def _get_content(
-        self,
-        content_url: str,
-        headers: dict = ...,
-        proxy_url: dict = ...
-    ) -> int:
+    async def _get_content_length(self, content_url: str, headers: dict = None, proxy_url: dict = None) -> int:
         """
-        (Retrieve the Content-Length for a given URL)
-
-        Args:
-            url (str): (Target URL)
-            headers (dict): (Request headers)
-            proxies (dict): (Proxies)
-
-        Returns:
-            int: (Value of Content-Length, or 0 if retrieval fails)
+        Retrieves the content length of a file from the given URL.
         """
-        if isinstance(proxy_url, dict): proxy_url = proxy_url.get("url")
-
+        proxy = proxy_url.get("url") if isinstance(proxy_url, dict) else None
         async with httpx.AsyncClient(
             timeout=10.0,
-            transport=httpx.AsyncHTTPTransport(retries=5, proxy=proxy_url),
+            transport=httpx.AsyncHTTPTransport(retries=5, proxy=proxy),
             verify=False,
-        ) as aclient:
+        ) as client:
             try:
-                response = await aclient.head(
+                response = await client.head(
                     url=content_url,
                     headers=headers,
                     follow_redirects=True
                 )
-                if int(response.headers.get("Content-Length", 0)) == 0:
-                    response = await aclient.get(
-                        url=content_url,
-                        headers=headers,
-                        follow_redirects=True
-                    )
                 response.raise_for_status()
-
-            except httpx.HTTPStatusError as exc:
-                if exc.response.status_code in [405, 403, 401, 302]:
-                    try:
-                        response = await aclient.get(
-                            url=content_url,
-                            headers=headers,
-                            follow_redirects=True,
-                            stream=True
-                        )
-                        response.raise_for_status()
-                    except Exception as e:
-                        log.error(e)
-                        return 0
-                else:
-                    log.error(e)
-                    return 0
-
-            except (httpx.ConnectTimeout, httpx.RequestError) as e:
-                log.error(f"Unable to request: {e}")
-                return 0
-
+                return int(response.headers.get("Content-Length", 0))
             except Exception as e:
-                log.error(f"Unable to retrieving content")
+                log.error(f"Failed to retrieve content length: {e}")
                 return 0
 
-            return int(response.headers.get("Content-Length", 0))
-
-    async def add_file(
-        self,
-        file_url: str,
-        file_media: Any,
-        service_step: tuple =("Download", "Downloading", "Downloaded"),
-    ):
+    async def _download_part(self, url: str, headers: dict, start: int, end: int, output_file: str):
         """
-        Adds a task to the queue and updates the progress bar.
+        Downloads a part of the file within the specified byte range.
+        """
+        range_headers = {**headers, "Range": f"bytes={start}-{end}"}
+        async with self.service.aclient.stream("GET", url, headers=range_headers) as response:
+            response.raise_for_status()
+            async with aiofiles.open(output_file, mode="r+b") as file:
+                await file.seek(start)
+                async for chunk in response.aiter_bytes():
+                    await file.write(chunk)
 
-        Args:
-            file_url: The URL of the file to download.
-            file_media: The identifier for the media.
+    async def _initialize_download_task(self, file_url: str, file_media: Any, service_step: tuple) -> tuple:
+        """
+        Initializes a download task, setting up progress bar tracking.
         """
         file_output, file_name = file_media
-        start_step, _, _ = service_step
+        start_step, *_ = service_step
         task_id = await self.task_progress.add_task(
             description=start_step,
             file_name=ResourceUtil.trim_filename(file_name, 40).ljust(40),
             start=True,
-            current_state="idle"
+            current_state="idle",
         )
 
         if await aiopath.exists(file_output):
@@ -144,156 +94,183 @@ class Downloader():
                 description="Skipping",
                 total=1,
                 completed=1,
+                new_state="success",
             )
-            return await self.task_progress.update_task(
-                task_id,
-                new_state="success"
-            )
+            return None, None, None
 
-        await self.task_progress.update_task(
-            task_id,
-            new_state="starting"
+        await self.task_progress.update_task(task_id, new_state="starting")
+        return task_id, file_output, file_name
+
+    async def add_file(
+        self,
+        file_url: str,
+        file_media: Any,
+        service_step: tuple = ("Download", "Downloading", "Downloaded"),
+        num_parts: int = 4,
+        small_file_threshold: int = 10 * 1024 * 1024,
+    ):
+        """
+        Adds a file to the download queue and configures the task.
+
+        Args:
+            file_url: The URL of the file to download.
+            file_media: The file output and metadata.
+            service_step: Progress step descriptions.
+            num_parts: Number of parts for multipart download.
+            small_file_threshold: Size threshold for small file optimization.
+        """
+        task_id, file_output, file_name = await self._initialize_download_task(
+            file_url,
+            file_media,
+            service_step
         )
+        if task_id is None:
+            return
+
+        content_length = await self._get_content_length(file_url, self.service.headers, self.service.proxies)
+        if content_length == 0:
+            return await self.task_progress.update_task(
+                task_id, new_state="failure", still_visible=True
+            )
 
         download_task = asyncio.create_task(
-            self.download_file(
+            self._download_single_file(
                 service_step,
                 task_id,
                 file_name,
                 file_url,
                 file_output
             )
+            if content_length < small_file_threshold
+            else self.download_file(
+                service_step,
+                task_id,
+                file_name,
+                file_url,
+                file_output,
+                num_parts
+            )
         )
         self.download_tasks.append(download_task)
 
-    async def download_file(
-        self,
-        seveice_step: tuple,
-        task_id,
-        file_name: str,
-        file_url: Any,
-        file_output: Any
-    ):
+    async def _download_single_file(self, service_step: tuple, task_id, file_name: str, file_url: str, file_output: str):
         """
-        Saves the file to the specified path.
-
-        Args:
-            task_id: The identifier for the task.
-            file_url: The content of the file to save.
-            file_output: The path to save the file to.
+        Downloads a small file in a single stream.
         """
-        _, working_step, end_step = seveice_step
-        request_method = "GET"
-        request_headers = self.service.headers
-        request_proxies = self.service.proxies
+        _, working_step, end_step = service_step
+        headers = self.service.headers
 
         async with self.service.semaphore:
-            content_length = await self._get_content(
-                file_url,
-                request_headers,
-                request_proxies,
-            )
-
-            if content_length == 0:
-                return await self.task_progress.update_task(
-                    task_id,
-                    new_state="failure",
-                    still_visible = True,
-                )
-
             await self.task_progress.update_task(
                 task_id,
-                new_total=int(content_length)
+                new_state="downloading"
             )
+            try:
+                async with self.service.aclient.stream("GET", file_url, headers=headers) as response:
+                    response.raise_for_status()
+                    content_length = await self._get_content_length(file_url, headers, self.service.proxies)
+                    await self.task_progress.update_task(
+                        task_id,
+                        new_total=content_length
+                    )
 
-            async with aiofiles.open(
-                file=file_output,
-                mode="wb"
-            ) as file:
-                try:
-                    # content_request = self.service.aclient.build_request(
-                    #     method=request_method,
-                    #     url=file_url,
-                    #     headers=request_headers,
-                    #     timeout=self.service.timeout
-                    # )
-                    # file_bytes = await self.service.aclient.send(
-                    #     request=content_request,
-                    #     stream=True
-                    # )
-                    async with self.service.aclient.stream(
-                        method=request_method,
-                        url=file_url,
-                        headers=request_headers,
-                        timeout=self.service.timeout
-                    ) as file_bytes:
-                        async for chunk in file_bytes.aiter_bytes(
-                            self._get_chunk_size(content_length)
-                        ):
+                    async with aiofiles.open(file_output, mode="wb") as file:
+                        async for chunk in response.aiter_bytes():
                             await file.write(chunk)
                             await self.task_progress.update_task(
                                 task_id,
                                 progress_increment=len(chunk)
                             )
-                except (
-                    httpx.TimeoutException,
-                    httpx.NetworkError,
-                    httpx.HTTPStatusError,
-                    httpx.ProxyError,
-                    httpx.UnsupportedProtocol,
-                    httpx.StreamError,
-                    Exception
-                ) as e:
-                    # log.error(f"Error during {working_step}: {e}")
-                    return await self.task_progress.update_task(
-                        task_id,
-                        new_state="failure",
-                        still_visible = True,
-                    )
+            except Exception as e:
+                # log.error(f"Error during {working_step}: {e}")
+                return await self.task_progress.update_task(
+                    task_id, new_state="failure", still_visible=True
+                )
 
-        # log.info(f"{end_step}: {file_name}")
         await self.task_progress.update_task(
             task_id,
             new_state="success",
-            still_visible = True,
+            still_visible=True
         )
+
+    async def download_file(self, service_step: tuple, task_id, file_name: str, file_url: str, file_output: str, num_parts: int = 4):
+        """
+        Downloads a file using multiple parts to improve speed.
+        """
+        _, working_step, end_step = service_step
+        headers = self.service.headers
+
+        async with self.service.semaphore:
+            content_length = await self._get_content_length(file_url, headers, self.service.proxies)
+            if content_length == 0:
+                return await self.task_progress.update_task(
+                    task_id, new_state="failure", still_visible=True
+                )
+
+            await self.task_progress.update_task(
+                task_id,
+                new_total=content_length
+            )
+            async with aiofiles.open(file_output, mode="wb") as file:
+                await file.seek(content_length - 1)
+                await file.write(b'\0')
+
+            part_size = content_length // num_parts
+            download_tasks = [
+                self._download_part(
+                    file_url,
+                    headers,
+                    part * part_size,
+                    min((part + 1) * part_size - 1, content_length - 1),
+                    file_output
+                )
+                for part in range(num_parts)
+            ]
+
+            try:
+                for task in asyncio.as_completed(download_tasks):
+                    await task
+                    await self.task_progress.update_task(
+                        task_id,
+                        progress_increment=part_size
+                    )
+            except Exception as e:
+                # log.error(f"Error during {working_step}: {e}")
+                return await self.task_progress.update_task(
+                    task_id, new_state="failure", still_visible=True
+                )
+
+        await self.task_progress.update_task(task_id, new_state="success", still_visible=True)
 
     async def execute(self):
         """
-        Executes all queued sound editing tasks concurrently.
+        Executes all queued download tasks concurrently.
         """
         await asyncio.gather(*self.download_tasks)
         self.download_tasks.clear()
 
     async def close(self):
         """
-        Clears the list of queued tasks.
+        Closes resources and cleans up tasks.
         """
         try:
-            if self.service.client: self.service.client.close()
-            if self.service.aclient: await self.service.aclient.aclose()
+            if self.service.client:
+                self.service.client.close()
+            if self.service.aclient:
+                await self.service.aclient.aclose()
         except Exception as e:
-            log.error(f"Error while closing resources: {e}")
-            log.pause()
+            log.error(f"Error during resource cleanup: {e}")
 
     async def __aenter__(self):
         """
-        Enter the context manager
+        Enters the context manager.
         """
-        try:
-            self.task_progress.__enter__()
-            return self
-        except Exception as e:
-            log.error(f"Error during __aenter__: {e}")
-            log.pause()
+        self.task_progress.__enter__()
+        return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         """
-        Exit the context manager
+        Exits the context manager.
         """
-        try:
-            self.task_progress.__exit__(exc_type, exc_val, exc_tb)
-            await self.close()
-        except Exception as e:
-            log.error(f"Error during __aexit__: {e}")
-            log.pause()
+        self.task_progress.__exit__(exc_type, exc_val, exc_tb)
+        await self.close()

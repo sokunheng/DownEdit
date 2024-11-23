@@ -3,6 +3,7 @@ import httpx
 
 from typing import Optional, Dict
 
+from downedit.service import httpx_capture, retry
 from downedit.site import Domain
 from downedit.site.youtube.client import YoutubeClient
 from downedit.download import Downloader
@@ -19,6 +20,19 @@ class YoutubeDL:
         self.yt_client = YoutubeClient()
         self.output_folder = output_folder
 
+    @httpx_capture
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
+    )
     async def _get_player_response(self, video_id: str) -> Optional[Dict]:
         """
         Gets the player response for the video.
@@ -32,28 +46,14 @@ class YoutubeDL:
         client_details = self.yt_client.get_client_details()
         payload = await self.yt_client.create_payload(video_id)
         headers = await self.yt_client.create_headers(client_details)
+        response = await Client().aclient.post(
+            url=Domain.YOUTUBE.YT_PLAYER,
+            json=payload,
+            headers=headers,
+        )
 
-        try:
-            response = await Client().aclient.post(
-                url=Domain.YOUTUBE.YT_PLAYER,
-                json=payload,
-                headers=headers,
-            )
-
-            response.raise_for_status()
-            return response.json()
-
-        except (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.HTTPStatusError,
-            httpx.ProxyError,
-            httpx.UnsupportedProtocol,
-            httpx.StreamError,
-            Exception
-        ) as e:
-            log.error(traceback.format_exc())
-            return None
+        response.raise_for_status()
+        return response.json()
 
     async def download_video(self, video_url: str, video_name: str = "starting..."):
         """
@@ -73,21 +73,20 @@ class YoutubeDL:
             log.error("No video stream found.")
             return
 
-        video_stream = video_stream[0]
-        video_url = video_stream.get("url", "")
-
-        output_file = ResourceUtil.get_output_file(
-            self.output_folder,
-            video_name,
-            ".mp4"
-        )
         client = Client()
         client.headers["User-Agent"] = self.yt_client.get_client_details()["userAgent"]
 
         async with Downloader(client) as downloader:
             await downloader.add_file(
-                file_url=video_url,
-                file_media=(output_file, video_name)
+                file_url=video_stream[0].get("url", ""),
+                file_media=(
+                    ResourceUtil.normalize_filename(
+                        folder_location=self.output_folder,
+                        file_name=video_name,
+                        file_extension=".mp4"
+                    ),
+                    video_name
+                )
             )
             await downloader.execute()
             await downloader.close()

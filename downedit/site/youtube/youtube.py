@@ -1,8 +1,7 @@
 import asyncio
 import traceback
 
-from downedit.site.domain import Domain
-from downedit.site.youtube._download import YoutubeDL
+from downedit.site.youtube._dl import YoutubeDL
 from downedit.site.youtube.crawler import YouTubeCrawler
 from downedit.utils import (
     ResourceUtil,
@@ -28,7 +27,7 @@ class Youtube:
         return ResourceUtil.create_folder(
             folder_type="YOUTUBE"
         )
-    
+
     async def download(self, video_url: str, video_name: str = "starting..."):
         """
         Downloads the video from the provided URL.

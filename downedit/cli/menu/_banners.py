@@ -171,7 +171,7 @@ _BANNERS: dict[
                 ░░░╚═╝░░░░╚════╝░░╚═════╝░░░░╚═╝░░░░╚═════╝░╚═════╝░╚══════╝░░░░░░╚═════╝░╚══════╝
                                         Created by HengSok - v{DE_VERSION}
                 """,
-        "message": """Example: https://www.youtube.com/watch?v=JGwWNGJdvx8"""
+        "message": """Example: https://www.youtube.com/@youtube"""
     },
 }
 

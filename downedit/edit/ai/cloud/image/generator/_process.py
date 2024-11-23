@@ -112,7 +112,7 @@ class AIImgGenProcess:
         """
         start_time = time.time()
         proceed_count = 0
-        log.info(f"Start Generating Image ...")
+        log.info(f"[white]Start Generating Image ...[/]")
 
         for _ in range(self.amount):
             if self.observer.is_termination_signaled():
@@ -122,7 +122,7 @@ class AIImgGenProcess:
 
         elapsed_time = time.time() - start_time
 
-        log.info(f"Processed: {elapsed_time:.2f} seconds.")
+        log.info(f"[white]Processed: {elapsed_time:.2f} seconds.[/]")
         log.file(f"Saved at [green]{self._output_folder}[/green]")
         log.file(f"Processed [green]{proceed_count}[/green] media files successfully.")
         log.pause()

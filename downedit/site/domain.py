@@ -2,14 +2,13 @@ class Perchance_API:
     """
     Contains the base API URL for Perchance services.
     """
-
     # Perchance Domain
-    PERCHANCE_DOMAIN = "https://perchance.org"
+    PERCHANCE_DOMAIN: str = "https://perchance.org"
 
-    PERCHANCE_CC =  "https://perchanceai.cc"
+    PERCHANCE_CC: str =  "https://perchanceai.cc"
 
     # Perchance API
-    PERCHANCE_API = "https://image-generation.perchance.org"
+    PERCHANCE_API: str = "https://image-generation.perchance.org"
 
     # Get Access Code
     ACCESS_CODE = f"{PERCHANCE_DOMAIN}/api/getAccessCodeForAdPoweredStuff"
@@ -21,7 +20,7 @@ class Perchance_API:
     USER_VERIFY = f"{PERCHANCE_API}/api/verifyUser"
 
     # Turnstile
-    EMBED_TURNSTILE = f"{PERCHANCE_API}//embed"
+    EMBED_TURNSTILE = f"{PERCHANCE_API}/embed"
 
     # Download Image
     DOWNLOAD_IMAGE = f"{PERCHANCE_API}/api/downloadTemporaryImage"
@@ -39,7 +38,7 @@ class AIGG_API:
     """
     Contains the base API URL for Downedit services.
     """
-    DOMAIN = "https://aiimagegenerator.io"
+    DOMAIN: str = "https://aiimagegenerator.io"
 
     GENERATE_IMAGE = f"{DOMAIN}/api/model/predict-peach"
 
@@ -56,19 +55,29 @@ class KauiShou_API:
     """
     Base API URL for Kuaishou services.
     """
-    KAUI_SHOU_DOMAIN = "https://www.kuaishou.com"
+    KAUI_SHOU_DOMAIN: str  = "https://www.kuaishou.com"
+
+    DOMAIN: str = "https://live.kuaishou.com"
+    # /live_api/profile/public?count=9999&pcursor=&principalId={tbUid.Text}&hasMore=true
+
+    DISCOVERY = f"{DOMAIN}/new-reco"
+
+    PROFILE_URL = f"{DOMAIN}/profile/"
+
+    DATA_URL = f"{DOMAIN}/m_graphql"
+
+    WORK_URL = "https://m.gifshow.com/fw/photo/"
 
 
 class Tiktok_API:
     """
     Contains the base API URL for TikTok services.
     """
-
     # Tiktok Domain
-    TIKTOK_DOMAIN = "https://www.tiktok.com"
+    TIKTOK_DOMAIN: str = "https://www.tiktok.com"
 
     # Webcast Domain
-    WEBCAST_DOMAIN = "https://webcast.tiktok.com"
+    WEBCAST_DOMAIN: str = "https://webcast.tiktok.com"
 
     # Login
     LOGIN_ENDPOINT = f"{TIKTOK_DOMAIN}/login/"
@@ -97,11 +106,12 @@ class Tiktok_API:
     # Post Search
     POST_SEARCH = f"{TIKTOK_DOMAIN}/api/search/item/full/"
 
+
 class Youtube_API:
     """
     Contains the base API URL for Youtube services.
     """
-    DOMAIN = "https://www.youtube.com"
+    DOMAIN: str = "https://www.youtube.com"
 
     CHANNEL = f"{DOMAIN}/channel/"
 
@@ -118,6 +128,7 @@ class Youtube_API:
     YT_SEARCH = f"{DOMAIN}/youtubei/v1/search"
 
     YT_PLAYER = f"{DOMAIN}/youtubei/v1/player"
+
 
 class Domain:
     """

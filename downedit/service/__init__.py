@@ -1,5 +1,6 @@
 from .decorators        import (
-    retry
+    retry,
+    httpx_capture
 )
 
 from .client            import Client

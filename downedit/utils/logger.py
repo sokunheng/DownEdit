@@ -33,25 +33,25 @@ class Formatter(logging.Formatter):
         message = f"[{color}]| {message}[/]"
         record.msg = message
         return super().format(record)
-    
+
 
 class Logger(logging.Logger, metaclass=Singleton):
     _console_instance = None
-    
+
     def __init__(self, name, level=logging.DEBUG):
         if hasattr(self, '_ready'):
             return
-        
+
         if Logger._console_instance is None:
             Logger._console_instance = Console()
-        
+
         super().__init__(name, level)
         self.console = Logger._console_instance
         self._ready = True
 
     def config_log(self, log_level=logging.INFO):
         """
-        Set new log level and configure 
+        Set new log level and configure
         """
         self.setLevel(log_level)
         if not self.hasHandlers():
@@ -64,25 +64,20 @@ class Logger(logging.Logger, metaclass=Singleton):
             )
             console_handler.setFormatter(Formatter())
             self.addHandler(console_handler)
-    
+
     def pause(self):
         current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        self.console.input(f"[cyan][{current_time}][/] [green]Press any key to continue ...[/]")
+        self.console.input(f"[cyan][{current_time}][/] [white]Press any key to continue ...[/]")
 
     def close(self):
-        # Properly close and remove all handlers
         for handler in self.handlers:
             handler.close()
             self.removeHandler(handler)
         self.handlers.clear()
-        # Ensure all logs are processed before exit
         time.sleep(0.5)
-        
 
-# Set the custom logger class as the default
 logging.setLoggerClass(Logger)
 
-# Adding custom log level method
 FILE_LEVEL_NUM = 25
 logging.addLevelName(FILE_LEVEL_NUM, "FILE")
 

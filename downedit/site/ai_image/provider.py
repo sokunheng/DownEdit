@@ -7,7 +7,7 @@ from playwright.async_api import async_playwright
 
 from downedit import AIContext
 from downedit.service import Client
-from downedit.service import retry
+from downedit.service import retry, httpx_capture
 from downedit.site import Domain
 from downedit.utils import (
     log
@@ -94,6 +94,19 @@ class Perchance:
                 await web_page.close()
                 await browser_context.close()
 
+    @httpx_capture
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
+    )
     async def _verify_token(self, token: str) -> bool:
         """
         Verify cloudflare token.
@@ -101,31 +114,20 @@ class Perchance:
         Args:
             token (str): The cloudflare token.
         """
-        try:
-            response = await self.service.aclient.get(
-                url=Domain.AI_IMAGE.PERCHANCE.USER_VERIFY,
-                params={
-                    'token': token,
-                    'thread': self._thread,
-                    "__cacheBust": uniform()
-                },
-                follow_redirects=True
-            )
-            data = response.json()
-            if data["status"] in ("success", "already_verified"):
-                self.context.set("userKey", data["userKey"])
-                return True
-            response.raise_for_status()
-        except (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.HTTPStatusError,
-            httpx.ProxyError,
-            httpx.UnsupportedProtocol,
-            httpx.StreamError,
-            Exception
-        ) as e:
-            return False
+        response = await self.service.aclient.get(
+            url=Domain.AI_IMAGE.PERCHANCE.USER_VERIFY,
+            params={
+                'token': token,
+                'thread': self._thread,
+                "__cacheBust": uniform()
+            },
+            follow_redirects=True
+        )
+        data = response.json()
+        if data["status"] in ("success", "already_verified"):
+            self.context.set("userKey", data["userKey"])
+            return True
+        response.raise_for_status()
 
     async def _verify_key(self, key: str) -> bool:
         """
@@ -157,62 +159,7 @@ class Perchance:
         ) as e:
             return False
 
-    async def _verify_user(self):
-        """
-        Handles user verification, including Turnstile solving if necessary.
-        """
-        try:
-            response = await self.service.aclient.get(
-                url=Domain.AI_IMAGE.PERCHANCE.USER_VERIFY,
-                params={
-                    'thread': self._thread,
-                    '__cacheBust': uniform()
-                },
-                follow_redirects=True
-            )
-            data = response.json()
-            if data["status"] in ("success", "already_verified"):
-                self.context.set("userKey", data["userKey"])
-                return True
-            response.raise_for_status()
-        except (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.HTTPStatusError,
-            httpx.ProxyError,
-            httpx.UnsupportedProtocol,
-            httpx.StreamError,
-            Exception
-        ) as e:
-            return False
-
-    async def _get_ad_access_code(self):
-        """
-        Retrieves and caches the ad access code.
-        """
-        try:
-            response = await self.service.aclient.get(
-                url=Domain.AI_IMAGE.PERCHANCE.ACCESS_CODE,
-                params={
-                    '__cacheBust': uniform()
-                },
-                follow_redirects=True
-            )
-            if response.status_code == 200:
-                self.context.set("adAccessCode", response.text)
-                return True
-            response.raise_for_status()
-        except (
-            httpx.TimeoutException,
-            httpx.NetworkError,
-            httpx.HTTPStatusError,
-            httpx.ProxyError,
-            httpx.UnsupportedProtocol,
-            httpx.StreamError,
-            Exception
-        ) as e:
-            return False
-
+    @httpx_capture
     @retry(
         num_retries=3,
         delay=1,
@@ -221,8 +168,69 @@ class Perchance:
             httpx.NetworkError,
             httpx.HTTPStatusError,
             httpx.ProxyError,
-            httpx.UnsupportedProtocol, httpx.StreamError
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
+    )
+    async def _verify_user(self):
+        """
+        Handles user verification, including Turnstile solving if necessary.
+        """
+        response = await self.service.aclient.get(
+            url=Domain.AI_IMAGE.PERCHANCE.USER_VERIFY,
+            params={
+                'thread': self._thread,
+                '__cacheBust': uniform()
+            },
+            follow_redirects=True
         )
+        data = response.json()
+        if data["status"] in ("success", "already_verified"):
+            self.context.set("userKey", data["userKey"])
+            return True
+        response.raise_for_status()
+
+    @httpx_capture
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
+    )
+    async def _get_ad_access_code(self):
+        """
+        Retrieves and caches the ad access code.
+        """
+        response = await self.service.aclient.get(
+            url=Domain.AI_IMAGE.PERCHANCE.ACCESS_CODE,
+            params={
+                '__cacheBust': uniform()
+            },
+            follow_redirects=True
+        )
+        if response.status_code == 200:
+            self.context.set("adAccessCode", response.text)
+            return True
+        response.raise_for_status()
+
+    @httpx_capture
+    @retry(
+        num_retries=3,
+        delay=1,
+        exceptions=(
+            httpx.TimeoutException,
+            httpx.NetworkError,
+            httpx.HTTPStatusError,
+            httpx.ProxyError,
+            httpx.UnsupportedProtocol,
+            httpx.StreamError,
+        ),
     )
     async def generate(self):
         """
@@ -267,6 +275,7 @@ class PerchanceCC:
         self.service = service
         self.context = context
 
+    @httpx_capture
     @retry(
         num_retries=3,
         delay=1,
@@ -276,8 +285,9 @@ class PerchanceCC:
             httpx.HTTPStatusError,
             httpx.ProxyError,
             httpx.UnsupportedProtocol,
-            httpx.StreamError
-    ))
+            httpx.StreamError,
+        ),
+    )
     async def generate(self):
         """
         Generates an image using the Perchance API.
@@ -332,6 +342,7 @@ class AIGG:
         self.context.set("width", width)
         self.context.set("height", height)
 
+    @httpx_capture
     @retry(
         num_retries=3,
         delay=1,
@@ -341,8 +352,9 @@ class AIGG:
             httpx.HTTPStatusError,
             httpx.ProxyError,
             httpx.UnsupportedProtocol,
-            httpx.StreamError
-    ))
+            httpx.StreamError,
+        ),
+    )
     async def generate(self):
         """
         Generates an image using the AIGG API.

@@ -1,12 +1,11 @@
 pystyle
-requests
 inquirer
 colorama
-moviepy
 rich
-playwright
 rembg
 onnxruntime
+moviepy
+playwright
 wmi
 psutil
 httpx

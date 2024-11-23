@@ -1,7 +1,7 @@
 import random
 import string
 
-class Youtube():
+class YoutubeIOS():
     """
     Youtube mobile client for iOS
 
@@ -46,7 +46,7 @@ class YoutubeClient:
     Handles Youtube Client configuration.
     """
     def __init__(self):
-        self.youtube = Youtube()
+        self.youtube = YoutubeIOS()
 
     def get_client_details(self):
         """

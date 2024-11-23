@@ -2,10 +2,12 @@ import time
 from colorama import Fore
 
 from .. import get_banner
-from downedit.site.douyin import __main__ as douyin
-from downedit.site.kuaishou import __main__ as kuaishou
-from downedit.site.tiktok import __main__ as tiktok
-from .youtube import main as youtube
+from downedit.site import (
+    Douyin,
+    Kuaishou,
+    Tiktok
+)
+from .youtube import main as youtube_main
 from downedit.utils import (
     log,
     selector
@@ -19,10 +21,10 @@ def display_menu():
     )
     # TODO: Media Video Downloader Algorithm
     menu_list = {
-        f" Tiktok  {Fore.RED}(Rework)": tiktok.main,
+        f" Tiktok  {Fore.RED}(Rework)": Tiktok.main,
         f" Douyin {Fore.RED}(Rework)": lambda: None,
         f" Kuaishou {Fore.RED}(Rework)": lambda: None,
-        " Youtube": youtube,
+        " Youtube": youtube_main,
         " Back": lambda: None,
     }
 

@@ -4,16 +4,16 @@ import random
 class Chrome():
     """
     Google Chrome
-    
+
     Description:
         The version of Chrome is based on the WebKit version. We have used the WebKit version to determine the minor version range.
-    
+
     Reference:
         https://chromereleases.googleblog.com/search/label/Stable%20updates
     """
     def __init__(self):
         pass
-    
+
     def user_agents(self) -> dict:
         return {
             "windows": [
@@ -32,10 +32,10 @@ class Chrome():
             ],
             "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) CriOS/{chrome} Mobile/15E148 Safari/{webkit}'
-            ] 
+            ]
         }
-        
-    def get_versions(self): 
+
+    def get_versions(self):
         return  {
             '100.0.4896': {'minor_range': (0, 255), 'webkit': '537.36'},
             '101.0.4951': {'minor_range': (0, 255), 'webkit': '537.36'},
@@ -71,16 +71,16 @@ class Chrome():
 class Firefox():
     """
     Mozilla Firefox
-    
+
     description:
         The version of Firefox is based on the Gecko version. We have used the stable release version provided by Mozilla to determine the minor version range.
-    
+
     Reference:
         https://www.mozilla.org/en-US/firefox/releases/
     """
     def __init__(self):
         pass
-    
+
     def user_agents(self):
         return {
             "windows": [
@@ -101,8 +101,8 @@ class Firefox():
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/{firefox} Mobile/15E148 Safari/605.1.15'
             ]
         }
-    
-    def get_versions(self): 
+
+    def get_versions(self):
         return {
             '103.0': {'minor_range': (0, 2)},
             '104.0': {'minor_range': (0, 2)},
@@ -144,16 +144,16 @@ class Firefox():
 class Edge():
     """
     Microsoft Edge
-    
+
     description:
         The version of Edge is based on the WebKit version. We have used the WebKit version to determine the minor version range.
-    
+
     Reference:
         https://docs.microsoft.com/en-us/deployedge/microsoft-edge-release-schedule
     """
     def __init__(self):
         pass
-    
+
     def user_agents(self):
         return {
             "windows": [
@@ -170,10 +170,10 @@ class Edge():
             ],
             "ios": [
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/15.0 EdgiOS/{chrome} Mobile/15E148 Safari/{webkit}'
-            ] 
+            ]
         }
-    
-    def get_versions(self): 
+
+    def get_versions(self):
         return {
             '100.0.1185': {'minor_range': (0, 99), 'webkit': '537.36'},
             '101.0.1210': {'minor_range': (0, 99), 'webkit': '537.36'},
@@ -208,16 +208,16 @@ class Edge():
 class Safari():
     """
     Apple Safari
-    
+
     description:
         The version of Safari is based on the WebKit version. We have used the WebKit version to determine the minor version range.
-    
+
     Reference:
         https://developer.apple.com/documentation/safari-release-notes
     """
     def __init__(self):
         pass
-    
+
     def user_agents(self):
         return {
             'macos': [
@@ -227,8 +227,8 @@ class Safari():
                 'Mozilla/5.0 (iPhone; CPU iPhone OS {ios} like Mac OS X) AppleWebKit/{webkit} (KHTML, like Gecko) Version/{safari} Mobile/15E148 Safari/{webkit}'
             ]
         }
-    
-    def get_versions(self): 
+
+    def get_versions(self):
         return {
             '10': {'minor_range': (0, 0), 'webkit': '602.4.8'},
             '11': {'minor_range': (0, 0), 'webkit': '604.1.38'},
@@ -239,16 +239,16 @@ class Safari():
             '16': {'minor_range': (0, 6), 'webkit': '605.1.15'},
             '17': {'minor_range': (0, 6), 'webkit': '605.1.15'},
         }
-    
+
 class Browser():
     def __init__(self, browser="chrome"):
         self.browser_name = browser.lower()
         self.browser = self._initialize_browser()
-    
+
     def _initialize_browser(self):
         """
         Initializes the Browser instance with a specific browser.
-        
+
         Args:
             browser (str): The name of the browser to use. Defaults to "chrome".
         """
@@ -259,28 +259,28 @@ class Browser():
             "safari": Safari()
         }
         return browser_classes.get(self.browser_name, Chrome())
-    
+
     def get_user_agents(self):
         """
         Retrieves the user agents for the browser.
-        
+
         Returns:
             tuple: A tuple containing the user agents for the browser.
         """
         return self.browser.user_agents()
-    
+
     def get_version(self):
         """
         Retrieves a random version from the browser's version set.
-        
+
         Returns:
-            dict: A dictionary containing the major version, minor version, 
+            dict: A dictionary containing the major version, minor version,
                     and possibly webkit version if available.
         """
         versions = self.browser.get_versions()
         major_version = random.choice(list(versions.keys()))
         properties = versions[major_version]
-            
+
         __version = {}
         if major_version:
             __version["major"] = major_version
@@ -288,4 +288,4 @@ class Browser():
             __version["minor"] = random.randint(*map(int, properties['minor_range']))
         if "webkit" in properties:
             __version["webkit"] = properties['webkit']
-        return __version    
+        return __version
