@@ -159,7 +159,7 @@ _BANNERS: dict[
                 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚═════╝░░░░░░░╚═════╝░╚══════╝
                                             Created by HengSok - v{DE_VERSION}
                 """,
-        "message": """Example Below\nCookie: kpf=PC_WEB; kpn=KUAISHOU_VISION; clientid=3; did=web_dfe556cf2a8....\nUser ID: 3xnpgvvuei3umwk"""
+        "message": """\nUser ID: 3xnpgvvuei3umwk\nhttps://www.kuaishou.com/profile/3xeqp66ummi8872"""
     },
     "YOUTUBE_DL": {
         "display": f"""{Fore.MAGENTA}
