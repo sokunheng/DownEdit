@@ -75,6 +75,7 @@ class KauiShou_API:
 
     WORK_URL = "https://m.gifshow.com/fw/photo/"
 
+    VERYFY_CAPTCHA = "https://captcha.zt.kuaishou.com/rest/zt/captcha/sliding/kSecretApiVerify"
 
 class Tiktok_API:
     """
