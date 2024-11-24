@@ -61,9 +61,17 @@ class KauiShou_API:
 
     DISCOVERY = f"{DOMAIN}/new-reco"
 
+    POPULAR = f"{DOMAIN}/live/HOT"
+
     PROFILE_URL = f"{DOMAIN}/profile/"
 
-    DATA_URL = f"{DOMAIN}/m_graphql"
+    PROFILE_FEED = f"{DOMAIN}/live_api/profile/feedbyid"
+
+    PUBLIC_PROFILE = f"{DOMAIN}/live_api/profile/public"
+
+    M_DATA_URL = f"{DOMAIN}/m_graphql"
+
+    DATA_URL = f"{KAUI_SHOU_DOMAIN}/graphql"
 
     WORK_URL = "https://m.gifshow.com/fw/photo/"
 

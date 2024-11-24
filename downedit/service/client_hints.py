@@ -21,6 +21,27 @@ class ClientHints:
     References:
         https://wicg.github.io/ua-client-hints/#http-ua-hints
         https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-CH-UA
+
+    Example:
+    >>> client_hints = ClientHints(user_agent)
+    >>> client_hints.mobile
+    True
+    >>> client_hints.platform
+    'iOS'
+    >>> client_hints.platform_version
+    '14.0.0'
+    >>> client_hints.brands
+    [{'brand': 'Google Chrome', 'version': '89'}, {'brand': 'Chromium', 'version': '89'}]
+    >>> client_hints.brands_full_version_list
+    [{'brand': 'Google Chrome', 'version': '89.0.4389.90'}, {'brand': 'Chromium', 'version': '89.0.4389.90'}]
+    >>> client_hints.bitness
+    '64'
+    >>> client_hints.architecture
+    'arm'
+    >>> client_hints.model
+    'SM-G390Y'
+    >>> client_hints.wow64
+    False
     """
     mobile: str
     platform: str
@@ -92,11 +113,12 @@ class ClientHints:
         browser_brands = brand_map.get(self.__user_agent.browser_type, [])
         browser_version = self.get_browser_version(full_version=full_version_list)
 
-        brands = [{'brand': 'Not)A;Brand', 'version': '99.0.0.0' if full_version_list else '99'}]
-        for brand in browser_brands:
-            brands.append({'brand': brand, 'version': browser_version})
-
-        return brands
+        brands = [
+            {'brand': 'Not_A Brand', 'version': '24.0.0.0' if full_version_list else '24'}
+        ]
+        return [
+            {'brand': brand, 'version': browser_version} for brand in browser_brands
+        ] + brands
 
     def get_browser_version(self, full_version=True):
         if full_version:

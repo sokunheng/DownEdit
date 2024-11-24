@@ -52,5 +52,6 @@ async def httpx_capture(func, *args, **kwargs):
         httpx.StreamError,
         Exception,
     ) as e:
-        # log.error(traceback.format_exc())
+        log.error(traceback.format_exc())
+        log.pause()
         raise

@@ -48,18 +48,62 @@ class KuaishouCrawler:
             httpx.StreamError,
         ),
     )
-    async def __crawl_user_videos(self, userId: str):
+    async def __crawl_user_videos(self, principalId: str, pcursor: str = ""):
         """
         Crawls the user information.
         """
-        cookie = await self.ks_client.get_client_details()
+        cookies = await self.ks_client.get_client_details()
         header = self.headers.get()
-        header["cookie"] = cookie
+        header["Accept"] = "application/json, text/plain, */*"
+        header["Connection"] = "keep-alive"
+        header["Cookie"] = cookies
+        header["Host"] = "live.kuaishou.com"
+        header["Referer"] = Domain.KUAI_SHOU.PROFILE_URL + principalId
 
-        response = await Client().aclient.post(
-            url=Domain.KUAI_SHOU.PROFILE_URL,
+        response = await Client().aclient.get(
+            url=Domain.KUAI_SHOU.PUBLIC_PROFILE,
             headers=header,
+            params = {
+                "count": 12,
+                "pcursor": pcursor,
+                "principalId": principalId,
+                "hasMore": "true"
+            }
         )
 
         response.raise_for_status()
-        return response.json()
+        json_response = response.json()
+        data = json_response.get("data", {})
+
+        return {
+            "result": data.get("result", 0),
+            "pcursor": data.get("pcursor", ""),
+            "videos": data.get("list", [])
+        }
+
+    async def fetch_user_videos(self, user_id: str):
+        """
+        Public method to fetch user videos iteratively.
+
+        Args:
+            user_id (str): The user's unique ID for Kuaishou.
+
+        Yields:
+            dict: A video metadata for the user.
+        """
+        try:
+            pcursor = ""
+            has_more = True
+
+            while has_more:
+                user_videos_data = await self.__crawl_user_videos(principalId=user_id, pcursor=pcursor)
+
+                for video in user_videos_data.get("videos", []):
+                    yield video
+
+                pcursor = user_videos_data.get("pcursor", "")
+                has_more = user_videos_data.get("result", 0) == 1 and pcursor != ""
+
+        except Exception as e:
+            log.error(f"Error fetching videos for user {user_id}: {str(e)}")
+            log.pause()

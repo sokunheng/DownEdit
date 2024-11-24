@@ -4,10 +4,10 @@ from colorama import Fore
 from .. import get_banner
 from downedit.site import (
     Douyin,
-    Kuaishou,
     Tiktok
 )
 from .youtube import main as youtube_main
+from .kuaishou import main as kuaishou_main
 from downedit.utils import (
     log,
     selector
@@ -23,7 +23,7 @@ def display_menu():
     menu_list = {
         f" Tiktok  {Fore.RED}(Rework)": Tiktok.main,
         f" Douyin {Fore.RED}(Rework)": lambda: None,
-        f" Kuaishou {Fore.RED}(Rework)": lambda: None,
+        f" Kuaishou": kuaishou_main,
         " Youtube": youtube_main,
         " Back": lambda: None,
     }
