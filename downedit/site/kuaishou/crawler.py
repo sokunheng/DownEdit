@@ -96,11 +96,12 @@ class KuaishouCrawler:
             has_more = True
 
             while has_more:
-                user_videos_data = await self.__crawl_user_videos(principalId=user_id, pcursor=pcursor)
-
+                user_videos_data = await self.__crawl_user_videos(
+                    principalId=user_id,
+                    pcursor=pcursor
+                )
                 for video in user_videos_data.get("videos", []):
                     yield video
-
                 pcursor = user_videos_data.get("pcursor", "")
                 has_more = user_videos_data.get("result", 0) == 1 and pcursor != ""
 
