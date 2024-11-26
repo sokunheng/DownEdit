@@ -63,7 +63,9 @@ class KauiShou_API:
 
     POPULAR = f"{DOMAIN}/live/HOT"
 
-    PROFILE_URL = f"{DOMAIN}/profile/"
+    LIVE_PROFILE_URL = f"{DOMAIN}/profile/"
+
+    FEED_PROFILE_URL = f"{KAUI_SHOU_DOMAIN}/profile/"
 
     PROFILE_FEED = f"{DOMAIN}/live_api/profile/feedbyid"
 

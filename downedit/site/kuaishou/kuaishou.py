@@ -44,7 +44,7 @@ class KuaiShou:
         match = re.match(user_id_pattern, input_string.strip())
         return match.group(1) if match else ""
 
-    def extract_url_segment(self, url: str) -> str:
+    def extract_live_url_segment(self, url: str) -> str:
         """
         Extracts the specific part of the URL and converts the slashes to underscores.
 
@@ -61,6 +61,25 @@ class KuaiShou:
             extracted_part = match.group(1)
             converted_part = extracted_part.replace("/", "_")
             return converted_part
+        else:
+            return secrets.token_hex(16)
+
+    def extract_url_segment(self, url: str) -> str:
+        """
+        Extracts the specific part of the URL and converts the slashes to underscores.
+
+        Args:
+            url (str): The input URL to extract the segment from.
+
+        Returns:
+            str: The extracted and converted segment.
+        """
+        pattern = r"/ksc2/(.+)\?.+"
+        match = re.search(pattern, url)
+
+        if match:
+            extracted_part = match.group(1)
+            return extracted_part
         else:
             return secrets.token_hex(16)
 
@@ -82,13 +101,21 @@ class KuaiShou:
         Asynchronously downloads all videos from the user.
         """
         user_id = self.extract_user_id(self.user)
-        async for video in self.kuaishou_crawler.fetch_user_videos(user_id):
+        # async for video in self.kuaishou_crawler.fetch_user__videos(user_id):
+        #     if self.observer.is_termination_signaled():
+        #             break
+
+        #     await self.download(
+        #         video_url=video["playUrl"],
+        #         video_name=self.extract_live_url_segment(video["playUrl"])
+        #     )
+        async for video in self.kuaishou_crawler.fetch_user_feed_videos(user_id):
             if self.observer.is_termination_signaled():
                     break
 
             await self.download(
-                video_url=video["playUrl"],
-                video_name=self.extract_url_segment(video["playUrl"])
+                video_url=video,
+                video_name=self.extract_url_segment(video)
             )
 
     def download_all_videos(self):
