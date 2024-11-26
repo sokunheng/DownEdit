@@ -23,8 +23,8 @@ def display_menu():
     menu_list = {
         f" Tiktok  {Fore.RED}(Rework)": Tiktok.main,
         f" Douyin {Fore.RED}(Rework)": lambda: None,
-        f" Kuaishou {Fore.RED}(Rework)": lambda: None,
-        # f" Kuaishou": kuaishou_main,
+        # f" Kuaishou {Fore.RED}(Rework)": lambda: None,
+        f" Kuaishou": kuaishou_main,
         " Youtube": youtube_main,
         " Back": lambda: None,
     }

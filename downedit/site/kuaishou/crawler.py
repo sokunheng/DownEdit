@@ -14,8 +14,9 @@ from downedit.utils import (
 )
 
 class KuaishouCrawler:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.ks_client = KuaiShouClient()
+        self.cookies = kwargs.get("cookies", "")
         self.user_agent = UserAgent(
             platform_type='mobile',
             device_type='android',
@@ -48,15 +49,17 @@ class KuaishouCrawler:
             httpx.StreamError,
         ),
     )
-    async def __crawl_user_videos(self, principalId: str, pcursor: str = ""):
+    async def __crawl_user_videos(self, principalId: str, pcursor: str = "", cookies: str = ""):
         """
         Crawls the user information.
         """
-        cookies = await self.ks_client.get_client_details()
+
         header = self.headers.get()
         header["Accept"] = "application/json, text/plain, */*"
         header["Connection"] = "keep-alive"
-        header["Cookie"] = cookies
+        # cookies = await self.ks_client.get_client_details()
+        # get cookies from class
+        header["Cookie"] = self.cookies
         header["Host"] = "live.kuaishou.com"
         header["Referer"] = Domain.KUAI_SHOU.PROFILE_URL + principalId
 
@@ -103,7 +106,7 @@ class KuaishouCrawler:
                 for video in user_videos_data.get("videos", []):
                     yield video
                 pcursor = user_videos_data.get("pcursor", "")
-                has_more = user_videos_data.get("result", 0) == 1 and pcursor != ""
+                has_more = user_videos_data.get("result", 0) == 1 or pcursor == "no_more"
 
         except Exception as e:
             log.error(f"Error fetching videos for user {user_id}: {str(e)}")

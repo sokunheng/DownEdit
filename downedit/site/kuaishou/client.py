@@ -97,16 +97,18 @@ class KuaiShouClient:
         response.raise_for_status()
         # json_response = response.json()
         did_cookies = response.cookies.get("did", "")
+        _did_cookies = response.cookies.get("_did", "")
         live_bfb1s_cookies = response.cookies.get("kuaishou.live.bfb1s", "")
         clientid_cookies = response.cookies.get("clientid", "")
         client_key_cookies = response.cookies.get("client_key", "")
         kpn_cookies = response.cookies.get("kpn", "")
         client_cookies = (
-            f"did={did_cookies}; "
+            # f"_did={_did_cookies};"
+            f"did={did_cookies}; ",
             f"kuaishou.live.bfb1s={live_bfb1s_cookies}; "
-            f"clientid={clientid_cookies}; "
-            f"did={did_cookies}; "
-            f"client_key={client_key_cookies}; "
-            f"kpn={kpn_cookies}"
+            f"clientid={clientid_cookies}; ",
+            f"did={did_cookies}; ",
+            f"client_key={client_key_cookies}; ",
+            f"kpn={kpn_cookies}",
         )
-        return client_cookies
+        return "".join(client_cookies)

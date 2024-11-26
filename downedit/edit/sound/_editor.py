@@ -15,7 +15,7 @@ class SoundEditor(Editor):
             output_path (str): Path to save the processed audio file.
             volume (float, optional): Volume level (default: 0.5).
         """
-        self.audio_clip = self.audio_clip.with_multiply_volume(volume)
+        self.audio_clip = self.audio_clip.with_volume_scaled(volume)
         return self
 
     def fade_in(self, duration="00:00:02"):

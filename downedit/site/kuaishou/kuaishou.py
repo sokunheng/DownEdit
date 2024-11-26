@@ -14,9 +14,10 @@ from downedit.utils import (
 class KuaiShou:
     def __init__(self, user, **kwargs):
         self.user = user
+        self.cookies = kwargs.get("cookies", "")
         self.observer = Observer()
         self._output_folder = self._get_output_folder()
-        self.kuaishou_crawler = KuaishouCrawler()
+        self.kuaishou_crawler = KuaishouCrawler(cookies=self.cookies)
         self.kuaishou_dl = KuaishouDL(
             output_folder=self._output_folder
         )

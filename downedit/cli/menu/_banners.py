@@ -159,7 +159,7 @@ _BANNERS: dict[
                 ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝░░╚═╝░╚════╝░░╚═════╝░░░░░░░╚═════╝░╚══════╝
                                             Created by HengSok - v{DE_VERSION}
                 """,
-        "message": """\nUser ID: 3xnpgvvuei3umwk\nhttps://www.kuaishou.com/profile/3xeqp66ummi8872"""
+        "message": """Example:\nUser ID: 3xnpgvvuei3umwk\nProfile Url: https://www.kuaishou.com/profile/3xeqp66ummi8872"""
     },
     "YOUTUBE_DL": {
         "display": f"""{Fore.MAGENTA}
