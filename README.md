@@ -28,12 +28,12 @@
 
 ## 🌐 Service
 
-| Website| Provider| Single Video | User's Videos | Stream | Status | Login Required|
+| Website| Provider| Single Video | User's Videos | Stream | Login Required | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
-| [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) | ✔️ |
-| [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) | ✔️ |
-| [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) | ❌ |
+| [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
+| [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
 
 ## 🤖 AI
 | Type | Model | Provider| Minimal | Bulk | API | Status |
