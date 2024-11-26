@@ -53,7 +53,7 @@
 | Video Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
 | Sound Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
 
-- `ChatDE`
+- `DownEdit`
 
 | Type | Model | Capabilities | Use Case | Status |
 | --- | --- | --- | --- | --- |
