@@ -28,30 +28,30 @@
 
 ## 🌐 Service
 
-| Website| Provider| Single Video | User's Videos | Stream | Login Required | Status |
+| Website| Provider| Single Video | User's Videos | Stream | Access | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
-| [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
-| [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ❌ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
-| [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
+| [tiktok.com](https://www.tiktok.com/) | `None` | ✔️ | ✔️ | ❌ | API (Cookie) | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| [douyin.com](https://www.douyin.com/) | `None` | ✔️ | ✔️ | ❌ | API (Cookie) | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| [kuaishou.com](https://www.kuaishou.com/?isHome=1) | `None` | ✔️ | ✔️ | ❌ | Login Required (Cookie) | ![Active](https://img.shields.io/badge/Active-brightgreen) |
+| [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | (Public/Private) | ![Active](https://img.shields.io/badge/Active-brightgreen) |
 
 ## 🤖 AI
 
 - `Cloud`
 
-| Type | Model | Provider| Minimal | Bulk | Login Required | Status |
+| Type | Model | Provider| Minimal | Bulk | Access | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Image Generation | `None` | | None | ✔️ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
-| Video Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
-| Sound Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Image Generation | `None` | | None | ✔️ | API (Public) | ![Active](https://img.shields.io/badge/Active-brightgreen) |
+| Video Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Sound Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
 
 - `Local`
 
-| Type | Model | Provider| Minimal | Bulk | Login Required | Status |
+| Type | Model | Provider| Minimal | Bulk | Access | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| Image Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
-| Video Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
-| Sound Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Image Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Video Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Sound Generation | `None` | | None | ✔️ |  | ![Inactive](https://img.shields.io/badge/Inactive-red) |
 
 - `ChatDE`
 
