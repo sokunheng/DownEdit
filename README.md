@@ -36,10 +36,28 @@
 | [youtube.com](https://www.youtube.com) | `None` | ✔️ | ✔️ | ❌ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
 
 ## 🤖 AI
-| Type | Model | Provider| Minimal | Bulk | API | Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| Image | `None` | | None | ✔️ | ✔️ | ✔️ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
 
+- `Cloud`
+
+| Type | Model | Provider| Minimal | Bulk | Login Required | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| Image Generation | `None` | | None | ✔️ | ❌ | ![Active](https://img.shields.io/badge/Active-brightgreen) |
+| Video Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Sound Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+
+- `Local`
+
+| Type | Model | Provider| Minimal | Bulk | Login Required | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| Image Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Video Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+| Sound Generation | `None` | | None | ✔️ | ❌ | ![Inactive](https://img.shields.io/badge/Inactive-red) |
+
+- `ChatDE`
+
+| Type | Model | Capabilities | Use Case | Status |
+| --- | --- | --- | --- | --- |
+| | | | | ![Inactive](https://img.shields.io/badge/Inactive-red) |
 
 ## 🚀 Usage
 - **`Edit Video`** - Simply copy and paste (right click) whatever directory location you would like to process.
