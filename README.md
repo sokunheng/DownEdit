@@ -242,7 +242,7 @@ Please ⭐️ this repository if this project helped you!
 
 ## 📚 Reference
 
-> [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
+[Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
 
 
 ## 📝 License
