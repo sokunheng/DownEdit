@@ -240,9 +240,11 @@ You can also download the application and use it on your PC without installing p
 Please ⭐️ this repository if this project helped you!
 
 
+## 📚 Reference
+
+> [!NOTE]
+> [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
+
+
 ## 📝 License
 Copyright © 2022 [SokunHeng](https://github.com/SokunHeng).<br />
-
-## 📚 Reference
-> [!NOTE]
-> Learn more about this research in the [Documentation](https://github.com/sokunheng/DownEdit/tree/main/docs#readme)
