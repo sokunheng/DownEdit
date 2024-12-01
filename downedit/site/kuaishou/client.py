@@ -39,16 +39,6 @@ class KuaiShouClient:
         self.default_client = Client(headers=self.headers.get())
         self.client = client or self.default_client
 
-    def generate_web_did(self):
-        """
-        Generates a 'did' cookie value in the format:
-        'web_<32-character-hex-string>'.
-
-        Returns:
-            str: A generated 'did' value.
-        """
-        return f"web_{secrets.token_hex(16)}"
-
     def extract_cookie_value(self, cookies, cookie_name):
         """
         Extracts the value of a specific cookie from a CookieJar object.

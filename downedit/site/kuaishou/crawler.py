@@ -78,7 +78,7 @@ class KuaishouCrawler:
             "pcursor": data.get("pcursor", ""),
             "videos": data.get("list", [])
         }
-    
+
     @httpx_capture
     @retry(
         num_retries=3,
