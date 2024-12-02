@@ -4,7 +4,11 @@ import re
 import secrets
 import time
 
+
 class KuaiShouHash:
+
+    # Reference:
+    # https://s2-111422.kwimgs.com/kos/nlav111422/pc-vision/js/app.e64212cd.js
 
     def __init__(self, app_key="10001001", secret_key="f2fff381c551a8dcdb765e316f3d44ac"):
         self._app_key = app_key
@@ -59,6 +63,7 @@ class KuaiShouHash:
         """
         sign_input = self._app_key + self._secret_key + str(int(time.time()))
         return self.generate_sign(sign_input)
+
 
 if __name__ == "__main__":
     kuai_shou_did = KuaiShouHash()
