@@ -1,10 +1,13 @@
-import logging
 import os
+import sys
 
+import logging
 from rich.logging import RichHandler
 
-from ..downedit.utils.logger import log
-from ..downedit.utils.logger import Formatter, init_logging
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from downedit.utils.logger import log
+from downedit.utils.logger import Formatter, init_logging
 
 
 def test_singleton():

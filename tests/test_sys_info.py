@@ -1,10 +1,16 @@
+import os
+import sys
+
 import unittest
-from downedit.utils import SystemInfo
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from downedit.utils import pc_info
 
 class TestSystemInfo(unittest.TestCase):
     def setUp(self):
-        self.sys_info1 = SystemInfo()
-        self.sys_info2 = SystemInfo()
+        self.sys_info1 = pc_info
+        self.sys_info2 = pc_info
 
     def test_singleton_instance(self):
         print("ID of sys_info1:", id(self.sys_info1))
@@ -14,12 +20,12 @@ class TestSystemInfo(unittest.TestCase):
     def test_multiple_calls(self):
         print("ID of sys_info1:", id(self.sys_info1))
         print("ID of sys_info2:", id(self.sys_info2))
-        print("CPU info for sys_info1:", self.sys_info1.get_cpu_info())
-        print("CPU info for sys_info2:", self.sys_info2.get_cpu_info())
-        print("RAM info for sys_info1:", self.sys_info1.get_ram_info())
-        print("RAM info for sys_info2:", self.sys_info2.get_ram_info())
-        print("GPU info for sys_info1:", self.sys_info1.get_gpu_info())
-        print("GPU info for sys_info2:", self.sys_info2.get_gpu_info())
+        print("CPU info for sys_info1:", self.sys_info1["CPU"])
+        print("CPU info for sys_info2:", self.sys_info2["CPU"])
+        print("RAM info for sys_info1:", self.sys_info1["RAM"])
+        print("RAM info for sys_info2:", self.sys_info2["RAM"])
+        print("GPU info for sys_info1:", self.sys_info1["GPU"])
+        print("GPU info for sys_info2:", self.sys_info2["GPU"])
 
 if __name__ == '__main__':
     unittest.main()
