@@ -1,12 +1,21 @@
 CHUNK_SIZE = 1024
 DE_VERSION = open('version', 'r').read().strip()
 
+
 class Config:
     """
     A class that provides setting for different types of configurations.
     """
+
     def __init__(self) -> None:
         pass
+
+
+class BinFolder:
+    """
+    A class that provides constants for different types of bin folders.
+    """
+    BIN = ".bin"
 
 
 class EditFolder:
