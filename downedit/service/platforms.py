@@ -263,17 +263,17 @@ class macOS():
 class Linux():
     """
     Linux desktop operating system
-    
+
     description:
         The version of Linux is based on the kernel version. We have used the stable release version provided by the Linux community.
-        
+
     Reference:
         https://www.kernel.org/
     """
     def __init__(self):
         pass
-    
-    def get_versions(self): 
+
+    def get_versions(self):
         return {
             '5.0': {'minor_range': (0, 21)},
             '5.1': {'minor_range': (0, 21)},
@@ -304,20 +304,20 @@ class Linux():
             '6.6': {'minor_range': (0, 17)},
             '6.7': {'minor_range': (0, 5)},
         }
-    
+
 class Windows():
     """
     Windows desktop operating system
-    
+
     description:
         The version of Windows is based on the build number. We have used the stable release version provided by Microsoft.
-        
+
     Reference:
         https://support.microsoft.com/en-us/help/12387/windows-10-update-history
     """
     def __init__(self):
         pass
-    
+
     def get_versions(self): 
         return {
             '6.1': {},
@@ -325,8 +325,8 @@ class Windows():
             '6.3': {},
             '10.0': {},
         }
-        
-        
+
+
 class Mobile:
     """
     Handles mobile platforms (e.g., Android, iOS).
@@ -387,7 +387,7 @@ class Platform:
         if self.device == 'android':
             return selected_device, selected_device.get_models() if selected_device else []
         return selected_device, []
-    
+
     def _generate_build_number(self, build_number_templates):
         """
         Generates a build number based on the provided templates.
@@ -404,19 +404,19 @@ class Platform:
             device=f'{random.randint(17, 22):02d}{random.randint(0, 12):02d}{random.randint(0, 29):02d}',
             version=random.randint(1, 255)
         )
-    
+
     def get_version(self):
         """
         Generates version information for the device.
         """
         device_type, device_models = self.get_device_type()
         if not device_type: return {}
-        
+
         versions = device_type.get_versions()
         major_version = random.choice(list(versions.keys()))
         properties = versions[major_version]
-            
-        __version = {}  
+
+        __version = {}
         if major_version:
             __version["major"] = major_version
         if "minor_range" in properties:
@@ -425,5 +425,5 @@ class Platform:
             __version['platform_model'] = random.choice(device_models)
         if "build_number" in properties:
             __version["build_number"] = self._generate_build_number(properties['build_number'])
-        
+
         return __version

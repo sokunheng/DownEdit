@@ -67,7 +67,7 @@ class PercentageColumn(ProgressColumn):
 
     def __init__(
         self,
-        text_format: str = "[progress.percentage]{task.percentage:>3.1f}%",	
+        text_format: str = "[progress.percentage]{task.percentage:>3.1f}%",
         style: str = "none",
         justify: str = "left",
     ):

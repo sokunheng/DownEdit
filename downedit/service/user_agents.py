@@ -26,9 +26,9 @@ class UserAgent():
         browser_version (dict): The browser version.
 
     Examples:
-        >>> user_agent = UserAgent()
-        >>> print(user_agent)
-        Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4664.45 Safari/537.36
+    >>> user_agent = UserAgent()
+    >>> print(user_agent)
+    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4664.45 Safari/537.36
     """
     def __init__(
         self,

@@ -241,6 +241,17 @@ class Safari():
         }
 
 class Browser():
+    """
+    Browser class for generating user agents and versions for different browsers.
+
+    Args:
+        browser (str): The name of the browser to use. (Chrome, Firefox, Edge, Safari). Defaults to "chrome".
+
+    Example:
+    >>> browser = Browser("chrome")
+    >>> browser.get_version()
+    {'major': '100', 'minor': 23, 'webkit': '537.36'}
+    """
     def __init__(self, browser="chrome"):
         self.browser_name = browser.lower()
         self.browser = self._initialize_browser()
