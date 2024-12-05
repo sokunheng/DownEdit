@@ -3,12 +3,11 @@ import asyncio
 import random
 
 from random import uniform
-from playwright.async_api import async_playwright
 
 from downedit import AIContext
 from downedit.service import Client
 from downedit.service import retry, httpx_capture
-from downedit.site import Domain
+from downedit.site import Domain, Turnstile
 from downedit.utils import (
     log
 )
@@ -29,34 +28,6 @@ class Perchance:
         })
         self._thread = 0
 
-    async def _start_playwright(self):
-        """
-        Lazily starts Playwright.
-        """
-        if self.__playwright is None:
-            self.__playwright = await async_playwright().start()
-
-    async def _solve_turnstile(self, page):
-        """
-        Solves the Turnstile challenge using Playwright and returns the token.
-        """
-        await page.wait_for_selector(".cf-turnstile", state="attached")
-        token = await page.evaluate(
-            """async () => {
-                return new Promise((resolve) => {
-                    window.turnstile.ready(async (turnstile) => {
-                        turnstile.render('#cfTurnstileCtn', {
-                            sitekey: '0x4AAAAAAAA8g8NphwaSOT59',
-                            callback: (token) => {
-                                resolve(token);
-                            }
-                        });
-                    })
-                });
-            }"""
-        )
-        return token
-
     async def refresh_key(self) -> None:
         """
         Verify and refresh the user key if needed.
@@ -68,31 +39,26 @@ class Perchance:
         """
         Fetch a new user key.
         """
-        async with async_playwright() as aplaywright:
-            try:
-                playwright_browser = await aplaywright.firefox.launch(headless=False)
-                browser_context = await playwright_browser.new_context(
-                    extra_http_headers=self.service.headers
-                )
-                web_page = await browser_context.new_page()
-                await web_page.goto(
-                    url=Domain.AI_IMAGE.PERCHANCE.EMBED_TURNSTILE,
-                    referer=Domain.AI_IMAGE.PERCHANCE.EMBED_TURNSTILE
-                )
-                cloudflare_token = await self._solve_turnstile(web_page)
-                verify_success = await self._verify_token(cloudflare_token)
-                if verify_success:
-                    return self.context.get("userKey")
-                else:
-                    raise Exception("Turnstile verification failed.")
+        try:
+            turnstile= Turnstile(
+                header=self.service.headers,
+                proxy=self.service.proxies
+            )
+            cloudflare = await turnstile.solve(
+                url=Domain.AI_IMAGE.PERCHANCE.EMBED_TURNSTILE,
+                sitekey="0x4AAAAAAAA8g8NphwaSOT59"
+            )
+            solved_token = cloudflare.result
+            verify_success = await self._verify_token(solved_token)
 
-            except Exception as e:
-                print(f"Turnstile or token error: {e}")
-                return ""
+            if verify_success:
+                return self.context.get("userKey")
+            else:
+                raise Exception("Turnstile verification failed.")
 
-            finally:
-                await web_page.close()
-                await browser_context.close()
+        except Exception as e:
+            print(f"Turnstile or token error: {e}")
+            return ""
 
     @httpx_capture
     @retry(
