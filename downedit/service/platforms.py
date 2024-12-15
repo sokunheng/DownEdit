@@ -57,6 +57,10 @@ class Android():
                 'minor_range': (0, 0),
                 'build_number': ('UP1A.{device}.{version}', 'UD1A.{device}.{version}', 'UQ1A.{device}.{version}')
             },
+            '15.0': {
+                'minor_range': (0, 0),
+                'build_number': ('AP3A.{device}.{version}', 'AP4A.{device}.{version}', 'AP4A.{device}.{version}')
+            },
         }
     
     def get_models(self):
@@ -209,7 +213,7 @@ class IOS():
             '17.4': {'minor_range': (0, 1)},
             '17.5': {'minor_range': (0, 1)},
             '17.6': {'minor_range': (0, 1)},
-            '18.0': {'minor_range': (0, 0)},
+            '18.0': {'minor_range': (0, 2)},
         }
 
 class macOS():
@@ -257,7 +261,7 @@ class macOS():
             '14.4': {'minor_range': (0, 1)},
             '14.5': {'minor_range': (0, 0)},
             '14.6': {'minor_range': (0, 1)},
-            '15.0': {'minor_range': (0, 0)},
+            '15.0': {'minor_range': (0, 2)},
         }
 
 class Linux():
@@ -303,6 +307,11 @@ class Linux():
             '6.5': {'minor_range': (0, 13)},
             '6.6': {'minor_range': (0, 17)},
             '6.7': {'minor_range': (0, 5)},
+            '6.8': {'minor_range': (0, 2)},
+            '6.9': {'minor_range': (0, 0)},
+            '6.10': {'minor_range': (0, 0)},
+            '6.11': {'minor_range': (0, 0)},
+            '6.12': {'minor_range': (0, 0)},
         }
 
 class Windows():
@@ -318,7 +327,7 @@ class Windows():
     def __init__(self):
         pass
 
-    def get_versions(self): 
+    def get_versions(self):
         return {
             '6.1': {},
             '6.2': {},

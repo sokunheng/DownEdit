@@ -66,6 +66,8 @@ class Chrome():
             '127.0.6533': {'minor_range': (0, 255), 'webkit': '537.36'},
             '128.0.6613': {'minor_range': (0, 255), 'webkit': '537.36'},
             '129.0.6668': {'minor_range': (0, 255), 'webkit': '537.36'},
+            '130.0.6723': {'minor_range': (0, 255), 'webkit': '537.36'},
+            '131.0.6778': {'minor_range': (0, 255), 'webkit': '537.36'},
         }
 
 class Firefox():
@@ -139,6 +141,10 @@ class Firefox():
             '127.0': {'minor_range': (0, 2)},
             '128.0': {'minor_range': (0, 1)},
             '129.0': {'minor_range': (0, 0)},
+            '130.0': {'minor_range': (0, 1)},
+            '131.0': {'minor_range': (0, 3)},
+            '132.0': {'minor_range': (0, 2)},
+            '133.0': {'minor_range': (3, 3)},
         }
 
 class Edge():
@@ -203,6 +209,10 @@ class Edge():
             '125.0.2535': {'minor_range': (0, 99), 'webkit': '537.36'},
             '126.0.2592': {'minor_range': (0, 99), 'webkit': '537.36'},
             '127.0.2651': {'minor_range': (0, 99), 'webkit': '537.36'},
+            '128.0.2739': {'minor_range': (0, 99), 'webkit': '537.36'},
+            '129.0.2792': {'minor_range': (0, 99), 'webkit': '537.36'},
+            '130.0.2849': {'minor_range': (0, 99), 'webkit': '537.36'},
+            '131.0.2903': {'minor_range': (0, 99), 'webkit': '537.36'},
         }
 
 class Safari():
@@ -238,6 +248,7 @@ class Safari():
             '15': {'minor_range': (0, 6), 'webkit': '605.1.15'},
             '16': {'minor_range': (0, 6), 'webkit': '605.1.15'},
             '17': {'minor_range': (0, 6), 'webkit': '605.1.15'},
+            '18': {'minor_range': (0, 2), 'webkit': '605.1.15'},
         }
 
 class Browser():
