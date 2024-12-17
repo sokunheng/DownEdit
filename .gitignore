@@ -1,5 +1,10 @@
 $(VENV_NAME)/
 __pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
 
 .vscode/
 .idea/
