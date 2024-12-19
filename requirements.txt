@@ -10,4 +10,3 @@ wmi
 psutil
 httpx
 aiofiles
- 
