@@ -29,16 +29,22 @@ IF %ERRORLEVEL% NEQ 0 (
 :: Install libraries
 if not exist .venv\Lib\site-packages\installed (
     if exist requirements.txt (
-        echo [Programs][INFO] Installing dependencies from requirements.txt...
-        echo.
-        pip install -r requirements.txt
-        IF %ERRORLEVEL% NEQ 0 (
-            echo [Programs][ERROR] Failed to install one or more dependencies.
+        ping 8.8.8.8 -n 1 >nul
+        if %ERRORLEVEL% neq 0 (
+            echo [Programs][ERROR] No network connection. Please check your internet connection and try again.
             exit /b 1
+        ) else (
+            echo [Programs][INFO] Installing dependencies from requirements.txt...
+            echo.
+            pip install -r requirements.txt
+            IF %ERRORLEVEL% NEQ 0 (
+                echo [Programs][ERROR] Failed to install one or more dependencies.
+                exit /b 1
+            )
+            echo.
+            echo [Programs][INFO] Dependencies installed successfully.
+            type nul > .venv\Lib\site-packages\installed
         )
-        echo.
-        echo [Programs][INFO] Dependencies installed successfully.
-        type nul > .venv\Lib\site-packages\installed
     ) else (
         echo [Programs][INFO] requirements.txt not found, skipping dependency installation.
     )
