@@ -6,15 +6,15 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-if not exist venv (
+if not exist .venv (
     echo [Programs][INFO] Creating virtual environment...
     python -m venv .venv
 )
 
 echo [Programs][INFO] Activating virtual environment...
-call venv\Scripts\activate.bat
+call .venv\Scripts\activate.bat
 
-if not exist venv\Lib\site-packages\installed (
+if not exist .venv\Lib\site-packages\installed (
     if exist requirements.txt (
         echo [Programs][INFO] Installing dependencies from requirements.txt...
         echo.
