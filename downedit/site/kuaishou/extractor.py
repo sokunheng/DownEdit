@@ -55,11 +55,11 @@ def extract_url_segment(url: str) -> str:
     Returns:
         str: The extracted and converted segment.
     """
-    pattern = r"/ksc2/(.+)\?.+"
+    pattern = r"/ksc2/(.+?)\.mp4\?.+"
     match = re.search(pattern, url)
 
     if match:
-        extracted_part = match.group(1)
+        extracted_part = match.group(1).replace('/', '_')
         return extracted_part
     else:
         return secrets.token_hex(16)
