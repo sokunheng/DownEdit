@@ -152,21 +152,24 @@ class Turnstile:
         Process the Turnstile challenge.
         """
         max_attempts = 10
-        for attempt in range(max_attempts):
-            turnstile_response = await page.input_value("[name=cf-turnstile-response]")
+        for _ in range(max_attempts):
+            try:
+                turnstile_response = await page.input_value("[name=cf-turnstile-response]")
 
-            if turnstile_response !="":
-                element = await page.query_selector("[name=cf-turnstile-response]")
+                if turnstile_response != "":
+                    element = await page.query_selector("[name=cf-turnstile-response]")
+                    if element:
+                        value = await element.get_attribute("value")
+                        return CloudflareResult(
+                            result=value,
+                            elapsed_time=round(time.time() - start_time, 3),
+                        )
 
-                if element:
-                    value = await element.get_attribute("value")
-                    return CloudflareResult(
-                        result=value,
-                        elapsed_time=round(time.time() - start_time, 3),
-                    )
+                await page.click("//div[@class='cf-turnstile']", timeout=5000)
+                await asyncio.sleep(0.7)
 
-            await page.click("//div[@class='cf-turnstile']", timeout=3000)
-            await asyncio.sleep(0.7)
+            except Exception as e:
+                pass
 
         return CloudflareResult(
             status="failure",

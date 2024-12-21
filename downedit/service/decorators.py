@@ -29,6 +29,7 @@ async def retry(
             if result is not None:
                 return result
         except exceptions as e:
+            # log.error(traceback.format_exc())
             if attempt < num_retries - 1:
                 await asyncio.sleep(delay)
     return None

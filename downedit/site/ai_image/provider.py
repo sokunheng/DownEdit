@@ -1,3 +1,4 @@
+import random
 import httpx
 import asyncio
 import random
@@ -32,8 +33,10 @@ class Perchance:
         """
         Verify and refresh the user key if needed.
         """
-        if not self._user_key or not await self._verify_key(self._user_key):
-            self._user_key = await self._fetch_key()
+        if not self.context.get("userKey") or not await self._verify_key(
+            self.context.get("userKey")
+        ):
+            await self._fetch_key()
 
     async def _fetch_key(self) -> str:
         """
@@ -42,7 +45,8 @@ class Perchance:
         try:
             turnstile= Turnstile(
                 header=self.service.headers,
-                proxy=self.service.proxies
+                # proxy=self.service.proxies
+                proxy=None
             )
             cloudflare = await turnstile.solve(
                 url=Domain.AI_IMAGE.PERCHANCE.EMBED_TURNSTILE,
@@ -365,6 +369,7 @@ class DE_AI_GENERATOR:
         """
         Returns a list of AI image providers.
         """
+        # provider_classes = [Perchance, PerchanceCC, AIGG]
         provider_classes = [PerchanceCC, AIGG]
         selected_provider = random.choice(provider_classes)
 
