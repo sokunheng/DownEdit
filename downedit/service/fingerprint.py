@@ -74,13 +74,13 @@ class Fingerprint:
             return "portrait-primary"
 
     @classmethod
-    def browser_fingerprint(cls, browser_type: str = "Edge") -> dict:
-        platform = {
-            "Chrome": "Win32",
-            "Edge": "Win32",
-            "Firefox": "Win32",
-            "Safari": "MacIntel",
-        }
+    def browser_fingerprint(cls, browser_type: str = "Chrome", user_agent: str  = None) -> dict:
+        platform = {}
+        platform["Chrome"] = "Win32"
+        platform["Edge"] = "Win32"
+        platform["Firefox"] = "Win32"
+        platform["Safari"] = "MacIntel"
+
         inner_width = random.randint(1024, 1920)
         inner_height = random.randint(768, 1080)
         outer_width = inner_width + random.randint(24, 32)
@@ -90,36 +90,36 @@ class Fingerprint:
         avail_width = random.randint(1280, 1920)
         avail_height = random.randint(800, 1080)
 
-        fingerprint = {
-            "language": random.choice(cls.LANGUAGES),
-            "colorDepth": 24,
-            "pixelDepth": 24,
-            "screenResolution": f"{inner_width}x{inner_height}",
-            "availableScreenResolution": f"{avail_width}x{avail_height}",
-            "timezone": random.choice(cls.TIMEZONES),
-            "platform": platform.get(browser_type, "Win32"),
-            "doNotTrack": random.choice(["1", "0"]),
-            "canvasFingerprint": cls.generate_canvas_fingerprint(),
-            "webGLFingerprint": cls.generate_webgl_fingerprint(),
-            "audioFingerprint": cls.generate_audio_fingerprint(),
-            "fonts": cls.generate_fonts(),
-            "plugins": cls.generate_plugins(),
-            "hardwareConcurrency": random.randint(2, 16),
-            "deviceMemory": random.choice([2, 4, 8, 16, 32]),
-            "cpuClass": cls.generate_cpu_class(),
-            "navigatorPluginsLength": random.randint(0, 10),
-            "screenOrientation": cls.generate_screen_orientation(inner_width, inner_height),
-            "availHeight": avail_height,
-            "availWidth": avail_width,
-            "colorDepth": 24,
-            "height": inner_height,
-            "pixelDepth": 24,
-            "width": inner_width,
-            "availTop": screen_y,
-            "availLeft": screen_x,
-            "outerWidth": outer_width,
-            "outerHeight": outer_height,
-        }
+        fingerprint = {}
+        fingerprint["language"] = random.choice(cls.LANGUAGES)
+        fingerprint["colorDepth"] = 24
+        fingerprint["pixelDepth"] = 24
+        fingerprint["screenResolution"] = f"{inner_width}x{inner_height}"
+        fingerprint["availableScreenResolution"] = f"{avail_width}x{avail_height}"
+        fingerprint["timezone"] = random.choice(cls.TIMEZONES)
+        fingerprint["platform"] = platform.get(browser_type, "Win32")
+        fingerprint["userAgent"] = user_agent or f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        fingerprint["doNotTrack"] = random.choice(["1", "0"])
+        fingerprint["canvasFingerprint"] = cls.generate_canvas_fingerprint()
+        fingerprint["webGLFingerprint"] = cls.generate_webgl_fingerprint()
+        fingerprint["audioFingerprint"] = cls.generate_audio_fingerprint()
+        fingerprint["fonts"] = cls.generate_fonts()
+        fingerprint["plugins"] = cls.generate_plugins()
+        fingerprint["hardwareConcurrency"] = random.randint(2, 16)
+        fingerprint["deviceMemory"] = random.choice([2, 4, 8, 16, 32])
+        fingerprint["cpuClass"] = cls.generate_cpu_class()
+        fingerprint["navigatorPluginsLength"] = random.randint(0, 10)
+        fingerprint["screenOrientation"] = cls.generate_screen_orientation(inner_width, inner_height)
+        fingerprint["availHeight"] = avail_height
+        fingerprint["availWidth"] = avail_width
+        fingerprint["colorDepth"] = 24
+        fingerprint["pixelDepth"] = 24
+        fingerprint["height"] = inner_height
+        fingerprint["width"] = inner_width
+        fingerprint["availTop"] = screen_y
+        fingerprint["availLeft"] = screen_x
+        fingerprint["outerWidth"] = outer_width
+        fingerprint["outerHeight"] = outer_height
         return fingerprint
 
 if __name__ == "__main__":
