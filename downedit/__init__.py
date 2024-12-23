@@ -42,6 +42,7 @@ from downedit.service import (
     Headers,
     Proxy,
     UserAgent,
+    Fingerprint
 )
 
 from downedit.edit.ai.cloud import AIImgGenProcess
@@ -75,6 +76,7 @@ __all__ = [
     "Headers",
     "Proxy",
     "UserAgent",
+    "Fingerprint",
     "Downloader",
 
     "Domain",
