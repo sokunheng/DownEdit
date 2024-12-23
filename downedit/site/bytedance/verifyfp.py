@@ -4,6 +4,8 @@ from string import ascii_uppercase
 from string import digits
 from time import time
 
+__all__ = ["VerifyFp"]
+
 """
 var xi = function() {
     return Pi.get(Si) || (null === localStorage || void 0 === localStorage ? void 0 : localStorage.getItem(Si)) || function() {

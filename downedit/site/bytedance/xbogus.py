@@ -1,218 +1,267 @@
-from base64 import b64encode
-from hashlib import md5
-from time import time
-from urllib.parse import quote, urlencode
+import json
+import time
+import base64
+import hashlib
 
+import urllib.parse
+
+from downedit.service.fingerprint import Fingerprint
+from downedit.service.serialization import format_mm_version
+from downedit.service.user_agents import UserAgent
+
+__all__ = ["XBogus"]
 
 class XBogus:
     """
-    Generates the x-bogus parameter for ByteDance services.
+    A class to generate the X-Bogus value for a given URL path.
     """
+    def __init__(self, user_agent: str = "") -> None:
+        self.Array = [None for _ in range(48)] + list(range(10)) + [None for _ in range(39)] + list(range(10, 16))
+        self.character = "Dkdpgh4ZKsQB80/Mfvw36XI1R25-WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe="
+        self.user_agent = (
+            user_agent
+            if user_agent is not None and user_agent != ""
+            else "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+        )
 
-    _DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-    _STRING_TABLE = "Dkdpgh4ZKsQB80/Mfvw36XI1R25-WUAlEi7NLboqYTOPuzmFjJnryx9HVGcaStCe="
-    _ARRAY_MAP = [None] * 48 + list(range(10)) + [None] * 39 + list(range(10, 16))
-    _CANVAS_VALUE = 3873194319
+    def md5_str_to_array(self, md5_str):
+        """
+        Convert a string to an array of integers using the md5 hashing algorithm.
+        """
+        if isinstance(md5_str, str) and len(md5_str) > 32:
+            return [ord(char) for char in md5_str]
+        else:
+            array = []
+            idx = 0
+            while idx < len(md5_str):
+                array.append(
+                    (self.Array[ord(md5_str[idx])] << 4)
+                    | self.Array[ord(md5_str[idx + 1])]
+                )
+                idx += 2
+            return array
 
-    def _create_array_from_values(self, *args) -> list[int]:
+    def md5_encrypt(self, url_params):
         """
-        Creates a 19-element array from input values.
+        Encrypt the URL path using multiple rounds of md5 hashing.
         """
-        array = [0] * 19
-        array[0], array[10], array[1],
-        array[11], array[2], array[12],
-        array[3], array[13], array[4],
-        array[14], array[5], array[15],
-        array[6], array[16], array[7],
-        array[17], array[8], array[18],
-        array[9] = args
-        return array
+        hashed_url_params = self.md5_str_to_array(
+            self.md5(self.md5_str_to_array(self.md5(url_params)))
+        )
+        return hashed_url_params
 
-    def _generate_obfuscated_string_1(self, *args) -> str:
+    def md5(self, input_data):
         """
-        Generates an obfuscated string using a specific permutation.
-        """
-        array = [0] * 19
-        array[0], array[1], array[2],
-        array[3], array[4], array[5],
-        array[6], array[7], array[8],
-        array[9], array[10], array[11],
-        array[12], array[13], array[14],
-        array[15], array[16], array[17],
-        array[18] = args
-        return "".join(map(chr, map(int, array)))
-
-    @staticmethod
-    def _generate_numbers_from_text(text: str) -> list[int]:
-        """
-        Generates a list of numbers from a text string.
-        """
-        return [
-            (ord(text[i]) << 16) | (ord(text[i + 1]) << 8) | ord(text[i + 2])
-            for i in range(0, 21, 3)
-        ]
-
-    @staticmethod
-    def _generate_obfuscated_string_2(a: int, b: int, c: str) -> str:
-        """
-        Generates a short obfuscated string.
-        """
-        return chr(a) + chr(b) + c
-
-    def _generate_obfuscated_string_3(self, a: str, b: str) -> str:
-        """
-        Generates an obfuscated string using RC4.
-        """
-        d = list(range(256))
-        c = 0
-        f = ""
-        for i in range(256):
-            d[i] = i
-        for j in range(256):
-            c = (c + d[j] + ord(a[j % len(a)])) % 256
-            d[j], d[c] = d[c], d[j]
-        t = 0
-        c = 0
-        for k in range(len(b)):
-            t = (t + 1) % 256
-            c = (c + d[t]) % 256
-            d[t], d[c] = d[c], d[t]
-            f += chr(ord(b[k]) ^ d[(d[t] + d[c]) % 256])
-        return f
-
-    def _calculate_md5_hash(self, input_data) -> str:
-        """
-        Calculates the MD5 hash of input data.
+        Calculate the md5 hash value of the input data.
         """
         if isinstance(input_data, str):
-            array = self._convert_md5_to_array(input_data)
+            array = self.md5_str_to_array(input_data)
         elif isinstance(input_data, list):
             array = input_data
         else:
-            raise TypeError("Input data must be a string or a list.")
+            raise ValueError("Invalid input type. Expected str or list.")
 
-        md5_hash = md5()
+        md5_hash = hashlib.md5()
         md5_hash.update(bytes(array))
         return md5_hash.hexdigest()
 
-    def _convert_md5_to_array(self, md5_string: str) -> list[int]:
+    def encoding_conversion(
+        self, a, b, c, e, d, t, f, r, n, o, i, _, x, u, s, l, v, h, p
+    ):
         """
-        Converts an MD5 string to an array of integers.
+        Perform encoding conversion.
         """
-        if isinstance(md5_string, str) and len(md5_string) > 32:
-            return [ord(char) for char in md5_string]
-        else:
-            return [
-                (self._ARRAY_MAP[ord(md5_string[index])] << 4)
-                | self._ARRAY_MAP[ord(md5_string[index + 1])]
-                for index in range(0, len(md5_string), 2)
-            ]
+        y = [a]
+        y.append(int(i))
+        y.extend([b, _, c, x, e, u, d, s, t, l, f, v, r, h, n, p, o])
+        re = bytes(y).decode("ISO-8859-1")
+        return re
 
+    def encoding_conversion2(self, a, b, c):
+        """
+        Perform an encoding conversion on the given input values and return the result.
+        """
+        return chr(a) + chr(b) + c
 
-    def _process_url_path(self, url_path: str) -> list[int]:
+    def rc4_encrypt(self, key, data):
         """
-        Processes the URL path to generate an array.
+        Encrypt data using the RC4 algorithm.
         """
-        return self._convert_md5_to_array(
-            self._calculate_md5_hash(self._convert_md5_to_array(self._calculate_md5_hash(url_path)))
+        S = list(range(256))
+        j = 0
+        encrypted_data = bytearray()
+
+        # Initialize the S box
+        for i in range(256):
+            j = (j + S[i] + key[i % len(key)]) % 256
+            S[i], S[j] = S[j], S[i]
+
+        # Generate the ciphertext
+        i = j = 0
+        for byte in data:
+            i = (i + 1) % 256
+            j = (j + S[i]) % 256
+            S[i], S[j] = S[j], S[i]
+            encrypted_byte = byte ^ S[(S[i] + S[j]) % 256]
+            encrypted_data.append(encrypted_byte)
+
+        return encrypted_data
+
+    def calculation(self, a1, a2, a3):
+        """
+        Perform a calculation using bitwise operations on the given input values and return the result.
+        """
+        x1 = (a1 & 255) << 16
+        x2 = (a2 & 255) << 8
+        x3 = x1 | x2 | a3
+        return (
+            self.character[(x3 & 16515072) >> 18]
+            + self.character[(x3 & 258048) >> 12]
+            + self.character[(x3 & 4032) >> 6]
+            + self.character[x3 & 63]
         )
 
-    def _generate_string_from_number(self, number: int) -> str:
+    def getXBogus(self, url_params):
         """
-        Generates a string from a number using a lookup table.
+        Get the X-Bogus value.
         """
-        string_representation = [number & 16515072, number & 258048, number & 4032, number & 63]
-        string_representation = [i >> j for i, j in zip(string_representation, range(18, -1, -6))]
-        return "".join([self._STRING_TABLE[i] for i in string_representation])
 
-    @staticmethod
-    def _handle_user_agent(key: str, user_agent: bytes) -> bytes:
-        """
-        Handles user agent using RC4.
-        """
-        d = list(range(256))
-        c = 0
-        result = bytearray(len(user_agent))
+        array1 = self.md5_str_to_array(
+            self.md5(
+                base64.b64encode(
+                    self.rc4_encrypt(b"\x00\x01\x0c", self.user_agent.encode("ISO-8859-1"))
+                ).decode("ISO-8859-1")
+            )
+        )
 
-        for i in range(256):
-            c = (c + d[i] + ord(key[i % len(key)])) % 256
-            d[i], d[c] = d[c], d[i]
+        array2 = self.md5_str_to_array(
+            self.md5(self.md5_str_to_array("d41d8cd98f00b204e9800998ecf8427e"))
+        )
+        url_params_array = self.md5_encrypt(url_params)
 
-        t = 0
-        c = 0
+        timer = int(time.time())
+        ct = 536919696
+        array3 = []
+        array4 = []
+        xb_ = ""
 
-        for i in range(len(user_agent)):
-            t = (t + 1) % 256
-            c = (c + d[t]) % 256
-            d[t], d[c] = d[c], d[t]
-            result[i] = user_agent[i] ^ d[(d[t] + d[c]) % 256]
-        return result
-
-    def _generate_user_agent_array(self, user_agent: str, params: int) -> list[int]:
-        """
-        Generates a user agent array.
-        """
-        ua_key = ["\u0000", "\u0001", chr(params)]
-        value = self._handle_user_agent("".join(ua_key), user_agent.encode("utf-8"))
-        value = b64encode(value)
-        return list(md5(value).digest())
-
-    def _generate_x_bogus(self, query: list[int], params: int, user_agent: str, timestamp: int) -> str:
-        """
-        Generates the x-bogus value.
-        """
-        user_agent_array = self._generate_user_agent_array(user_agent, params)
-        array = [
-            64,
-            int(0.00390625 * (2**32)),
-            1,
-            params,
-            query[-2],
-            query[-1],
-            69,
-            63,
-            user_agent_array[-2],
-            user_agent_array[-1],
-            timestamp >> 24 & 255,
-            timestamp >> 16 & 255,
-            timestamp >> 8 & 255,
-            timestamp & 255,
-            self._CANVAS_VALUE >> 24 & 255,
-            self._CANVAS_VALUE >> 16 & 255,
-            self._CANVAS_VALUE >> 8 & 255,
-            self._CANVAS_VALUE & 255,
-            0,
+        new_array = [
+            64, 0.00390625, 1, 12,
+            url_params_array[14], url_params_array[15], array2[14], array2[15], array1[14], array1[15],
+            timer >> 24 & 255, timer >> 16 & 255, timer >> 8 & 255, timer & 255,
+            ct >> 24 & 255, ct >> 16 & 255, ct >> 8 & 255, ct & 255
         ]
 
-        for i in array[:-1]:
-            array[-1] ^= i
+        xor_result = new_array[0]
+        for i in range(1, len(new_array)):
+            b = new_array[i]
+            if isinstance(b, float):
+                b = int(b)
+            xor_result ^= b
 
-        obfuscated_string_1 = self._generate_obfuscated_string_1(*self._create_array_from_values(*array))
-        obfuscated_string_2 = self._generate_obfuscated_string_2(2, 255, self._generate_obfuscated_string_3("ÿ", obfuscated_string_1))
-        return "".join(self._generate_string_from_number(i) for i in self._generate_numbers_from_text(obfuscated_string_2))
+        new_array.append(xor_result)
 
-    def get_x_bogus(
-        self,
-        query: dict,
-        params: int = 8,
-        user_agent: str = _DEFAULT_USER_AGENT,
-        timestamp: int = None
-    ) -> str:
-        """
-        Generates the x-bogus parameter.
-        """
-        timestamp = int(timestamp or time())
-        processed_query = self._process_url_path(urlencode(query, quote_via=quote))
-        return self._generate_x_bogus(processed_query, params, user_agent, timestamp)
+        idx = 0
+        while idx < len(new_array):
+            array3.append(new_array[idx])
+            try:
+                array4.append(new_array[idx + 1])
+            except IndexError:
+                pass
+            idx += 2
+
+        merge_array = array3 + array4
+
+        garbled_code = self.encoding_conversion2(
+            2,
+            255,
+            self.rc4_encrypt(
+                "ÿ".encode("ISO-8859-1"),
+                self.encoding_conversion(*merge_array).encode("ISO-8859-1"),
+            ).decode("ISO-8859-1"),
+        )
+
+        idx = 0
+        while idx < len(garbled_code):
+            xb_ += self.calculation(
+                ord(garbled_code[idx]),
+                ord(garbled_code[idx + 1]),
+                ord(garbled_code[idx + 2]),
+            )
+            idx += 3
+        self.params = "%s&X-Bogus=%s" % (url_params, xb_)
+        self.xb = xb_
+        return (self.params, self.xb, self.user_agent)
 
 if __name__ == "__main__":
-    # bogus = XBogus()
-    # print(bogus.get_x_bogus({
-    #     "Accept": "*/*",
-    #     "Accept-Encoding": "*/*",
-    #     "Accept-Language": "zh-SG,zh-CN;q=0.9,zh;q=0.8",
-    #     "Content-Type": "text/plain;charset=UTF-8",
-    #     "Referer": "https://www.douyin.com/",
-    #     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-    # }))
-    ...
+    platform_type, device_type, browser_type = "Desktop", "Windows", "Chrome"
+    user_agent = UserAgent(platform_type=platform_type, device_type=device_type, browser_type=browser_type)
+    browser_info = Fingerprint.browser_fingerprint(browser_type=browser_type, user_agent=user_agent)
+    xb = XBogus(user_agent=user_agent)
+
+    dy_url_param_dict = {}
+    dy_url_param_dict["device_platform"] = "webapp"
+    dy_url_param_dict["aid"] = 6383
+    dy_url_param_dict["channel"] = "channel_pc_web"
+    dy_url_param_dict["sec_user_id"] = "MS4wLjABAAAAW9FWcqS7RdQAWPd2AA5fL_ilmqsIFUCQ_Iym6Yh9_cUa6ZRqVLjVQSUjlHrfXY1Y"
+    dy_url_param_dict["max_cursor"] = 0
+    dy_url_param_dict["locate_query"] = False
+    dy_url_param_dict["show_live_replay_strategy"] = 1
+    dy_url_param_dict["need_time_list"] = 1
+    dy_url_param_dict["time_list_query"] = 0
+    dy_url_param_dict["whale_cut_token"] = ""
+    dy_url_param_dict["cut_version"] = 1
+    dy_url_param_dict["count"] = 18
+    dy_url_param_dict["publish_video_strategy_type"] = 2
+    dy_url_param_dict["pc_client_type"] = 1
+    dy_url_param_dict["version_code"] = 170400
+    dy_url_param_dict["version_name"] = "17.4.0"
+    dy_url_param_dict["cookie_enabled"] = True
+    dy_url_param_dict["screen_width"] = browser_info.get("width")
+    dy_url_param_dict["screen_height"] = browser_info.get("height")
+    dy_url_param_dict["browser_language"] = "zh-CN"
+    dy_url_param_dict["browser_platform"] = "Win32"
+    dy_url_param_dict["browser_name"] = browser_type
+    dy_url_param_dict["browser_version"] = format_mm_version(user_agent.browser_version)
+    dy_url_param_dict["browser_online"] = True
+    dy_url_param_dict["engine_name"] = "Blink"
+    dy_url_param_dict["engine_version"] = format_mm_version(user_agent.browser_version)
+    dy_url_param_dict["os_name"] = device_type
+    dy_url_param_dict["os_version"] = "10"
+    dy_url_param_dict["cpu_core_num"] = browser_info.get("hardwareConcurrency")
+    dy_url_param_dict["device_memory"] = browser_info.get("deviceMemory")
+    dy_url_param_dict["platform"] = "PC"
+    dy_url_param_dict["downlink"] = 10
+    dy_url_param_dict["effective_type"] = "4g"
+    dy_url_param_dict["round_trip_time"] = 50
+    dy_url_param_dict["webid"] = "7335414539335222835"
+    dy_url_param_dict["msToken"] = "p9Y7fUBuq9DKvAuN27Peml6JbaMqG2ZcXfFiyDv1jcHrCN00uidYqUgSuLsKl1onC-E_n82m-aKKYE0QGEmxIWZx9iueQ6WLbvzPfqnMk4GBAlQIHcDzxb38FLXXQxAm"
+
+    douying_params = urllib.parse.urlencode(dy_url_param_dict)
+    dy_xbogus = xb.getXBogus(douying_params)
+
+    tk_url_param_dict = {}
+    tk_url_param_dict["WebIdLastTime"] = 1713796127
+    tk_url_param_dict["abTestVersion"] = "[object Object]"
+    tk_url_param_dict["aid"] = 1988
+    tk_url_param_dict["appType"] = "t"
+    tk_url_param_dict["app_language"] = "zh-Hans"
+    tk_url_param_dict["app_name"] = "tiktok_web"
+    tk_url_param_dict["browser_name"] = "Mozilla"
+    tk_url_param_dict["browser_online"] = True
+    tk_url_param_dict["browser_platform"] = "Win32"
+    tk_url_param_dict["browser_version"] = "5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F123.0.0.0%20Safari%2F537.36"
+    tk_url_param_dict["channel"] = "tiktok_web"
+    tk_url_param_dict["device_id"] = "7360698239018452498"
+    tk_url_param_dict["odinId"] = "7360698115047851026"
+    tk_url_param_dict["region"] = "TW"
+    tk_url_param_dict["tz_name"] = "Asia%2FHong_Kong"
+    tk_url_param_dict["uniqueId"] = "rei_toy625"
+
+    tiktok_params = urllib.parse.urlencode(tk_url_param_dict)
+    tk_xbogus = xb.getXBogus(tiktok_params)
+
+    print(json.dumps(dy_xbogus, indent=4))
+    print(f"url: {dy_xbogus[0]}, xbogus:{dy_xbogus[1]}, ua: {dy_xbogus[2]}")
+    print(json.dumps(dy_xbogus, indent=4))
+    print(f"url: {tk_xbogus[0]}, xbogus:{tk_xbogus[1]}, ua: {tk_xbogus[2]}")
